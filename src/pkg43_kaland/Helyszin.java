@@ -19,7 +19,7 @@ class Helyszin {
     bejart = false;
   }
   
-  Helyszin uj(ResultSet rs) throws SQLException {
+  static Helyszin uj(ResultSet rs) throws SQLException {
     return new Helyszin(rs.getString("nev"), rs.getString("leiras"), rs.getBoolean("sotet"));
   }
   
