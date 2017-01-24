@@ -1,0 +1,50 @@
+Kalandjáték térképe
+
+       /\
+      /||\  É
+     / || \ s
+       ||   z
+       ||   a
+       ||   k
+       
+      +-------+       +-------+     +-------+        +-------+     +-------+
+      |       |       |       |     |       | le-fel |       |     |       |
+      | pince |       |padlás |<--->|padlás |<------>|rejtett|<--->| odaát |
+      |       |       |eleje  |     | vége  |        | pince |     |       |
+      +-------+       +-------+     +-------+        +-------+     +-------+
+              ^       ^
+              | le-fel|
+              v       v
++-------+     +-------+     +-------+
+|       |     |       |     |       |
+| szoba |<--->|folyosó|<--->|konyha |
+|       |     |       |     |       |
++-------+     +-------+     +-------+
+                  ^
+                  |
+                  v
++-------+     +-------+
+|       |     |       |
+| gödör |<----|előtér |
+|       |     |       |
++-------+     +-------+
+                  ^
+                  |
+                  v
+              +-------+
+              |       |
+              |  ház  |
+              | előtt |
+              +-------+
+
+Kijáratok: észak;kelet;dél;nyugat;le;fel;indirekt
+
+ház előtt: előtér;null;null;null;null;null;előtér
+előtér: folyosó;null;ház előtt;null;gödör;null;folyosó
+gödör: halál
+folyosó: null;konyha;előtér;szoba;pince;padlás eleje;szoba
+pince: null;null;null;null;null;folyosó;folyosó
+padlás eleje: null;padlás vége;null;null;folyosó;null;folyosó
+padlás vége: null;null;null;padlás eleje;null(változhat);null;null(változhat)
+rejtett pince: null;odaát;null;null;null;padlás vége
+odaát: null;nul;null;rejtett pince;null;null;rejtett pince
