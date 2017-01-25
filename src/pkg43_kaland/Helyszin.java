@@ -45,7 +45,7 @@ class Helyszin {
   
   @Override
   public String toString() {
-    return String.format("%s: %ssötét, %sbejárt%n",
+    return String.format("%s: %ssötét, %sbejárt",
       nev, sotet ? "" : "nincs ", bejart ? "" : "nem ");
   }
   
