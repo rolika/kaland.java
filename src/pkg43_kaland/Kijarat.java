@@ -32,11 +32,6 @@ class Kijarat implements Elem<Kijarat> {
   public String getKijarat(String irany) {
     return kijaratok.get(irany);
   }
-
-  @Override
-  public Kijarat uj(ResultSet rs) throws SQLException {
-    return new Kijarat(rs);
-  }
   
   @Override
   public String toString() {

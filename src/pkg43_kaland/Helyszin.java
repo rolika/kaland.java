@@ -26,11 +26,6 @@ public class Helyszin implements Elem<Helyszin> {
     bejart = false;
   }
   
-  @Override
-  public Helyszin uj(ResultSet rs) throws SQLException {
-    return new Helyszin(rs.getString("nev"), rs.getString("leiras"), rs.getBoolean("sotet"));
-  }
-  
   public String getnev() {
     return nev;
   }
