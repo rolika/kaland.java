@@ -7,4 +7,7 @@ package pkg43_kaland;
  */
 public interface Elem<E> {
   
+  String getNev();
+  String getCel(String irany);
+  
 }

@@ -22,11 +22,13 @@ public class Kijarat implements Elem<Kijarat> {
     }
   }
   
-  public String getHelyszin() {
+  @Override
+  public String getNev() {
     return helyszin;
   }
   
-  public String getKijarat(String irany) {
+  @Override
+  public String getCel(String irany) {
     return kijaratok.get(irany);
   }
   
