@@ -7,28 +7,37 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-class SqliteJDBC {
-  
-  private final PreparedStatement minden;
-  
+public class SqliteJDBC {
+
+  private PreparedStatement minden;
+  private String mindenString = "SELECT * FROM helyiseg"; // a táblanevet hardkódolni kell
+  private final Connection kon;
+
   public SqliteJDBC(Connection kon) throws SQLException {
-    minden = kon.prepareStatement("SELECT * FROM helyiseg");
+    minden = kon.prepareStatement(mindenString);
+    this.kon = kon;
+  }
+
+  public List<Elem> minden(String tabla) throws SQLException {
+    ujTabla(tabla);
+    return tobbTalalat(tabla, minden.executeQuery());
   }
   
-  List<Helyszin> minden() throws SQLException {
-    return tobbTalalat(minden.executeQuery());
+  private void ujTabla(String tabla) throws SQLException {
+    mindenString = mindenString.replaceAll("[a-z]+", tabla);
+    minden = kon.prepareStatement(mindenString);
   }
-    
-  private Helyszin egyTalalat(ResultSet rs) throws SQLException {    
-    return Helyszin.uj(rs);
+
+  private Elem egyTalalat(String tabla, ResultSet rs) throws SQLException {
+    return ElemFactory.uj(tabla, rs);
   }
-  
-  private List<Helyszin> tobbTalalat(ResultSet rs) throws SQLException {
-    List<Helyszin> helyszinek = new ArrayList<>();
+
+  private List<Elem> tobbTalalat(String tabla, ResultSet rs) throws SQLException {
+    List<Elem> elemek = new ArrayList<>();
     while (rs.next()) {
-      helyszinek.add(egyTalalat(rs));
+      elemek.add(egyTalalat(tabla, rs));
     }
-    return helyszinek;
+    return elemek;
   }
-  
+
 }

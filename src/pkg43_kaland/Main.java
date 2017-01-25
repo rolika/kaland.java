@@ -12,9 +12,10 @@ public class Main {
     //Jatekter.main();
     try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
       SqliteJDBC sql = new SqliteJDBC(kon);
-      sql.minden().forEach(System.out::println);
+      sql.minden("helyiseg").forEach(System.out::println);
+      sql.minden("kijarat").forEach(System.out::println);
     } catch (SQLException ex) {
-      
+      System.out.println("SQL hiba\n" + ex.getMessage());
     }
     
   }

@@ -3,7 +3,7 @@ package pkg43_kaland;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-class Helyszin {
+public class Helyszin implements Elem<Helyszin> {
   
   private static final String SOTET = "Túl sötét van, nem látsz semmit!";
   
@@ -19,27 +19,35 @@ class Helyszin {
     bejart = false;
   }
   
-  static Helyszin uj(ResultSet rs) throws SQLException {
+  public Helyszin(ResultSet rs) throws SQLException {
+    nev = rs.getString("nev");
+    leiras = rs.getString("leiras");
+    sotet = rs.getBoolean("sotet");
+    bejart = false;
+  }
+  
+  @Override
+  public Helyszin uj(ResultSet rs) throws SQLException {
     return new Helyszin(rs.getString("nev"), rs.getString("leiras"), rs.getBoolean("sotet"));
   }
   
-  String getnev() {
+  public String getnev() {
     return nev;
   }
   
-  boolean isSotet() {
+  public boolean isSotet() {
     return sotet;
   }
   
-  void setBejart(boolean bejart) {
+  public void setBejart(boolean bejart) {
     this.bejart = bejart;
   }
   
-  void setSotet(boolean sotet) {
+  public void setSotet(boolean sotet) {
     this.sotet = sotet;
   }
   
-  String helyszinLeiras() {
+  public String helyszinLeiras() {
     return sotet ? SOTET : (bejart ? nev : leiras);
   }
   
