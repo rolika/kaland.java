@@ -2,31 +2,28 @@ package pkg43_kaland;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Helyiség kijáratait nyilvántartó osztály
- * @author Roland
- */
 class Kijarat implements Elem<Kijarat> {
 
   private static final String[] IRANYOK =
     { "eszak", "kelet", "del", "nyugat", "le", "fel", "indirekt" };
   
-  private Map<String, String> kijaratok;
+  private final String helyszin;
+  private final Map<String, String> kijaratok;
 
-  public Kijarat(ResultSet kijarat) {
+  public Kijarat(ResultSet rs) throws SQLException {
+    helyszin = rs.getString("helyiseg");
     kijaratok = new HashMap<>();
-    Arrays.asList(IRANYOK).forEach(irany -> {
-      try {
-        kijaratok.put(irany, kijarat.getString(irany));
-      } catch (SQLException ex) {
-        System.out.println("SQL-hiba!");
-        System.out.println(ex.getMessage());
-      }
-    });
+    for (String irany : IRANYOK) {
+      String cel = rs.getString(irany);
+      kijaratok.put(irany, cel.equals("NULL") ? null : cel);
+    }
+  }
+  
+  public String getHelyszin() {
+    return helyszin;
   }
   
   public String getKijarat(String irany) {
@@ -35,7 +32,11 @@ class Kijarat implements Elem<Kijarat> {
   
   @Override
   public String toString() {
-    return String.format("");
+    String kijarat = "";
+    for (String irany : IRANYOK) {
+      kijarat += kijaratok.get(irany) + ", ";
+    }
+    return String.format("%s: %s", helyszin, kijarat);
   }
 
 }
