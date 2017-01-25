@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-class Kijarat implements Elem<Kijarat> {
+public class Kijarat implements Elem<Kijarat> {
 
   private static final String[] IRANYOK =
     { "eszak", "kelet", "del", "nyugat", "le", "fel", "indirekt" };
