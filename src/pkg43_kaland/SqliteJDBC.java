@@ -10,7 +10,7 @@ import java.util.List;
 public class SqliteJDBC {
 
   private PreparedStatement minden;
-  private String mindenString = "SELECT * FROM helyiseg"; // a táblanevet hardkódolni kell
+  private String mindenString = "SELECT * FROM helyszin"; // a táblanevet hardkódolni kell
   private final Connection kon;
 
   public SqliteJDBC(Connection kon) throws SQLException {

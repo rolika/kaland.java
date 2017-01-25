@@ -11,7 +11,7 @@ public class ElemFactory {
   
   public static Elem uj(String tabla, ResultSet rs) throws SQLException {
     switch (tabla) {
-      case "helyiseg":
+      case "helyszin":
         return new Helyszin(rs);
       case "kijarat":
         return new Kijarat(rs);

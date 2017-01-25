@@ -14,7 +14,7 @@ class Kijarat implements Elem<Kijarat> {
   private final Map<String, String> kijaratok;
 
   public Kijarat(ResultSet rs) throws SQLException {
-    helyszin = rs.getString("helyiseg");
+    helyszin = rs.getString("helyszin");
     kijaratok = new HashMap<>();
     for (String irany : IRANYOK) {
       String cel = rs.getString(irany);
