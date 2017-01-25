@@ -41,4 +41,9 @@ public class Kijarat implements Elem<Kijarat> {
     return String.format("%s: %s", helyszin, kijarat);
   }
 
+  @Override
+  public String helyszinLeiras() {
+    return null; // nem használt
+  }
+
 }

@@ -9,5 +9,6 @@ public interface Elem<E> {
   
   String getNev();
   String getCel(String irany);
+  String helyszinLeiras();
   
 }
