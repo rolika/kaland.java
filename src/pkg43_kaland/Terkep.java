@@ -23,7 +23,7 @@ public class Terkep<E extends Elem>  {
   }
   
   public String getLeiras(String helyszin) {
-    return helyszinek.get(helyszin).helyszinLeiras();
+    return helyszinek.get(helyszin).getLeiras();
   }
   
 }

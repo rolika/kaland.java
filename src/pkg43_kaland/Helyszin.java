@@ -43,7 +43,7 @@ public class Helyszin implements Elem<Helyszin> {
     this.sotet = sotet;
   }
   
-  public String helyszinLeiras() {
+  public String getLeiras() {
     return sotet ? SOTET : (bejart ? nev : leiras);
   }
   
