@@ -30,7 +30,7 @@ public class Konzol {
       System.out.print("> ");
       parancs = bevitel.nextLine();
       akadaly = terkep.getAkadaly(helyszin, parancs);
-      if (akadaly != null && akadaly.getAktiv()) {
+      if (akadaly != null && akadaly.isAktiv()) {
         System.out.println(akadaly.getLeiras());
         continue;
       }

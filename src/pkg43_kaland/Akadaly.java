@@ -26,11 +26,11 @@ public class Akadaly implements Elem<Akadaly> {
     return leiras;
   }
   
-  public boolean getAktiv() {
+  public boolean isAktiv() {
     return aktiv;
   }
   
-  public boolean getHalalos() {
+  public boolean isHalalos() {
     return halalos;
   }
   
