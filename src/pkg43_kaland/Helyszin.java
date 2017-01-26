@@ -43,7 +43,6 @@ public class Helyszin implements Elem<Helyszin> {
     this.sotet = sotet;
   }
   
-  @Override
   public String helyszinLeiras() {
     return sotet ? SOTET : (bejart ? nev : leiras);
   }
@@ -52,11 +51,6 @@ public class Helyszin implements Elem<Helyszin> {
   public String toString() {
     return String.format("%s: %ssötét, %sbejárt",
       nev, sotet ? "" : "nincs ", bejart ? "" : "nem ");
-  }
-
-  @Override
-  public String getCel(String irany) {
-    return null; // nem használt
   }
   
 }

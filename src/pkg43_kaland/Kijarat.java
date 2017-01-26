@@ -27,7 +27,6 @@ public class Kijarat implements Elem<Kijarat> {
     return helyszin;
   }
   
-  @Override
   public String getCel(String irany) {
     return kijaratok.get(irany);
   }
@@ -39,11 +38,6 @@ public class Kijarat implements Elem<Kijarat> {
       kijarat += kijaratok.get(irany) + ", ";
     }
     return String.format("%s: %s", helyszin, kijarat);
-  }
-
-  @Override
-  public String helyszinLeiras() {
-    return null; // nem használt
   }
 
 }
