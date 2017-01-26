@@ -7,9 +7,6 @@ import java.util.Map;
 
 public class Kijarat implements Elem<Kijarat> {
 
-  private static final String[] IRANYOK =
-    { "eszak", "kelet", "del", "nyugat", "le", "fel", "indirekt" };
-  
   private final String helyszin;
   private final Map<String, String> kijaratok;
 
