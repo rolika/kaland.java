@@ -11,7 +11,7 @@ public class Terkep<E extends Elem>  {
   private final Map<String, Akadaly> akadalyok;
   private final Map<String, AkadalyIrany> akadalyIranyok;
   
-  public Terkep( List<E> helyszinek, List<E> kijaratok, List<E> akadalyok, List<E> akadalyIranyok) {
+  public Terkep(List<E> helyszinek, List<E> kijaratok, List<E> akadalyok, List<E> akadalyIranyok) {
     this.helyszinek = new HashMap<>();
     this.kijaratok = new HashMap<>();
     this.akadalyok = new HashMap<>();
@@ -22,13 +22,24 @@ public class Terkep<E extends Elem>  {
     akadalyIranyok.forEach(irany -> this.akadalyIranyok.put(irany.getNev(), (AkadalyIrany) irany));
   }
   
-  public String szandek(String helyszin, String irany) {
-    Kijarat kijarat = kijaratok.getOrDefault(helyszin, null);
-    return kijarat.getCel(irany);
+  public Helyszin getCel(Helyszin helyszin, String irany) {
+    Kijarat kijarat = kijaratok.get(helyszin.getNev());
+    String celNev = kijarat.getCel(irany);
+    return celNev == null ? null : getHelyszin(celNev);
+  }
+  
+  public Helyszin getHelyszin(String nev) {
+    return helyszinek.get(nev);
   }
   
   public String getLeiras(String helyszin) {
     return helyszinek.get(helyszin).getLeiras();
+  }
+  
+  public Akadaly getAkadaly(Helyszin helyszin, String irany) {
+    AkadalyIrany ai = akadalyIranyok.get(helyszin.getNev());
+    String akadalyNev = ai.getAkadaly(irany);
+    return akadalyNev == null ? null : akadalyok.get(akadalyNev);
   }
   
 }
