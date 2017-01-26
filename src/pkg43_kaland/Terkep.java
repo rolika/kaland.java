@@ -14,7 +14,7 @@ public class Terkep<E extends Elem>  {
     this.kijaratok = new HashMap<>();
     helyszinek.forEach(helyszin -> this.helyszinek.put(helyszin.getNev(), (Helyszin) helyszin));
     kijaratok.forEach(kijarat -> this.kijaratok.put(kijarat.getNev(), (Kijarat) kijarat));
-    // és ugyanígy lesznek az akadályok, akadályirányok, tárgyak
+    // és ugyanígy lesznek az akadályok, akadályirányok, tárgyak, üzenetek
   }
   
   public String szandek(String helyszin, String irany) {
