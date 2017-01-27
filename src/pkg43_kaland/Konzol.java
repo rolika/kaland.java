@@ -12,11 +12,13 @@ public class Konzol {
   Scanner bevitel;
   Helyszin helyszin, cel;
   Akadaly akadaly;
+  Jatekos jatekos;
   
   public Konzol(Terkep terkep) {
     this.terkep = terkep;
     bevitel = new Scanner(System.in);
-    helyszin = terkep.getHelyszin("Ház előtt");
+    jatekos = new Jatekos(terkep.getHelyszin("Ház előtt"));
+    helyszin = jatekos.holVan();
     cel = null;
   }
   
