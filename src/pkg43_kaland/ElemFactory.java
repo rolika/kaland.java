@@ -11,6 +11,8 @@ public class ElemFactory {
         return new Helyszin(rs);
       case "kijarat":
         return new Kijarat(rs);
+      case "uzenet":
+        return new Uzenet(rs);
       case "ajto":
         return new Ajto(rs);
       default:

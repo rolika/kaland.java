@@ -49,7 +49,7 @@ public class Helyszin implements Elem<Helyszin> {
   }
   
   public String getLeiras() {
-    return sotet ? SOTET : (bejart ? nev : leiras);
+    return bejart ? nev : leiras;
   }
   
   public String getKijarat(String irany) {
