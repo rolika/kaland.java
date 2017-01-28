@@ -4,7 +4,7 @@ public class Jatekos {
   
   private boolean el;
   private Helyszin helyszin;
-  // private Leltar leltar();
+  //private List<Targy> leltar;
   
   public Jatekos(Helyszin helyszin) {
     this.helyszin = helyszin;
@@ -19,12 +19,16 @@ public class Jatekos {
     return el;
   }
   
-  public void mozog(Helyszin helyszin) {
+  public void setHelyszin(Helyszin helyszin) {
     this.helyszin = helyszin;
   }
   
   public Helyszin holVan() {
     return helyszin;
+  }
+  
+  public String megy(String irany) {
+    return helyszin.getKijarat(irany);
   }
   
 }

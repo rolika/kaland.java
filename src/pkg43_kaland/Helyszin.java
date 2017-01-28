@@ -11,6 +11,7 @@ public class Helyszin implements Elem<Helyszin> {
   private final String leiras;
   private boolean sotet;
   private boolean bejart;
+  private Kijarat kijarat;
   
   private Helyszin(String nev, String leiras, boolean sotet) {
     this.nev = nev;
@@ -43,8 +44,16 @@ public class Helyszin implements Elem<Helyszin> {
     this.sotet = sotet;
   }
   
+  public void setKijarat(Kijarat kijarat) {
+    this.kijarat = kijarat;
+  }
+  
   public String getLeiras() {
     return sotet ? SOTET : (bejart ? nev : leiras);
+  }
+  
+  public String getKijarat(String irany) {
+    return kijarat.getCel(irany);
   }
   
   @Override

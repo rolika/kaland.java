@@ -11,36 +11,32 @@ public class Konzol {
   private final Terkep terkep;
   Scanner bevitel;
   Helyszin helyszin, cel;
-  Akadaly akadaly;
   Jatekos jatekos;
+  Parancs parancs;
   
   public Konzol(Terkep terkep) {
     this.terkep = terkep;
     bevitel = new Scanner(System.in);
     jatekos = new Jatekos(terkep.getHelyszin("Ház előtt"));
-    helyszin = jatekos.holVan();
     cel = null;
+    parancs = new Parancs();
   }
   
   public void jatek() {
     
-    String parancs;
-    
     while (true) {
+      helyszin = jatekos.holVan();
       System.out.println(helyszin.getLeiras());
       helyszin.setBejart(true);
       System.out.print("> ");
-      parancs = bevitel.nextLine();
-      akadaly = terkep.getAkadaly(helyszin, parancs);
-      if (akadaly != null && akadaly.isAktiv()) {
-        System.out.println(akadaly.getLeiras());
-        continue;
-      }
-      cel = terkep.getCel(helyszin, parancs);
-      if (cel == null) {
-        System.out.println("Arra nem mehetsz!");
-      } else {
-        helyszin = cel;
+      parancs.szetszed(bevitel.nextLine());
+      if (parancs.isIrany()) {
+        String celHelyszin = jatekos.megy(parancs.getIrany());
+        if (celHelyszin == null) {
+          System.out.println("Arra nem mehetsz!");
+        } else {
+          jatekos.setHelyszin(terkep.getHelyszin(celHelyszin));
+        }
       }
     }
     
