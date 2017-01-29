@@ -17,7 +17,7 @@ public class Main {
     //Jatekter.main();
     try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
       SqliteJDBC sql = new SqliteJDBC(kon);
-      terkep = new Terkep(sql.minden("helyszin"), sql.minden("kijarat"));
+      terkep = new Terkep(sql.minden("helyszin"), sql.minden("kijarat"), sql.minden("targy"));
       for (Elem elem : sql.minden("uzenet")) {
         uzenetek.add(elem.getNev());
       }

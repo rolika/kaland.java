@@ -15,6 +15,8 @@ public class ElemFactory {
         return new Uzenet(rs);
       case "ajto":
         return new Ajto(rs);
+      case "targy":
+        return new Targy(rs);
       default:
         return null;
     }

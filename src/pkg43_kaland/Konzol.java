@@ -29,12 +29,12 @@ public class Konzol {
     
     while (true) {
       helyszin = jatekos.holVan();
-      if (helyszin.isSotet()) {
+      if (helyszin.isSotet() && !terkep.isZseblampaAktiv()) {
         System.out.println(uzenetek.get(5));
       } else {
         System.out.println(helyszin.getLeiras());
+        helyszin.setBejart(true);
       }
-      helyszin.setBejart(true);
       System.out.print("> ");
       parancs.szetszed(bevitel.nextLine());
       if (parancs.isIrany()) {
@@ -42,7 +42,8 @@ public class Konzol {
         if (celHelyszin == null) {
           System.out.println(uzenetek.get(1));
         } else {
-          jatekos.setHelyszin(terkep.getHelyszin(celHelyszin));
+          Helyszin ujHelyszin = terkep.getHelyszin(celHelyszin);
+          jatekos.setHelyszin(ujHelyszin);
         }
       } else {
         System.out.println(uzenetek.get(6));
