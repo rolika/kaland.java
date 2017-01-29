@@ -10,6 +10,7 @@ import java.util.Set;
 
 public class Parancs {
   
+  // irányszavak mozgáshoz
   private static final String[] ESZAK = { "é", "észak","északra", "északnak" };
   private static final String[] DEL = { "d", "dél","délre", "délnek" };
   private static final String[] KELET = { "k", "kelet","keletre", "keletnek" };
@@ -17,6 +18,10 @@ public class Parancs {
   private static final String[] LE = { "le", "lefelé", "lefele" };
   private static final String[] FEL = { "fel", "felfelé", "felfele" };
   private static final String[] INDIREKT = { "ki", "be" };
+  
+  // szavak bekapcsoláshoz
+  private static final String[] BEKAPCSOL = { "bekapcsolom", "felkapcsolom" };
+  private static final String[] KIKAPCSOL = { "kikapcsolom", "lekapcsolom" };
   
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -53,6 +58,19 @@ public class Parancs {
   
   public String getIrany() {
     return irany;
+  }
+  
+  public boolean isBekapcsol() {
+    for (String szo : BEKAPCSOL) {
+      if (szo.equals(szavak.get(0))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public String getTargy() {
+    return szavak.get(1);
   }
   
   public boolean isLeltar() {

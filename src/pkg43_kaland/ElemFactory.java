@@ -13,10 +13,10 @@ public class ElemFactory {
         return new Kijarat(rs);
       case "uzenet":
         return new Uzenet(rs);
-      case "ajto":
-        return new Ajto(rs);
       case "targy":
         return new Targy(rs);
+      case "ajto":
+        return new Ajto(rs);
       default:
         return null;
     }
