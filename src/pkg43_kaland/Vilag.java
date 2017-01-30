@@ -42,16 +42,42 @@ public class Vilag<E extends Elem>  {
   public String ujHelyszin(String irany) {
     String celHelyszinNev = aktualisHelyszin.getKijarat(irany);
     if (celHelyszinNev == null) {
-      return this.uzenetek.get(1);
+      return uzenetek.get(1);
     } else {
       // itt kell majd ráellenőrizni ajtókra és akadályokra
       aktualisHelyszin = helyszinek.get(celHelyszinNev);
-      return this.uzenetek.get(2);
+      return uzenetek.get(2);
     }
   }
   
-  public Targy getTargy(String nev) {
-    return targyak.get(nev);
+  public String beallit(String nevTargyeset, boolean aktiv) {
+    Targy targy = getTargy(nevTargyeset);
+    if (targy == null || !keznelVan(targy)) {
+      return uzenetek.get(7);
+    }
+    targy.setAktiv(aktiv);
+    return uzenetek.get(2);
   }
+  
+  public Targy getTargy(String nevTargyeset) {
+    for (String kulcs : targyak.keySet()) {
+      if (targyak.get(kulcs).getTargyeset().equals(nevTargyeset)) {
+        return targyak.get(kulcs);
+      }
+    }
+    return null;
+  }
+  
+  private boolean keznelVan(Targy targy) {
+    if (targy.getHely().equals("Leltár")) { // leltárban van, vagy
+      return true;
+      } else if (targy.getHely().equals(aktualisHelyszin.getNev()) && // nem sötét helyszínen
+        (!aktualisHelyszin.isSotet() || getTargy("zseblámpát").isAktiv())) {
+      return true;
+    }
+    return false;
+  }
+  
+  
   
 }

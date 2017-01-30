@@ -19,7 +19,7 @@ public class Parancs {
   private static final String[] FEL = { "fel", "felfelé", "felfele" };
   private static final String[] INDIREKT = { "ki", "be" };
   
-  // szavak bekapcsoláshoz
+  // szavak kapcsoláshoz
   private static final String[] BEKAPCSOL = { "bekapcsolom", "felkapcsolom" };
   private static final String[] KIKAPCSOL = { "kikapcsolom", "lekapcsolom" };
   
@@ -62,6 +62,15 @@ public class Parancs {
   
   public boolean isBekapcsol() {
     for (String szo : BEKAPCSOL) {
+      if (szo.equals(szavak.get(0))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean isKikapcsol() {
+    for (String szo : KIKAPCSOL) {
       if (szo.equals(szavak.get(0))) {
         return true;
       }

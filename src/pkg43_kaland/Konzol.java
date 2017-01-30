@@ -22,7 +22,7 @@ public class Konzol {
   public void jatek() {
 
     while (true) {
-      if (vilag.getHelyszin().isSotet() && !vilag.getTargy("zseblámpa").isAktiv()) {
+      if (vilag.getHelyszin().isSotet() && !vilag.getTargy("zseblámpát").isAktiv()) {
         System.out.println(vilag.getUzenet(5));
       } else {
         System.out.println(vilag.getHelyszin().getLeiras());
@@ -33,7 +33,11 @@ public class Konzol {
       if (parancs.isIrany()) {
         System.out.println(vilag.ujHelyszin(parancs.getIrany()));
       } else if (parancs.isBekapcsol()) {
-        vilag.getTargy(parancs.getTargy()).setAktiv(true);
+        System.out.println(vilag.beallit(parancs.getTargy(), true));
+      } else if (parancs.isKikapcsol()) {
+        System.out.println(vilag.beallit(parancs.getTargy(), false));
+      } else if (parancs.isLeltar()) {
+        
       } else {
         System.out.println(vilag.getUzenet(6));
       }
