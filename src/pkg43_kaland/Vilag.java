@@ -54,6 +54,8 @@ public class Vilag<E extends Elem>  {
     Targy targy = getTargy(nevTargyeset);
     if (targy == null || !keznelVan(targy)) {
       return uzenetek.get(7);
+    } else if (!targy.isAktivalhato()) {
+      return uzenetek.get(9);
     }
     targy.setAktiv(aktiv);
     return uzenetek.get(2);
@@ -78,6 +80,44 @@ public class Vilag<E extends Elem>  {
     return false;
   }
   
+  public String getLeltar() {
+    if (aktualisHelyszin.isSotet()) {
+      return uzenetek.get(5);
+    } else {
+      String leltar = this.getTargyakFromHelyszin(helyszinek.get("Leltár"));
+      if (leltar.isEmpty()) {
+        return uzenetek.get(10);
+      } else {
+        return uzenetek.get(12) + leltar;
+      }
+    }
+  }
   
+  public String getLathatoTargyak() {
+    String leltar = this.getTargyakFromHelyszin(aktualisHelyszin);
+    if (leltar.isEmpty()) {
+      return uzenetek.get(11);
+    } else {
+      return uzenetek.get(8) + leltar;
+    }
+  }
+  
+  private String getTargyakFromHelyszin(Helyszin helyszin) {
+    StringBuilder eredmeny = new StringBuilder();
+    targyak.keySet().stream()
+      .map(kulcs -> targyak.get(kulcs))
+      .filter(targy ->
+        (targy.getHely().equals(helyszin.getNev()) && targy.isFelveheto() && targy.isLathato()))
+      .forEach(targy -> {
+        eredmeny.append(" egy ");
+        eredmeny.append(targy.getNev());
+        eredmeny.append(",");
+      });
+    int hossz = eredmeny.length();
+    if (hossz > 0) {
+      eredmeny.replace(hossz-1, hossz, "."); // pontot tesz a végére
+    }
+    return eredmeny.toString();
+  }
   
 }

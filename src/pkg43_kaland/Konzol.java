@@ -26,6 +26,7 @@ public class Konzol {
         System.out.println(vilag.getUzenet(5));
       } else {
         System.out.println(vilag.getHelyszin().getLeiras());
+        System.out.println(vilag.getLathatoTargyak());
         vilag.getHelyszin().setBejart(true);
       }
       System.out.print("> ");

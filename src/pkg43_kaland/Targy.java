@@ -6,9 +6,9 @@ import java.sql.SQLException;
 public class Targy implements Elem<Targy>{
   
   private final String nev, leiras, hely, targyeset, reszeset; // hely adatbázisból beolvasáshoz
-  private boolean aktiv;
-  private boolean felveheto;
+  private boolean aktiv, felveheto, lathato;
   private Helyszin helyszin;
+  private final boolean aktivalhato;
   
   public Targy(ResultSet rs) throws SQLException {
     nev = rs.getString("nev");
@@ -17,6 +17,8 @@ public class Targy implements Elem<Targy>{
     targyeset = rs.getString("targyeset");
     reszeset = rs.getString("reszeset");
     felveheto = rs.getBoolean("felveheto");
+    aktivalhato = rs.getBoolean("aktivalhato");
+    lathato = rs.getBoolean("lathato");
     aktiv = false;
   }
   
@@ -26,6 +28,10 @@ public class Targy implements Elem<Targy>{
   
   public void setFelveheto(boolean felveheto) {
     this.felveheto = felveheto;
+  }
+  
+  public void setLathato(boolean lathato) {
+    this.lathato = lathato;
   }
   
   public void setHelyszin(Helyszin helyszin) {
@@ -63,6 +69,14 @@ public class Targy implements Elem<Targy>{
   
   public Helyszin getHelyszin() {
     return helyszin;
+  }
+
+  public boolean isLathato() {
+    return lathato;
+  }
+
+  boolean isAktivalhato() {
+    return aktivalhato;
   }
   
 }
