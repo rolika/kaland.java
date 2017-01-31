@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Parancsértelmező osztály
+ * A játék alapvető szintaxisa a magyar nyelvnek megfelelő egyes szám első személyben megfogalmazott
+ * utasítás, pl. MEGÖLÖM A PÓKOT A KÉSSEL
+ * @author Roland
+ */
 public class Parancs {
   
   // irányszavak mozgáshoz
@@ -19,7 +25,9 @@ public class Parancs {
   private static final String[] FEL = { "fel", "felfelé", "felfele" };
   private static final String[] INDIREKT = { "ki", "be" };
   
-  // szavak kapcsoláshoz
+  private static final String LELTAR = "leltár";
+  
+  // igék kapcsoláshoz
   private static final String[] BEKAPCSOL = { "bekapcsolom", "felkapcsolom" };
   private static final String[] KIKAPCSOL = { "kikapcsolom", "lekapcsolom" };
   
@@ -27,6 +35,9 @@ public class Parancs {
   private String irany;
   private List<String> szavak;
   
+  /**
+   * A konstruktor szükség szerint inicializálja a szótárat és a parancsszavakat tartalmazó listát
+   */
   public Parancs() {
     iranyok = new HashMap<>();
     iranyok.put("eszak", new HashSet(Arrays.asList(ESZAK)));
@@ -40,10 +51,18 @@ public class Parancs {
     szavak = new ArrayList<>();
   }
   
+  /**
+   * Szóközök ill. esetleges névelők (a, az) mentén szavakra bontja a parancsot
+   * @param parancs játékostól kapott szöveges parancs, pl. MEGÖLÖM A PÓKOT A KÉSSEL
+   */
   public void szetszed(String parancs) {
     szavak = Arrays.asList(parancs.split("\\sa?z?\\s?"));
   }
   
+  /**
+   * Ellenőrzi, hogy a parancs szavai között van-e irányt jelző szó, ha van, be is állítja az irányt
+   * @return igaz, ha volt irányt jelző szó
+   */
   public boolean isIrany() {
     for (String szo : szavak) {
       for (String kulcs : iranyok.keySet()) {
@@ -56,10 +75,18 @@ public class Parancs {
     return false;
   }
   
+  /**
+   * Ha a parancs mozgási szándék volt, lekérhető az irány
+   * @return irány szöveges reprezentációje (ékezetlen égtáj)
+   */
   public String getIrany() {
     return irany;
   }
   
+  /**
+   * Bekapcsolásra (aktiválásra) utaló szó kiszűrése
+   * @return igaz, ha a játékos be akar valamit kapcsolni
+   */
   public boolean isBekapcsol() {
     for (String szo : BEKAPCSOL) {
       if (szo.equals(szavak.get(0))) {
@@ -69,6 +96,10 @@ public class Parancs {
     return false;
   }
   
+  /**
+   * Kikapcsolásra (deaktiválásra) utaló szó kiszűrése
+   * @return igaz, ha a játékos ki akar valamit kapcsolni
+   */
   public boolean isKikapcsol() {
     for (String szo : KIKAPCSOL) {
       if (szo.equals(szavak.get(0))) {
@@ -78,12 +109,20 @@ public class Parancs {
     return false;
   }
   
+  /**
+   * Magyar nyelvtan szerint a mondat tárgya az ige után jön, azaz a parancs második szava
+   * @return parancs második szava (Tárgy tárgyesete)
+   */
   public String getTargy() {
     return szavak.get(1);
   }
   
+  /**
+   * Leltárra utaló szó kiszűrése
+   * @return igaz, ha volt leltár szó a parancsban
+   */
   public boolean isLeltar() {
-    return false;
+    return (szavak.stream().anyMatch(szo -> szo.contains(LELTAR)));
   }
   
 }

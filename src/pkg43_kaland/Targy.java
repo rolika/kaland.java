@@ -3,13 +3,22 @@ package pkg43_kaland;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Tárgyak kezelése a kalandjátékban
+ * @author Roland
+ */
 public class Targy implements Elem<Targy>{
   
   private final String nev, leiras, hely, targyeset, reszeset; // hely adatbázisból beolvasáshoz
   private boolean aktiv, felveheto, lathato;
   private Helyszin helyszin;
-  private final boolean aktivalhato;
+  private final boolean aktivalhato; // használható
   
+  /**
+   * Konstruktor adatbázisból kiolvasott találokra
+   * @param rs
+   * @throws SQLException
+   */
   public Targy(ResultSet rs) throws SQLException {
     nev = rs.getString("nev");
     leiras = rs.getString("leiras");

@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A világ osztály implementálja és működteti a játék világát
+ * @author Roland
+ * @param <E> generikus, hogy kezelni tudja az adatbázisból képzett különböző osztályokat
+ */
 public class Vilag<E extends Elem>  {
   
   private final Map<String, Helyszin> helyszinek;
@@ -12,6 +17,14 @@ public class Vilag<E extends Elem>  {
   private final Map<String, Targy> targyak;
   private Helyszin aktualisHelyszin;
   
+  /**
+   * Felépíti a világot, beállítj a kezdő helyszínt
+   * Az egyes osztályokat type cast-olja az Elem-ből
+   * @param helyszinek
+   * @param kijaratok
+   * @param uzenetek
+   * @param targyak
+   */
   public Vilag(List<E> helyszinek, List<E> kijaratok, List<E> uzenetek, List<E> targyak) {
     // helyszínek és kijáratok
     Map<String, Kijarat> tempKijarat = new HashMap<>();
@@ -31,14 +44,36 @@ public class Vilag<E extends Elem>  {
     aktualisHelyszin = this.helyszinek.get("Ház előtt");
   }
 
+  /**
+   * Aktuális helyszín, mint osztály
+   * @return helyszín
+   */
   public Helyszin getHelyszin() {
     return aktualisHelyszin;
   }
   
+  /**
+   * Adott azonosítójú üzenet
+   * @param id adatbázis primary key
+   * @return üzenet mint string
+   */
   public String getUzenet(int id) {
     return uzenetek.get(id);
   }
   
+  /**
+   * Világos van-e az adott helyszínen
+   * @return igaz, ha világít a zseblámpa vagy egyébként nincs sötét
+   */
+  public boolean isVilagos() {
+    return getTargy("zseblámpát").isAktiv() || !aktualisHelyszin.isSotet();
+  }
+  
+  /**
+   * Mozgás esetén új helyszín beállítása, vagy régi megtartása
+   * @param irany ékezetlen égtáj
+   * @return mozgási szándék eredményét jelző üzenet
+   */
   public String ujHelyszin(String irany) {
     String celHelyszinNev = aktualisHelyszin.getKijarat(irany);
     if (celHelyszinNev == null) {
@@ -50,7 +85,13 @@ public class Vilag<E extends Elem>  {
     }
   }
   
-  public String beallit(String nevTargyeset, boolean aktiv) {
+  /**
+   * Tárgy aktiválása (bekapcsolása)
+   * @param nevTargyeset parancsból tárgyesetet kap
+   * @param aktiv igaz, ha bekapcsol, hamis, ha lekapcsol
+   * @return eredményjelző üzenet
+   */
+  public String aktival(String nevTargyeset, boolean aktiv) {
     Targy targy = getTargy(nevTargyeset);
     if (targy == null || !keznelVan(targy)) {
       return uzenetek.get(7);
@@ -61,6 +102,11 @@ public class Vilag<E extends Elem>  {
     return uzenetek.get(2);
   }
   
+  /**
+   * Tárgyesettel meghatározott Tárgy visszaadása
+   * @param nevTargyeset parancsból kapott tárgyeset
+   * @return adott tárgy-objektum vagy null, ha nincs ilyen (hívónak kezelni kell)
+   */
   public Targy getTargy(String nevTargyeset) {
     for (String kulcs : targyak.keySet()) {
       if (targyak.get(kulcs).getTargyeset().equals(nevTargyeset)) {
@@ -80,6 +126,10 @@ public class Vilag<E extends Elem>  {
     return false;
   }
   
+  /**
+   * Játékosnál lévő tárgyak felsorolása
+   * @return megfelelő üzenet-string
+   */
   public String getLeltar() {
     if (aktualisHelyszin.isSotet()) {
       return uzenetek.get(5);
@@ -93,6 +143,10 @@ public class Vilag<E extends Elem>  {
     }
   }
   
+  /**
+   * Aktuális helyszínen lévő tárgyak felsorolása
+   * @return megfelelő üzenet-string
+   */
   public String getLathatoTargyak() {
     String leltar = this.getTargyakFromHelyszin(aktualisHelyszin);
     if (leltar.isEmpty()) {
