@@ -92,6 +92,9 @@ public class Vilag<E extends Elem>  {
    * @return eredményjelző üzenet
    */
   public String aktival(String nevTargyeset, boolean aktiv) {
+    if (nevTargyeset.isEmpty()) {
+      return uzenetek.get(9);
+    }
     Targy targy = getTargy(nevTargyeset);
     if (targy == null || !keznelVan(targy)) {
       return uzenetek.get(7);
