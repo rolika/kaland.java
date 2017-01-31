@@ -29,7 +29,7 @@ public class Konzol {
 
     while (true) { // fő játékciklus
       if (vilag.isVilagos()) {
-        System.out.println("világos " + vilag.isVilagos());
+        //System.out.println("világos " + vilag.isVilagos()); // debug!
         System.out.println(vilag.getHelyszin().getLeiras());
         System.out.println(vilag.getLathatoTargyak());
         vilag.getHelyszin().setBejart(true);
@@ -45,7 +45,7 @@ public class Konzol {
       } else if (parancs.isKikapcsol()) {
         System.out.println(vilag.aktival(parancs.getTargy(), false));
       } else if (parancs.isLeltar()) {
-        System.out.println("idáig eljut " + vilag.isVilagos());
+        //System.out.println("idáig eljut " + vilag.isVilagos()); // debug!
         if (vilag.isVilagos()) {
           System.out.println(vilag.getLeltar());
         }

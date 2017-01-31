@@ -114,7 +114,11 @@ public class Parancs {
    * @return parancs második szava (Tárgy tárgyesete)
    */
   public String getTargy() {
-    return szavak.get(1);
+    try {
+      return szavak.get(1);
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      return "";
+    }
   }
   
   /**
