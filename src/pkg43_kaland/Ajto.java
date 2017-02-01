@@ -9,8 +9,8 @@ import java.sql.SQLException;
  */
 public class Ajto implements Elem<Ajto>{
   
-  private final String egyik, masik; // a két érintett helyiség neve
-  private int allapot; // 0: nyitott; 1: becsukott; 2: bezart
+  private final String nev, viszonylat, leiras, zarva, csukva, nyitva, targyeset; // viszonylat CSV
+  private String allapot; // lehet "nyitva" || "csukva" ||"zárva"
   
   /**
    * Konstruktor adatbázisból kiolvasott találokra
@@ -18,25 +18,75 @@ public class Ajto implements Elem<Ajto>{
    * @throws SQLException
    */
   public Ajto(ResultSet rs) throws SQLException {
-    this.egyik = rs.getString("egyik");
-    this.masik = rs.getString("masik");
-    this.allapot = rs.getInt("allapot");
+    nev = rs.getString("nev");
+    viszonylat = rs.getString("viszonylat"); // CSV: helyszín-név;helyszín-név
+    leiras = rs.getString("leiras");
+    zarva = rs.getString("zarva");
+    csukva = rs.getString("csukva");
+    nyitva = rs.getString("nyitva");
+    targyeset = rs.getString("targyeset");
+    allapot = rs.getString("allapot");
   }
   
   /**
-   * Ajtó állapotának beállítása
-   * @param allapot 0: nyitott; 1: becsukott; 2: bezart
+   * Ajtó rövid neve
+   * @return
    */
-  public void setAllapot(int allapot) {
-    this.allapot = allapot;
+  @Override
+  public String getNev() {
+    return nev;
+  }
+  
+  /**
+   * Ajtó leírása (viszgálathoz)
+   * @return
+   */
+  public String getLeiras() {
+    return leiras;
+  }
+  
+  /**
+   * Üzenet, ha az ajtó zárva van
+   * @return
+   */
+  public String getZarva() {
+    return zarva;
+  }
+  
+  /**
+   * Üzenet, ha az ajtó be van csukva.
+   * @return
+   */
+  public String getCsukva() {
+    return csukva;
+  }
+  
+  /**
+   * Üzenet, amikor az ajtó ki lett nyitva.
+   * @return
+   */
+  public String getNyitva() {
+    return nyitva;
+  }
+  
+  public String getTargyeset() {
+    return targyeset;
   }
   
   /**
    * Ajtó állapotának kiolvasása
-   * @return 0: nyitott; 1: becsukott; 2: bezart
+   * @return "nyitva" || "csukva" ||"zárva"
    */
-  public int getAllapot() {
+  public String getAllapot() {
     return allapot;
+  }
+  
+  /**
+   * Ajtó állapotának beállítása
+   * @param allapot "nyitva" || "csukva" ||"zárva"
+   */
+  public void setAllapot(String allapot) {
+    this.allapot = allapot;
   }
   
   /**
@@ -46,17 +96,17 @@ public class Ajto implements Elem<Ajto>{
    * @return igaz, ha van ajtó
    */
   public boolean vanAjto(Helyszin start, Helyszin cel) {
-    return (start.getNev().equals(egyik) && cel.getNev().equals(masik)) || // oda és
-      (start.getNev().equals(masik) && cel.getNev().equals(egyik)); // vissza
+    return viszonylat.contains(start.getNev()) && viszonylat.contains(cel.getNev());
   }
   
   /**
-   * Csak az Elem interface miatt van itt (egyelőre)
-   * @return null
+   * Visszaadja az ajtó példányát, ha két adott helyszín között van
+   * @param start kiindulási helyszín
+   * @param cel elérni szándékozott helyszín
+   * @return ajtó példánya, ill. null ha nem
    */
-  @Override
-  public String getNev() {
-    return null; // itt nincs szükség rá
+  public Ajto peldany(Helyszin start, Helyszin cel) {
+    return vanAjto(start, cel) ? this : null;
   }
   
 }
