@@ -200,9 +200,15 @@ public class Vilag<E extends Elem>  {
     return null;
   }
 
+  /**
+   * Megpróbálja kinyitni a tárgyesettel megadott ajtót
+   * @param targy ajtó tárgyesete
+   * @param reszes ha az ajtó zárva van, ezzel lehet kinyitni a zárat
+   * @return a kísérlet eredményét jelző üzenet
+   */
   public String kinyit(String targy, String reszes) {
     if (targy.isEmpty()) {
-      return uzenetek.get(6);
+      return uzenetek.get(6); // értelmetlen
     } else {
       for (String kulcs : ajtok.keySet()) {
         Ajto ajto = ajtok.get(kulcs);
@@ -214,11 +220,11 @@ public class Vilag<E extends Elem>  {
             case "zárva":
               return ajto.getZarva();
             default:
-              return uzenetek.get(13);
+              return uzenetek.get(13); // már nyitva
           }
         }
       }
-      return uzenetek.get(7);
+      return uzenetek.get(7); // nincs ilyen ajtó
     }
   }
   
