@@ -85,9 +85,17 @@ public class Vilag<E extends Elem>  {
     if (celHelyszinNev == null) {
       return uzenetek.get(1);
     } else {
-      // itt kell majd ráellenőrizni ajtókra és akadályokra
+      Ajto ajto = getAjto(helyszinek.get(celHelyszinNev));
+      if (ajto == null || ajto.getAllapot().equals("nyitva")) {
       aktualisHelyszin = helyszinek.get(celHelyszinNev);
       return uzenetek.get(2);
+      } else {
+        if (ajto.getAllapot().equals("zárva")) {
+          return ajto.getZarva();
+        } else {
+          return ajto.getCsukva();
+        }
+      }
     }
   }
   
@@ -181,6 +189,15 @@ public class Vilag<E extends Elem>  {
       eredmeny.replace(hossz-1, hossz, "."); // pontot tesz a végére
     }
     return eredmeny.toString();
+  }
+
+  private Ajto getAjto(Helyszin cel) {
+    for (String ajto : ajtok.keySet()) {
+      if (ajtok.get(ajto).vanAjto(aktualisHelyszin, cel)) {
+        return ajtok.get(ajto);
+      }
+    }
+    return null;
   }
   
 }
