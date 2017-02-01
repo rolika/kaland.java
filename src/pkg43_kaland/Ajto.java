@@ -99,14 +99,4 @@ public class Ajto implements Elem<Ajto>{
     return viszonylat.contains(start.getNev()) && viszonylat.contains(cel.getNev());
   }
   
-  /**
-   * Visszaadja az ajtó példányát, ha két adott helyszín között van
-   * @param start kiindulási helyszín
-   * @param cel elérni szándékozott helyszín
-   * @return ajtó példánya, ill. null ha nem
-   */
-  public Ajto peldany(Helyszin start, Helyszin cel) {
-    return vanAjto(start, cel) ? this : null;
-  }
-  
 }

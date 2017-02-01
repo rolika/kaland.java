@@ -199,5 +199,27 @@ public class Vilag<E extends Elem>  {
     }
     return null;
   }
+
+  public String kinyit(String targy, String reszes) {
+    if (targy.isEmpty()) {
+      return uzenetek.get(6);
+    } else {
+      for (String kulcs : ajtok.keySet()) {
+        Ajto ajto = ajtok.get(kulcs);
+        if (ajto.getTargyeset().equals(targy)) {
+          switch (ajto.getAllapot()) {
+            case "csukva":
+              ajto.setAllapot("nyitva");
+              return ajto.getNyitva();
+            case "zárva":
+              return ajto.getZarva();
+            default:
+              return uzenetek.get(13);
+          }
+        }
+      }
+      return uzenetek.get(7);
+    }
+  }
   
 }

@@ -16,7 +16,6 @@ import java.util.Set;
  */
 public class Parancs {
   
-  // irányszavak mozgáshoz
   private static final String[] ESZAK = { "é", "észak","északra", "északnak" };
   private static final String[] DEL = { "d", "dél","délre", "délnek" };
   private static final String[] KELET = { "k", "kelet","keletre", "keletnek" };
@@ -27,9 +26,12 @@ public class Parancs {
   
   private static final String LELTAR = "leltár";
   
-  // igék kapcsoláshoz
   private static final String[] BEKAPCSOL = { "bekapcsolom", "felkapcsolom" };
   private static final String[] KIKAPCSOL = { "kikapcsolom", "lekapcsolom" };
+  
+  private static final String KINYIT = "kinyitom";
+  private static final String BECSUK = "becsukom";
+  private static final String BEZAR = "bezarom";
   
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -122,11 +124,35 @@ public class Parancs {
   }
   
   /**
+   * A tárgy után jön a részes eset, azaz a parancs harmadik szava
+   * @return parancs harmadik szava (Tárgy részes esete)
+   */
+  public String getReszes() {
+    try {
+      return szavak.get(2);
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      return "";
+    }
+  }
+  
+  /**
    * Leltárra utaló szó kiszűrése
    * @return igaz, ha volt leltár szó a parancsban
    */
   public boolean isLeltar() {
     return (szavak.stream().anyMatch(szo -> szo.contains(LELTAR)));
+  }
+  
+  /**
+   * Ajtónyitásra irányuló kifejezés
+   * @return igaz, ha kinyitni akar a játékos
+   */
+  public boolean isKinyit() {
+    try {
+      return szavak.get(0).equals(KINYIT);
+    } catch (ArrayIndexOutOfBoundsException ex) {
+      return false;
+    }
   }
   
 }

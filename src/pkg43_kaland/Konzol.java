@@ -52,6 +52,8 @@ public class Konzol {
         if (vilag.isVilagos()) {
           System.out.println(WordUtils.wrap(vilag.getLeltar(), WRAP));
         }
+      } else if (parancs.isKinyit()) {
+        System.out.println(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
       } else {
         System.out.println(vilag.getUzenet(6));
       }
