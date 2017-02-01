@@ -1,12 +1,15 @@
 package pkg43_kaland;
 
 import java.util.Scanner;
+import org.apache.commons.lang3.text.WordUtils;
 
 /**
  * Szöveges játék begépelős változata *
  * @author rolika
  */
 public class Konzol {
+  
+  private final static int WRAP = 80;
 
   private final Vilag vilag;
   Scanner bevitel;
@@ -30,11 +33,11 @@ public class Konzol {
     while (true) { // fő játékciklus
       if (vilag.isVilagos()) {
         //System.out.println("világos " + vilag.isVilagos()); // debug!
-        System.out.println(vilag.getHelyszin().getLeiras());
-        System.out.println(vilag.getLathatoTargyak());
+        System.out.println(WordUtils.wrap(vilag.getHelyszin().getLeiras(), WRAP));
+        System.out.println(WordUtils.wrap(vilag.getLathatoTargyak(), WRAP));
         vilag.getHelyszin().setBejart(true);
       } else {
-        System.out.println(vilag.getUzenet(5));
+        System.out.println(WordUtils.wrap(vilag.getUzenet(5), WRAP));
       }
       System.out.print("> ");
       parancs.szetszed(bevitel.nextLine());
@@ -47,7 +50,7 @@ public class Konzol {
       } else if (parancs.isLeltar()) {
         //System.out.println("idáig eljut " + vilag.isVilagos()); // debug!
         if (vilag.isVilagos()) {
-          System.out.println(vilag.getLeltar());
+          System.out.println(WordUtils.wrap(vilag.getLeltar(), WRAP));
         }
       } else {
         System.out.println(vilag.getUzenet(6));
