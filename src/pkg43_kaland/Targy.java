@@ -9,7 +9,8 @@ import java.sql.SQLException;
  */
 public class Targy implements Elem<Targy>{
   
-  private final String nev, leiras, hely, targyeset, reszeset; // hely adatbázisból beolvasáshoz
+  private final String nev, leiras, targyeset, reszeset; // hely adatbázisból beolvasáshoz
+  private String hely;
   private boolean aktiv, felveheto, lathato;
   private Helyszin helyszin;
   private final boolean aktivalhato; // használható
@@ -45,6 +46,10 @@ public class Targy implements Elem<Targy>{
   
   public void setHelyszin(Helyszin helyszin) {
     this.helyszin = helyszin;
+  }
+  
+  public void setHely(String hely) {
+    this.hely = hely;
   }
 
   @Override

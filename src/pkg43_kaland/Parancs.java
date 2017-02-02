@@ -30,8 +30,8 @@ public class Parancs {
   private static final String[] KIKAPCSOL = { "kikapcsolom", "lekapcsolom" };
   
   private static final String KINYIT = "kinyitom";
-  private static final String BECSUK = "becsukom";
-  private static final String BEZAR = "bezárom";
+  
+  private static final String[] FELVESZ = { "felveszem", "elteszem", "elrakom" };
   
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -153,6 +153,19 @@ public class Parancs {
     } catch (ArrayIndexOutOfBoundsException ex) {
       return false;
     }
+  }
+  
+  /**
+   * Tárgyak felvételére irányuló kifejezés
+   * @return igaz, ha a játékos fel akar venni valamit
+   */
+  public boolean isFelvesz() {
+    for (String szo : FELVESZ) {
+      if (szo.equals(szavak.get(0))) {
+        return true;
+      }
+    }
+    return false;
   }
   
 }

@@ -54,6 +54,11 @@ public class Konzol {
         }
       } else if (parancs.isKinyit()) {
         System.out.println(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
+      } else if (parancs.isFelvesz()) {
+        System.out.println(vilag.felvesz(parancs.getTargy()));
+        if (vilag.getLeltar().contains("lábtörlő")) {
+          vilag.getTargy("kulcsot").setLathato(true);
+        }
       } else {
         System.out.println(vilag.getUzenet(6));
       }

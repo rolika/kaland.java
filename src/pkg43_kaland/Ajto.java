@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class Ajto implements Elem<Ajto>{
   
-  private final String nev, viszonylat, leiras, zarva, csukva, nyitva, targyeset; // viszonylat CSV
+  private final String nev, viszonylat, leiras, zarva, csukva, nyitva, targyeset, kulcs;
   private String allapot; // lehet "nyitva" || "csukva" ||"zárva"
   
   /**
@@ -26,6 +26,7 @@ public class Ajto implements Elem<Ajto>{
     nyitva = rs.getString("nyitva");
     targyeset = rs.getString("targyeset");
     allapot = rs.getString("allapot");
+    kulcs = rs.getString("kulcs");
   }
   
   /**
@@ -79,6 +80,14 @@ public class Ajto implements Elem<Ajto>{
    */
   public String getAllapot() {
     return allapot;
+  }
+  
+  /**
+   * Visszaadja az ajtóhoz tartozó kulcs rövid nevét
+   * @return kulcs neve ill. üres string, ha nincs kulcs
+   */
+  public String getKulcs() {
+    return kulcs;
   }
   
   /**

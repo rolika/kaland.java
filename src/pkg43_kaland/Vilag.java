@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A világ osztály implementálja és működteti a játék világát
+ * Játékmotor
  * @author Roland
  * @param <E> generikus, hogy kezelni tudja az adatbázisból képzett különböző osztályokat
  */
@@ -133,11 +133,25 @@ public class Vilag<E extends Elem>  {
     return null;
   }
   
+  /**
+   * Részesesettel meghatározott Tárgy visszaadása
+   * @param nevReszeset parancsból kapott részes eset
+   * @return adott tárgy-objektum vagy null, ha nincs ilyen (hívónak kezelni kell)
+   */
+  public Targy getReszes(String nevReszeset) {
+    for (String kulcs : targyak.keySet()) {
+      if (targyak.get(kulcs).getReszeset().equals(nevReszeset)) {
+        return targyak.get(kulcs);
+      }
+    }
+    return null;
+  }
+  
   private boolean keznelVan(Targy targy) {
     if (targy.getHely().equals("Leltár")) { // leltárban van, vagy
       return true;
-      } else if (targy.getHely().equals(aktualisHelyszin.getNev()) && // nem sötét helyszínen
-        (!aktualisHelyszin.isSotet() || getTargy("zseblámpát").isAktiv())) {
+      } else if (targy.getHely().equals(aktualisHelyszin.getNev()) && targy.isLathato() &&
+        isVilagos()) {
       return true;
     }
     return false;
@@ -216,15 +230,45 @@ public class Vilag<E extends Elem>  {
           switch (ajto.getAllapot()) {
             case "csukva":
               ajto.setAllapot("nyitva");
-              return ajto.getNyitvaUzenet();
+              return uzenetek.get(2);
             case "zárva":
-              return ajto.getZarvaUzenet();
+              Targy kulcs = getReszes(reszes);
+              if (reszes.isEmpty()) {
+                return ajto.getZarvaUzenet();
+              } else if (kulcs == null || !keznelVan(kulcs) || 
+                !ajto.getKulcs().equals(kulcs.getNev())) {
+                return uzenetek.get(15); // nincs kulcs
+              } else {
+                ajto.setAllapot("csukva");
+                return ajto.getNyitvaUzenet();
+              }
             default:
               return uzenetek.get(13); // már nyitva
           }
         }
       }
       return uzenetek.get(7); // nincs ilyen ajtó
+    }
+  }
+  
+  /**
+   * Megpróbálja felvenni a tárgyat
+   * @param targyeset
+   * @return megfelelő üzenet
+   */
+  public String felvesz(String targyeset) {
+    Targy targy = getTargy(targyeset);
+    if (targy == null) {
+      return uzenetek.get(6); // nem értelmezett tárgy
+    } else {
+      if (getLeltar().contains(targy.getNev())) {
+        return uzenetek.get(14); // már a leltárban van
+      } else if (getLathatoTargyak().contains(targy.getNev())) {
+        targy.setHely("Leltár");
+        return uzenetek.get(2); // rendben
+      } else {
+        return uzenetek.get(7); // nincs itt ilyen tárgy
+      }
     }
   }
   
