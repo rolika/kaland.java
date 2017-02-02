@@ -162,15 +162,11 @@ public class Vilag<E extends Elem>  {
    * @return megfelelő üzenet-string
    */
   public String getLeltar() {
-    if (aktualisHelyszin.isSotet()) {
-      return uzenetek.get(5);
+    String leltar = this.getTargyakFromHelyszin(helyszinek.get("Leltár"));
+    if (leltar.isEmpty()) {
+      return uzenetek.get(10);
     } else {
-      String leltar = this.getTargyakFromHelyszin(helyszinek.get("Leltár"));
-      if (leltar.isEmpty()) {
-        return uzenetek.get(10);
-      } else {
-        return uzenetek.get(12) + leltar;
-      }
+      return uzenetek.get(12) + leltar;
     }
   }
   
