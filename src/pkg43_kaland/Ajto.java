@@ -49,7 +49,7 @@ public class Ajto implements Elem<Ajto>{
    * Üzenet, ha az ajtó zárva van
    * @return
    */
-  public String getZarva() {
+  public String getZarvaUzenet() {
     return zarva;
   }
   
@@ -65,7 +65,7 @@ public class Ajto implements Elem<Ajto>{
    * Üzenet, amikor az ajtó ki lett nyitva.
    * @return
    */
-  public String getNyitva() {
+  public String getNyitvaUzenet() {
     return nyitva;
   }
   

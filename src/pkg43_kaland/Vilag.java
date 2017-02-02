@@ -91,7 +91,7 @@ public class Vilag<E extends Elem>  {
       return uzenetek.get(2);
       } else {
         if (ajto.getAllapot().equals("zárva")) {
-          return ajto.getZarva();
+          return ajto.getZarvaUzenet();
         } else {
           return ajto.getCsukva();
         }
@@ -210,15 +210,15 @@ public class Vilag<E extends Elem>  {
     if (targy.isEmpty()) {
       return uzenetek.get(6); // értelmetlen
     } else {
-      for (String kulcs : ajtok.keySet()) {
-        Ajto ajto = ajtok.get(kulcs);
+      for (String k : ajtok.keySet()) {
+        Ajto ajto = ajtok.get(k);
         if (ajto.getTargyeset().equals(targy)) {
           switch (ajto.getAllapot()) {
             case "csukva":
               ajto.setAllapot("nyitva");
-              return ajto.getNyitva();
+              return ajto.getNyitvaUzenet();
             case "zárva":
-              return ajto.getZarva();
+              return ajto.getZarvaUzenet();
             default:
               return uzenetek.get(13); // már nyitva
           }

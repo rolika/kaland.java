@@ -31,7 +31,7 @@ public class Parancs {
   
   private static final String KINYIT = "kinyitom";
   private static final String BECSUK = "becsukom";
-  private static final String BEZAR = "bezarom";
+  private static final String BEZAR = "bezárom";
   
   private final Map<String, Set<String>> iranyok;
   private String irany;
