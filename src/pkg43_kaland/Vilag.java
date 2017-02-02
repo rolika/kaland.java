@@ -253,7 +253,7 @@ public class Vilag<E extends Elem>  {
   
   /**
    * Megpróbálja felvenni a tárgyat
-   * @param targyeset
+   * @param targyeset szóban forgó tárgy tárgy esete
    * @return megfelelő üzenet
    */
   public String felvesz(String targyeset) {
@@ -269,6 +269,25 @@ public class Vilag<E extends Elem>  {
       } else {
         return uzenetek.get(7); // nincs itt ilyen tárgy
       }
+    }
+  }
+  
+  /**
+   * Letesz egy játékosnál lévő tárgyat
+   * @param targyeset szóban forgó tárgy tárgy esete
+   * @return megfelelő üzenet
+   */
+  public String letesz(String targyeset) {
+    Targy targy = getTargy(targyeset);
+    if (targy == null) {
+      return uzenetek.get(6); // nem értelmezett tárgy
+    } else {
+      if (getLeltar().contains(targy.getNev())) {
+        targy.setHely(aktualisHelyszin.getNev());
+        return uzenetek.get(2); // rendben
+      } else {
+        return uzenetek.get(15); // nincs a játékosnál
+      }      
     }
   }
   

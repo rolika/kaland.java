@@ -59,6 +59,8 @@ public class Konzol {
         if (vilag.getLeltar().contains("lábtörlő")) {
           vilag.getTargy("kulcsot").setLathato(true);
         }
+      } else if (parancs.isLetesz()) {
+        System.out.println(vilag.letesz(parancs.getTargy()));
       } else {
         System.out.println(vilag.getUzenet(6));
       }

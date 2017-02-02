@@ -32,6 +32,7 @@ public class Parancs {
   private static final String KINYIT = "kinyitom";
   
   private static final String[] FELVESZ = { "felveszem", "elteszem", "elrakom" };
+  private static final String[] LETESZ = { "leteszem", "lerakom", "eldobom" };
   
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -58,7 +59,7 @@ public class Parancs {
    * @param parancs játékostól kapott szöveges parancs, pl. MEGÖLÖM A PÓKOT A KÉSSEL
    */
   public void szetszed(String parancs) {
-    szavak = Arrays.asList(parancs.split("\\sa?z?\\s?"));
+    szavak = Arrays.asList(parancs.split(" a?z?\\b ?"));
   }
   
   /**
@@ -161,6 +162,19 @@ public class Parancs {
    */
   public boolean isFelvesz() {
     for (String szo : FELVESZ) {
+      if (szo.equals(szavak.get(0))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * Tárgyak lerakására irányuló kifejezés
+   * @return igaz, ha a játékos le akar tenni valamit
+   */
+  public boolean isLetesz() {
+    for (String szo : LETESZ) {
       if (szo.equals(szavak.get(0))) {
         return true;
       }
