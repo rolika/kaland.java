@@ -292,4 +292,18 @@ public class Vilag<E extends Elem>  {
     }
   }
   
+  /**
+   * Ha van a helyiségben csapda, visszaadja
+   * @param celHelyszinNev
+   * @return egy csapda, vagy null, ha nincs
+   */
+  public Csapda getCsapda(String celHelyszinNev) {
+    for (String kulcs : csapdak.keySet()) {
+      if (csapdak.get(kulcs).getHely().equals(celHelyszinNev)) {
+        return csapdak.get(kulcs);
+      }
+    }
+    return null;
+  }
+  
 }
