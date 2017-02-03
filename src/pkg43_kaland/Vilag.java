@@ -16,6 +16,7 @@ public class Vilag<E extends Elem>  {
   private final List<String> uzenetek;
   private final Map<String, Targy> targyak;
   private final Map<String, Ajto> ajtok;
+  private final Map<String, Csapda> csapdak;
   private Helyszin aktualisHelyszin;
   
   /**
@@ -26,9 +27,10 @@ public class Vilag<E extends Elem>  {
    * @param uzenetek
    * @param targyak
    * @param ajtok
+   * @param csapdak
    */
   public Vilag(List<E> helyszinek, List<E> kijaratok, List<E> uzenetek, List<E> targyak,
-    List<E> ajtok) {
+    List<E> ajtok, List<E> csapdak) {
     // helyszínek és kijáratok
     Map<String, Kijarat> tempKijarat = new HashMap<>();
     this.helyszinek = new HashMap<>();
@@ -46,6 +48,9 @@ public class Vilag<E extends Elem>  {
     // ajtók
     this.ajtok = new HashMap<>();
     ajtok.forEach(ajto -> this.ajtok.put(ajto.getNev(), (Ajto) ajto));
+    // csapdák beállítása
+    this.csapdak = new HashMap<>();
+    csapdak.forEach(csapda -> this.csapdak.put(csapda.getNev(), (Csapda) csapda));
     // kezdő helyszín beállítása
     aktualisHelyszin = this.helyszinek.get("Ház előtt");
   }
