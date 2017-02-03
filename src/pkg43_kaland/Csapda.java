@@ -15,6 +15,8 @@ public class Csapda implements Elem<Csapda> {
   /**
    * A konstruktor beolvassa a csapda nevét, helyét, a halál, felfedezés és hatástalanított 
    * üzeneteket, és aktiválja is a csapdát
+   * A csapda helye az a helysiég, amelyikbe érve aktiválódik. (A gödör az előtérben van, de a
+   * folyosó felé indulva aktiválódik.
    * @param rs resultset az adatbázisból
    * @throws SQLException
    */
