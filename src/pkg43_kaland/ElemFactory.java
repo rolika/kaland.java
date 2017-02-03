@@ -28,6 +28,8 @@ public class ElemFactory {
         return new Targy(rs);
       case "ajto":
         return new Ajto(rs);
+      case "csapda":
+        return new Csapda(rs);
       default:
         return null;
     }

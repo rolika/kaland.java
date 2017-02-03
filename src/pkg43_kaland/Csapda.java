@@ -15,7 +15,7 @@ public class Csapda implements Elem<Csapda> {
   /**
    * A konstruktor beolvassa a csapda nevét, helyét, a halál, felfedezés és hatástalanított 
    * üzeneteket, és aktiválja is a csapdát
-   * A csapda helye az a helysiég, amelyikbe érve aktiválódik. (A gödör az előtérben van, de a
+   * A csapda helye az a helyiség, amelyikbe érve aktiválódik. (A gödör az előtérben van, de a
    * folyosó felé indulva aktiválódik.
    * @param rs resultset az adatbázisból
    * @throws SQLException
@@ -75,6 +75,14 @@ public class Csapda implements Elem<Csapda> {
    */
   public String getHatastalanUzenet() {
     return hatastalanUzenet;
+  }
+  
+  /**
+   * Aktív-e a csapda
+   * @return igaz, ha aktív
+   */
+  public boolean isAktiv() {
+    return aktiv;
   }
   
 }

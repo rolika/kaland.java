@@ -105,6 +105,15 @@ public class Vilag<E extends Elem>  {
   }
   
   /**
+   * Visszaadja a szándékolt mozgás célját (csapdához)
+   * @param irany ékezetlen égtáj
+   * @return célhelyszín rövid neve
+   */
+  public String getCelHelyszinNev(String irany) {
+    return aktualisHelyszin.getKijarat(irany);
+  }
+  
+  /**
    * Tárgy aktiválása (bekapcsolása)
    * @param nevTargyeset parancsból tárgyesetet kap
    * @param aktiv igaz, ha bekapcsol, hamis, ha lekapcsol

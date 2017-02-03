@@ -41,7 +41,14 @@ public class Konzol {
       System.out.print("> ");
       parancs.szetszed(bevitel.nextLine());
       if (parancs.isIrany()) {
-        System.out.println(vilag.ujHelyszin(parancs.getIrany()));
+        String cel = vilag.getCelHelyszinNev(parancs.getIrany());
+        Csapda csapda = vilag.getCsapda(cel);
+        if (csapda != null && csapda.isAktiv()) {
+          System.out.println(csapda.getHalalUzenet());
+          break;
+        } else {
+          System.out.println(vilag.ujHelyszin(parancs.getIrany()));
+        }
       } else if (parancs.isBekapcsol()) {
         System.out.println(vilag.aktival(parancs.getTargy(), true));
       } else if (parancs.isKikapcsol()) {
@@ -63,6 +70,7 @@ public class Konzol {
         System.out.println(vilag.getUzenet(6));
       }
     }
+    System.out.println("Meghaltál!\nVége a játéknak!");
 
   }
 
