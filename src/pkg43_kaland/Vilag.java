@@ -20,7 +20,7 @@ public class Vilag<E extends Elem>  {
   private Helyszin aktualisHelyszin;
   
   /**
-   * Felépíti a világot, beállítj a kezdő helyszínt
+   * Felépíti a világot, beállítja a kezdő helyszínt
    * Az egyes osztályokat type cast-olja az Elem-ből
    * @param helyszinek
    * @param kijaratok
