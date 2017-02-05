@@ -42,12 +42,17 @@ public class Konzol {
       parancs.szetszed(bevitel.nextLine());
       if (parancs.isIrany()) {
         Csapda csapda = vilag.getCsapda();
-        if (csapda != null && csapda.isAktiv() && vilag.getCelNev(parancs.getIrany()).equals(csapda.getCel())) {
-          System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
-          break;
-        } else {
-          System.out.println(vilag.ujHelyszin(parancs.getIrany()));
+        if (csapda != null) {
+          if (vilag.getCelNev(parancs.getIrany()).equals(csapda.getCel())) {
+            if (csapda.isAktiv()) {
+              System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
+              break;
+            } else {
+              System.out.println(WordUtils.wrap(csapda.getHatastalanUzenet(), WRAP));
+            }
+          }
         }
+        System.out.println(vilag.ujHelyszin(parancs.getIrany()));
       } else if (parancs.isBekapcsol()) {
         System.out.println(vilag.aktival(parancs.getTargy(), true));
       } else if (parancs.isKikapcsol()) {
