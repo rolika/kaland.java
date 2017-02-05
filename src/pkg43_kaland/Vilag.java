@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Játékmotor
+ * Játékmotor, mely reagál a játékos által kezdeményezett szándékra.
+ * Alapvetően megkísérli elvégezni az adott parancsot, és az eredménytől függően mindig valamilyen
+ * üzenettel tér vissza. Pl. RENDBEN, ha sikerült végrehajtani, vagy ARRA NEM MEHETSZ, ha a
+ * játékos falba ütközne, ha arra menne.
  * @author Roland
  * @param <E> generikus, hogy kezelni tudja az adatbázisból képzett különböző osztályokat
  */
