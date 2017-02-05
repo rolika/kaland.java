@@ -4,25 +4,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Csapda kezelése
+ * Csapda kezelése: a csapda egy adott helyiséghez tartozik, és adott irányba történő elmozdulással
+ * lehet kiváltani, ez a viszonylat: helyszin;irany.
  * @author rolika
  */
 public class Csapda implements Elem<Csapda> {
   
-  private final String nev, hely, halalUzenet, felfedezesUzenet, hatastalanUzenet;
+  private final String nev, viszonylat, halalUzenet, felfedezesUzenet, hatastalanUzenet;
   private boolean aktiv;
   
   /**
    * A konstruktor beolvassa a csapda nevét, helyét, a halál, felfedezés és hatástalanított 
-   * üzeneteket, és aktiválja is a csapdát
-   * A csapda helye az a helyiség, amelyikbe érve aktiválódik. (A gödör az előtérben van, de a
-   * folyosó felé indulva aktiválódik.
+   * üzeneteket, és aktiválja is a csapdát.
    * @param rs resultset az adatbázisból
    * @throws SQLException
    */
   public Csapda(ResultSet rs) throws SQLException {
     nev = rs.getString("nev");
-    hely = rs.getString("hely");
+    viszonylat = rs.getString("viszonylat");
     halalUzenet = rs.getString("halal");
     felfedezesUzenet = rs.getString("felfed");
     hatastalanUzenet = rs.getString("hatastalan");
@@ -50,7 +49,15 @@ public class Csapda implements Elem<Csapda> {
    * @return helyszín rövid neve
    */
   public String getHely() {
-    return hely;
+    return viszonylat.split(";")[0];
+  }
+  
+  /**
+   * Visszaadja a csapda irányát az adott helyiségben
+   * @return irány ékezetlen neve
+   */
+  public String getIrany() {
+    return viszonylat.split(";")[1];
   }
   
   /**
