@@ -4,7 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Csapda kezelése: a csapda egy adott helyiséghez tartozik, és adott irányba történő elmozdulással
+ * Csapda kezelése: a csapda egy adott helyiséghez tartozik,
+ * adott helyiség felé történő elmozdulással
  * lehet kiváltani, ez a viszonylat: helyszin;irany.
  * @author rolika
  */
@@ -56,7 +57,7 @@ public class Csapda implements Elem<Csapda> {
    * Visszaadja a csapda irányát az adott helyiségben
    * @return irány ékezetlen neve
    */
-  public String getIrany() {
+  public String getCel() {
     return viszonylat.split(";")[1];
   }
   
