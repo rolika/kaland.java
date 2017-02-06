@@ -70,6 +70,12 @@ public class Konzol {
         }
       } else if (parancs.isLetesz()) {
         System.out.println(vilag.letesz(parancs.getTargy()));
+      } else if (parancs.isVizsgal()) {
+        Csapda csapda = vilag.getCsapda();
+        if (csapda != null) {
+          System.out.println(csapda.getFelfedezesUzenet());
+          csapda.setAktiv(false);
+        }
       } else {
         System.out.println(vilag.getUzenet(6));
       }
