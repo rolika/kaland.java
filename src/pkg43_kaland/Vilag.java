@@ -332,4 +332,18 @@ public class Vilag<E extends Elem> {
     return null;
   }
 
+  /**
+   * Játékos megvizsgálja az adott tárgyat
+   * @param targyeset vizsgálandó tárgy tárgyesete
+   * @return megfelelő üzenet
+   */
+  public String vizsgal(String targyeset) {
+    Targy targy = getTargy(targyeset);
+    if (targy == null) {
+      return uzenetek.get(6); // nem értelmezett tárgy
+    } else {
+      return targy.getLeiras();
+    }
+  }
+
 }

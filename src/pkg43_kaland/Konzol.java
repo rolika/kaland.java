@@ -40,19 +40,23 @@ public class Konzol {
       }
       System.out.print("> ");
       parancs.szetszed(bevitel.nextLine());
+      Csapda csapda = vilag.getCsapda();
       if (parancs.isIrany()) {
-        Csapda csapda = vilag.getCsapda();
-        if (csapda != null) {
+        if (csapda != null && vilag.getCelNev(parancs.getIrany()) != null) {
           if (vilag.getCelNev(parancs.getIrany()).equals(csapda.getCel())) {
             if (csapda.isAktiv()) {
               System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
               break;
-            } else {
-              System.out.println(WordUtils.wrap(csapda.getHatastalanUzenet(), WRAP));
             }
           }
         }
-        System.out.println(vilag.ujHelyszin(parancs.getIrany()));
+        String leiras = vilag.ujHelyszin(parancs.getIrany());
+        if (csapda != null && vilag.getCelNev(parancs.getIrany()) != null) {
+          System.out.println(leiras);
+          System.out.println(WordUtils.wrap(csapda.getHatastalanUzenet(), WRAP));
+        } else {
+          System.out.println(leiras);
+        }
       } else if (parancs.isBekapcsol()) {
         System.out.println(vilag.aktival(parancs.getTargy(), true));
       } else if (parancs.isKikapcsol()) {
@@ -71,16 +75,18 @@ public class Konzol {
       } else if (parancs.isLetesz()) {
         System.out.println(vilag.letesz(parancs.getTargy()));
       } else if (parancs.isVizsgal()) {
-        Csapda csapda = vilag.getCsapda();
-        if (csapda != null) {
-          System.out.println(csapda.getFelfedezesUzenet());
+        if (vilag.getHelyszin().getNev().equals("Előtér") && parancs.getTargy().equals("padlót")) {
+          //Csapda csapda = vilag.getCsapda();
+          System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
           csapda.setAktiv(false);
+        } else {
+          System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
         }
       } else {
-        System.out.println(vilag.getUzenet(6));
+        System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
       }
     }
-    System.out.println(vilag.getUzenet(16));
+    System.out.println(vilag.getUzenet(16)); // meghaltál!
 
   }
 

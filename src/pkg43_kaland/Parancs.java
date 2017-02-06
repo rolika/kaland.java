@@ -195,6 +195,11 @@ public class Parancs {
     return false;
   }
   
+  /**
+   * Tárgyak megvizsgálására irányuló kifejezés
+   * 
+   * @return igaz, ha a játékos meg akar vizsgálni valamit
+   */
   public boolean isVizsgal() {
     for (String szo : VIZSGAL) {
       if (szo.equals(szavak.get(0))) {

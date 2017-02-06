@@ -44,9 +44,9 @@ public class Targy implements Elem<Targy>{
     this.lathato = lathato;
   }
   
-  public void setHelyszin(Helyszin helyszin) {
+  /*public void setHelyszin(Helyszin helyszin) {
     this.helyszin = helyszin;
-  }
+  }*/
   
   public void setHely(String hely) {
     this.hely = hely;
