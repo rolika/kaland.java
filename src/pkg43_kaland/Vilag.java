@@ -264,7 +264,7 @@ public class Vilag<E extends Elem> {
                 || !ajto.getKulcs().equals(kulcs.getNev())) {
                 return uzenetek.get(15); // nincs kulcs
               } else {
-                ajto.setAllapot("csukva");
+                ajto.setAllapot("nyitva");
                 return ajto.getNyitvaUzenet();
               }
             default:

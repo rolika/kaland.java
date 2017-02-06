@@ -8,7 +8,7 @@ import org.apache.commons.lang3.text.WordUtils;
  * @author rolika
  */
 public class Konzol {
-  
+
   private final static int WRAP = 80;
 
   private final Vilag vilag;
@@ -42,20 +42,22 @@ public class Konzol {
       parancs.szetszed(bevitel.nextLine());
       Csapda csapda = vilag.getCsapda();
       if (parancs.isIrany()) {
-        if (csapda != null && vilag.getCelNev(parancs.getIrany()) != null) {
-          if (vilag.getCelNev(parancs.getIrany()).equals(csapda.getCel())) {
-            if (csapda.isAktiv()) {
-              System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
-              break;
+        String uzenet = vilag.ujHelyszin(parancs.getIrany());
+        String ujHelyszinNev = vilag.getHelyszin().getNev();
+        if (csapda != null) {
+          if (csapda.isAktiv()) {
+            if (ujHelyszinNev.equals(csapda.getCel())) {
+            System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
+            break;
+            } else {
+              System.out.println(uzenet);
             }
+          } else {
+            System.out.println(uzenet);
+            System.out.println(WordUtils.wrap(csapda.getHatastalanUzenet(), WRAP));
           }
-        }
-        String leiras = vilag.ujHelyszin(parancs.getIrany());
-        if (csapda != null && vilag.getCelNev(parancs.getIrany()) != null) {
-          System.out.println(leiras);
-          System.out.println(WordUtils.wrap(csapda.getHatastalanUzenet(), WRAP));
         } else {
-          System.out.println(leiras);
+          System.out.println(uzenet);
         }
       } else if (parancs.isBekapcsol()) {
         System.out.println(vilag.aktival(parancs.getTargy(), true));
