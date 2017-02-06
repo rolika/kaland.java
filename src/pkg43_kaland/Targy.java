@@ -12,7 +12,6 @@ public class Targy implements Elem<Targy>{
   private final String nev, leiras, targyeset, reszeset; // hely adatbázisból beolvasáshoz
   private String hely;
   private boolean aktiv, felveheto, lathato;
-  private Helyszin helyszin;
   private final boolean aktivalhato; // használható
   
   /**
@@ -43,10 +42,6 @@ public class Targy implements Elem<Targy>{
   public void setLathato(boolean lathato) {
     this.lathato = lathato;
   }
-  
-  /*public void setHelyszin(Helyszin helyszin) {
-    this.helyszin = helyszin;
-  }*/
   
   public void setHely(String hely) {
     this.hely = hely;
@@ -79,10 +74,6 @@ public class Targy implements Elem<Targy>{
   
   public boolean isFelveheto() {
     return felveheto;
-  }
-  
-  public Helyszin getHelyszin() {
-    return helyszin;
   }
 
   public boolean isLathato() {
