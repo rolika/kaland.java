@@ -340,6 +340,21 @@ public class Vilag<E extends Elem> {
     }
     return null;
   }
+  
+  /**
+   * Visszaad egy bizonyos csapdát a neve alapján
+   * 
+   * @param nev
+   * @return egy csapda, vagy null, ha nincs
+   */
+  public Csapda getCsapda(String nev) {
+    for (String kulcs : csapdak.keySet()) {
+      if (csapdak.get(kulcs).getNev().equals(nev)) {
+        return csapdak.get(kulcs);
+      }
+    }
+    return null;
+  }
 
   /**
    * Játékos megvizsgálja az adott tárgyat

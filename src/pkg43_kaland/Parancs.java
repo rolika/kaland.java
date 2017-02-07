@@ -26,7 +26,7 @@ public class Parancs {
 
   private static final String LELTAR = "leltár";
 
-  private static final String[] BEKAPCSOL = {"bekapcsolom", "felkapcsolom"};
+  private static final String[] BEKAPCSOL = {"bekapcsolom", "felkapcsolom", "használom", "mozgatom"};
   private static final String[] KIKAPCSOL = {"kikapcsolom", "lekapcsolom"};
 
   private static final String KINYIT = "kinyitom";
@@ -96,7 +96,7 @@ public class Parancs {
    *
    * @return igaz, ha a játékos be akar valamit kapcsolni
    */
-  public boolean isBekapcsol() {
+  public boolean isAktival() {
     for (String szo : BEKAPCSOL) {
       if (szo.equals(szavak.get(0))) {
         return true;
@@ -110,7 +110,7 @@ public class Parancs {
    *
    * @return igaz, ha a játékos ki akar valamit kapcsolni
    */
-  public boolean isKikapcsol() {
+  public boolean isDeaktival() {
     for (String szo : KIKAPCSOL) {
       if (szo.equals(szavak.get(0))) {
         return true;

@@ -59,9 +59,13 @@ public class Konzol {
         } else {
           System.out.println(uzenet);
         }
-      } else if (parancs.isBekapcsol()) {
+      } else if (parancs.isAktival()) {
         System.out.println(vilag.aktival(parancs.getTargy(), true));
-      } else if (parancs.isKikapcsol()) {
+        if (vilag.getTargy("kart").isAktiv()) {
+          vilag.getCsapda("penge").setAktiv(false);
+          System.out.println(WordUtils.wrap(vilag.getCsapda("penge").getFelfedezesUzenet(), WRAP));
+        }
+      } else if (parancs.isDeaktival()) {
         System.out.println(vilag.aktival(parancs.getTargy(), false));
       } else if (parancs.isLeltar()) {
         if (vilag.isVilagos()) {
@@ -80,6 +84,7 @@ public class Konzol {
         if (vilag.getHelyszin().getNev().equals("Előtér") && parancs.getTargy().equals("padlót")) {
           System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
           csapda.setAktiv(false);
+          continue;
         } else if (vilag.getHelyszin().getNev().equals("Szoba")
             && parancs.getTargy().equals("kandallót")) {
             vilag.getTargy("piszkavasat").setLathato(true);
