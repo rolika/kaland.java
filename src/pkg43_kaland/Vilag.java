@@ -131,13 +131,13 @@ public class Vilag<E extends Elem> {
    */
   public String aktival(String nevTargyeset, boolean aktiv) {
     if (nevTargyeset.isEmpty()) {
-      return uzenetek.get(9);
+      return uzenetek.get(9); // ennek nincs értelme
     }
     Targy targy = getTargy(nevTargyeset);
     if (targy == null || !keznelVan(targy)) {
-      return uzenetek.get(7);
+      return uzenetek.get(7); // nincs itt ilyesmi
     } else if (!targy.isAktivalhato()) {
-      return uzenetek.get(9);
+      return uzenetek.get(9); // ennek nincs értelme
     }
     targy.setAktiv(aktiv);
     return uzenetek.get(2);
@@ -231,7 +231,16 @@ public class Vilag<E extends Elem> {
 
   private Ajto getAjto(Helyszin cel) {
     for (String ajto : ajtok.keySet()) {
-      if (ajtok.get(ajto).vanAjto(aktualisHelyszin, cel)) {
+      if (ajtok.get(ajto).vanAjtoArra(aktualisHelyszin, cel)) {
+        return ajtok.get(ajto);
+      }
+    }
+    return null;
+  }
+
+  private Ajto getAjto(String targyeset) {
+    for (String ajto : ajtok.keySet()) {
+      if (ajtok.get(ajto).getTargyeset().equals(targyeset)) {
         return ajtok.get(ajto);
       }
     }
@@ -251,7 +260,7 @@ public class Vilag<E extends Elem> {
     } else {
       for (String k : ajtok.keySet()) {
         Ajto ajto = ajtok.get(k);
-        if (ajto.getTargyeset().equals(targy)) {
+        if (ajto.getTargyeset().equals(targy) && ajto.vanAjto(aktualisHelyszin)) {
           switch (ajto.getAllapot()) {
             case "csukva":
               ajto.setAllapot("nyitva");
@@ -286,15 +295,15 @@ public class Vilag<E extends Elem> {
     Targy targy = getTargy(targyeset);
     if (targy == null) {
       return uzenetek.get(6); // nem értelmezett tárgy
+    } else if (!targy.getHely().equals(aktualisHelyszin.getNev())) {
+      return uzenetek.get(7); // nincs itt ilyen tárgy
+    } else if (getLeltar().contains(targy.getNev())) {
+      return uzenetek.get(14); // már a leltárban van
+    } else if (getLathatoTargyak().contains(targy.getNev())) {
+      targy.setHely("Leltár");
+      return uzenetek.get(2); // rendben
     } else {
-      if (getLeltar().contains(targy.getNev())) {
-        return uzenetek.get(14); // már a leltárban van
-      } else if (getLathatoTargyak().contains(targy.getNev())) {
-        targy.setHely("Leltár");
-        return uzenetek.get(2); // rendben
-      } else {
-        return uzenetek.get(7); // nincs itt ilyen tárgy
-      }
+      return uzenetek.get(3); // nem felvehető
     }
   }
 
@@ -334,15 +343,19 @@ public class Vilag<E extends Elem> {
 
   /**
    * Játékos megvizsgálja az adott tárgyat
+   *
    * @param targyeset vizsgálandó tárgy tárgyesete
    * @return megfelelő üzenet
    */
   public String vizsgal(String targyeset) {
     Targy targy = getTargy(targyeset);
-    if (targy == null) {
-      return uzenetek.get(6); // nem értelmezett tárgy
-    } else {
+    Ajto ajto = getAjto(targyeset);
+    if (targy != null && keznelVan(targy)) {
       return targy.getLeiras();
+    } else if (ajto != null && ajto.vanAjto(aktualisHelyszin)) {
+      return ajto.getLeiras();
+    } else {
+      return uzenetek.get(6); // nem értelmezett tárgy
     }
   }
 

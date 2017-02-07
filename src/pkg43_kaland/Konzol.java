@@ -78,12 +78,13 @@ public class Konzol {
         System.out.println(vilag.letesz(parancs.getTargy()));
       } else if (parancs.isVizsgal()) {
         if (vilag.getHelyszin().getNev().equals("Előtér") && parancs.getTargy().equals("padlót")) {
-          //Csapda csapda = vilag.getCsapda();
           System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
           csapda.setAktiv(false);
-        } else {
-          System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
-        }
+        } else if (vilag.getHelyszin().getNev().equals("Szoba")
+            && parancs.getTargy().equals("kandallót")) {
+            vilag.getTargy("piszkavasat").setLathato(true);
+          }
+        System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
       } else {
         System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
       }
