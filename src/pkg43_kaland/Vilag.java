@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Játékmotor, mely reagál a játékos által kezdeményezett szándékra. Alapvetően megkísérli elvégezni
@@ -37,8 +38,9 @@ public class Vilag<E extends Elem> {
     List<E> ajtok, List<E> csapdak) {
     // helyszínek és kijáratok
     Map<String, Kijarat> tempKijarat = new HashMap<>();
-    this.helyszinek = new HashMap<>();
-    helyszinek.forEach(helyszin -> this.helyszinek.put(helyszin.getNev(), (Helyszin) helyszin));
+    this.helyszinek = helyszinek.stream().map(helyszin -> (Helyszin) helyszin)
+      .collect(Collectors.toMap(Helyszin::getNev, Helyszin::getThis));
+    //helyszinek.forEach(helyszin -> this.helyszinek.put(helyszin.getNev(), (Helyszin) helyszin));
     kijaratok.forEach(kijarat -> tempKijarat.put(kijarat.getNev(), (Kijarat) kijarat));
     this.helyszinek.keySet().forEach(nev
       -> this.helyszinek.get(nev).setKijarat(tempKijarat.get(nev))); // kijárat a helyszín része
