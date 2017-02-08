@@ -58,7 +58,7 @@ public class Vilag<E extends Elem> {
     this.csapdak = new HashMap<>();
     csapdak.forEach(csapda -> this.csapdak.put(csapda.getNev(), (Csapda) csapda));
     // kezdő helyszín beállítása
-    aktualisHelyszin = this.helyszinek.get("Ház előtt");
+    aktualisHelyszin = this.helyszinek.get("Padlás vége");
   }
 
   /**
@@ -66,7 +66,7 @@ public class Vilag<E extends Elem> {
    *
    * @return helyszín
    */
-  public Helyszin getHelyszin() {
+  public Helyszin getAktualisHelyszin() {
     return aktualisHelyszin;
   }
 
@@ -374,6 +374,18 @@ public class Vilag<E extends Elem> {
     } else {
       return uzenetek.get(6); // nem értelmezett tárgy
     }
+  }
+  
+  /**
+   * Adott helyszínen adott helyzet megtörténik-e
+   * 
+   * @param helyszin melyik helyszin
+   * @param mit egyeztessen
+   * @param mivel egyezzen
+   * @return
+   */
+  public boolean checkHelyzet(String helyszin, String mit, String mivel) {
+    return aktualisHelyszin.getNev().equals(helyszin) && mit.equals(mivel);
   }
 
 }

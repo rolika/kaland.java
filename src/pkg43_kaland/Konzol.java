@@ -32,9 +32,9 @@ public class Konzol {
 
     while (true) { // fő játékciklus
       if (vilag.isVilagos()) {
-        System.out.println(WordUtils.wrap(vilag.getHelyszin().getLeiras(), WRAP));
+        System.out.println(WordUtils.wrap(vilag.getAktualisHelyszin().getLeiras(), WRAP));
         System.out.println(WordUtils.wrap(vilag.getLathatoTargyak(), WRAP));
-        vilag.getHelyszin().setBejart(true);
+        vilag.getAktualisHelyszin().setBejart(true);
       } else {
         System.out.println(WordUtils.wrap(vilag.getUzenet(5), WRAP));
       }
@@ -43,7 +43,7 @@ public class Konzol {
       Csapda csapda = vilag.getCsapda();
       if (parancs.isIrany()) {
         String uzenet = vilag.ujHelyszin(parancs.getIrany());
-        String ujHelyszinNev = vilag.getHelyszin().getNev();
+        String ujHelyszinNev = vilag.getAktualisHelyszin().getNev();
         if (csapda != null) {
           if (csapda.isAktiv()) {
             if (ujHelyszinNev.equals(csapda.getCel())) {
@@ -81,16 +81,17 @@ public class Konzol {
       } else if (parancs.isLetesz()) {
         System.out.println(vilag.letesz(parancs.getTargy()));
       } else if (parancs.isVizsgal()) {
-        if (vilag.getHelyszin().getNev().equals("Előtér") && parancs.getTargy().equals("padlót")) {
+        if (vilag.checkHelyzet("Előtér", parancs.getTargy(), "padlót")) {
           System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
           csapda.setAktiv(false);
           continue;
-          } else if (vilag.getHelyszin().getNev().equals("Szoba")
-            && parancs.getTargy().equals("kandallót")) {
+          } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
             vilag.getTargy("piszkavasat").setLathato(true);
-          } else if (vilag.getHelyszin().getNev().equals("Konyha")
-            && parancs.getTargy().equals("szekrényt")) {
+          } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
             vilag.getTargy("jegyzetet").setLathato(true);
+          } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
+            continue;
           }
         System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
       } else {

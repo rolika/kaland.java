@@ -34,7 +34,7 @@ public class Parancs {
   private static final String[] FELVESZ = {"felveszem", "elteszem", "elrakom"};
   private static final String[] LETESZ = {"leteszem", "lerakom", "eldobom"};  
   
-  private static final String[] VIZSGAL = {"megvizsgálom", "megnézem", "ellenőrzöm"};
+  private static final String[] VIZSGAL = {"megvizsgálom", "megnézem", "ellenőrzöm", "elolvasom"};
 
   private final Map<String, Set<String>> iranyok;
   private String irany;
