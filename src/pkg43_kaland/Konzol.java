@@ -74,26 +74,30 @@ public class Konzol {
       } else if (parancs.isKinyit()) {
         System.out.println(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
       } else if (parancs.isFelvesz()) {
-        System.out.println(vilag.felvesz(parancs.getTargy()));
-        if (vilag.getLeltar().contains("lábtörlő")) {
-          vilag.getTargy("kulcsot").setLathato(true);
+        if (vilag.isVilagos()) {
+          System.out.println(vilag.felvesz(parancs.getTargy()));
+          if (vilag.getLeltar().contains("lábtörlő")) {
+            vilag.getTargy("kulcsot").setLathato(true);
+          }
         }
       } else if (parancs.isLetesz()) {
         System.out.println(vilag.letesz(parancs.getTargy()));
       } else if (parancs.isVizsgal()) {
-        if (vilag.checkHelyzet("Előtér", parancs.getTargy(), "padlót")) {
-          System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
-          csapda.setAktiv(false);
-          continue;
-          } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
-            vilag.getTargy("piszkavasat").setLathato(true);
-          } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
-            vilag.getTargy("jegyzetet").setLathato(true);
-          } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
-            System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
+        if (vilag.isVilagos()) {
+          if (vilag.checkHelyzet("Előtér", parancs.getTargy(), "padlót")) {
+            System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
+            csapda.setAktiv(false);
             continue;
-          }
-        System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
+            } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
+              vilag.getTargy("piszkavasat").setLathato(true);
+            } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
+              vilag.getTargy("jegyzetet").setLathato(true);
+            } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
+              System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
+              continue;
+            }
+          System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
+        }
       } else {
         System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
       }
