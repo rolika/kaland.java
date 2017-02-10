@@ -61,10 +61,11 @@ public class Konzol {
         }
       } else if (parancs.isAktival()) {
         if (vilag.isVilagos()) {
-          if (parancs.getTargy().equals("kötelet") 
-            && !vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
-            && vilag.getAjto("ládát").getAllapot().equals("zárva")) {
+          if (parancs.getTargy().equals("kötelet")
+            && (!vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
+            || vilag.getAjto("ládát").getAllapot().equals("zárva"))) {
             System.out.println(vilag.getUzenet(20)); // nincs értelme használni
+            continue;
           } 
           System.out.println(vilag.aktival(parancs.getTargy(), true));          
           if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
