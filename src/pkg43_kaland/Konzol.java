@@ -66,7 +66,13 @@ public class Konzol {
             || vilag.getAjto("ládát").getAllapot().equals("zárva"))) {
             System.out.println(vilag.getUzenet(20)); // nincs értelme használni
             continue;
-          } 
+          } else if (parancs.getTargy().equals("gépet")) {
+            if (!parancs.getReszes().equals("papírral")) {
+              System.out.println(vilag.getUzenet(20)); // nincs értelme használni
+            } else {
+              System.out.println(WordUtils.wrap(vilag.kinyit("portált", "papírral"), WRAP));
+            }
+          }
           System.out.println(vilag.aktival(parancs.getTargy(), true));          
           if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
             vilag.getCsapda("penge").setAktiv(false);
