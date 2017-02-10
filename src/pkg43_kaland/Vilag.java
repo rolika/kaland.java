@@ -58,7 +58,7 @@ public class Vilag<E extends Elem> {
     this.csapdak = new HashMap<>();
     csapdak.forEach(csapda -> this.csapdak.put(csapda.getNev(), (Csapda) csapda));
     // kezdő helyszín beállítása
-    aktualisHelyszin = this.helyszinek.get("Padlás vége");
+    aktualisHelyszin = this.helyszinek.get("Padlás eleje");
   }
 
   /**
@@ -240,7 +240,13 @@ public class Vilag<E extends Elem> {
     return null;
   }
 
-  private Ajto getAjto(String targyeset) {
+  /**
+   * Visszaadja az adott nevű ajtót
+   * 
+   * @param targyeset
+   * @return
+   */
+  public Ajto getAjto(String targyeset) {
     for (String ajto : ajtok.keySet()) {
       if (ajtok.get(ajto).getTargyeset().equals(targyeset)) {
         return ajtok.get(ajto);
@@ -297,7 +303,7 @@ public class Vilag<E extends Elem> {
     Targy targy = getTargy(targyeset);
     if (targy == null) {
       return uzenetek.get(6); // nem értelmezett tárgy
-    } else if (!targy.getHely().equals(aktualisHelyszin.getNev())) {
+    } else if (!targy.getHely().equals(aktualisHelyszin.getNev()) || !targy.isLathato()) {
       return uzenetek.get(7); // nincs itt ilyen tárgy
     } else if (getLeltar().contains(targy.getNev())) {
       return uzenetek.get(14); // már a leltárban van

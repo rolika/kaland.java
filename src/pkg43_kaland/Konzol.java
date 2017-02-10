@@ -60,13 +60,25 @@ public class Konzol {
           System.out.println(uzenet);
         }
       } else if (parancs.isAktival()) {
-        System.out.println(vilag.aktival(parancs.getTargy(), true));
-        if (vilag.getTargy("kart").isAktiv()) {
-          vilag.getCsapda("penge").setAktiv(false);
-          System.out.println(WordUtils.wrap(vilag.getCsapda("penge").getFelfedezesUzenet(), WRAP));
+        if (vilag.isVilagos()) {
+          if (parancs.getTargy().equals("kötelet") 
+            && !vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
+            && vilag.getAjto("ládát").getAllapot().equals("zárva")) {
+            System.out.println(vilag.getUzenet(20)); // nincs értelme használni
+          } 
+          System.out.println(vilag.aktival(parancs.getTargy(), true));          
+          if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
+            vilag.getCsapda("penge").setAktiv(false);
+            System.out.println(WordUtils.wrap(vilag.getCsapda("penge").getFelfedezesUzenet(), WRAP));
+          } else if (vilag.getTargy("kötelet").isAktiv() && vilag.getCsapda("kürtő").isAktiv()) {
+            vilag.getCsapda("kürtő").setAktiv(false);
+            System.out.println(WordUtils.wrap(vilag.getCsapda("kürtő").getFelfedezesUzenet(), WRAP));
+          }
         }
       } else if (parancs.isDeaktival()) {
-        System.out.println(vilag.aktival(parancs.getTargy(), false));
+        if (vilag.isVilagos()) {
+          System.out.println(vilag.aktival(parancs.getTargy(), false));
+        }
       } else if (parancs.isLeltar()) {
         if (vilag.isVilagos()) {
           System.out.println(WordUtils.wrap(vilag.getLeltar(), WRAP));
@@ -94,6 +106,9 @@ public class Konzol {
               vilag.getTargy("jegyzetet").setLathato(true);
             } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
               System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
+              continue;
+            } else if (vilag.checkHelyzet("Rejtett pince", parancs.getTargy(), "papírt")) {
+              System.out.println(WordUtils.wrap(vilag.getUzenet(19), WRAP));
               continue;
             }
           System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
