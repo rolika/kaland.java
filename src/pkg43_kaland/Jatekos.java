@@ -2,33 +2,47 @@ package pkg43_kaland;
 
 public class Jatekos {
   
-  private boolean el;
-  private Helyszin helyszin;
-  //private List<Targy> leltar;
+  private static final int ODAAT = 4; // ennyi lépés-1 után csukódik be a portál
   
-  public Jatekos(Helyszin helyszin) {
-    this.helyszin = helyszin;
-    el = true;
+  private boolean eletbenVan, visszajott;
+  private int odaatVan;
+  
+  public Jatekos() {
+    eletbenVan = true;
+    visszajott = false;
+    odaatVan = ODAAT;
   }
   
-  public void meghalt() {
-    el = false;
+  public void setEletbenVan(boolean eletbenVan) {
+    this.eletbenVan = eletbenVan;
   }
   
-  public boolean eletbenVan() {
-    return el;
+  public void setVisszaJott(boolean visszajott) {
+    this.visszajott = visszajott;
   }
   
-  public void setHelyszin(Helyszin helyszin) {
-    this.helyszin = helyszin;
+  public void setOdaatVan(int odaatVan) {
+    this.odaatVan = odaatVan;
   }
   
-  public Helyszin holVan() {
-    return helyszin;
+  public void csokkentOdaat() {
+    this.odaatVan -= 1;
   }
   
-  public String megy(String irany) {
-    return helyszin.getKijarat(irany);
+  public boolean getEletbenVan() {
+    return eletbenVan;
+  }
+  
+  public boolean getVisszaJott() {
+    return visszajott;
+  }
+  
+  public boolean getOttRagadt() {
+    return odaatVan == 0;
+  }
+  
+  public boolean getVoltOdaat() {
+    return odaatVan < ODAAT;
   }
   
 }

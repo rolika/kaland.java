@@ -4,9 +4,9 @@ import java.util.Scanner;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
- * Szöveges játék begépelős változata. A Vilag.java-t használja. Ez valósítja meg a játék
- * logikáját, azaz hangolja össze a világ lehetőségeit (metódusait).
- * 
+ * Szöveges játék begépelős változata. A Vilag.java-t használja. Ez valósítja meg a játék logikáját,
+ * azaz hangolja össze a világ lehetőségeit (metódusait).
+ *
  * @author rolika
  */
 public class Konzol {
@@ -16,15 +16,18 @@ public class Konzol {
   private final Vilag vilag;
   Scanner bevitel;
   Parancs parancs;
+  Jatekos jatekos;
 
   /**
    * A konstruktor megkapja a világot és inicializálja a parancsértelmezőt
+   *
    * @param vilag a játék itt játszódik
    */
   public Konzol(Vilag vilag) {
     this.vilag = vilag;
     bevitel = new Scanner(System.in);
     parancs = new Parancs();
+    jatekos = new Jatekos();
   }
 
   /**
@@ -32,7 +35,7 @@ public class Konzol {
    */
   public void jatek() {
 
-    while (true) { // fő játékciklus
+    while (jatekos.getEletbenVan() && !jatekos.getOttRagadt() && !jatekos.getVisszaJott()) {
       if (vilag.isVilagos()) {
         System.out.println(WordUtils.wrap(vilag.getAktualisHelyszin().getLeiras(), WRAP));
         System.out.println(WordUtils.wrap(vilag.getLathatoTargyak(), WRAP));
@@ -49,8 +52,8 @@ public class Konzol {
         if (csapda != null) {
           if (csapda.isAktiv()) {
             if (ujHelyszinNev.equals(csapda.getCel())) {
-            System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
-            break;
+              System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
+              jatekos.setEletbenVan(false);
             } else {
               System.out.println(uzenet);
             }
@@ -60,6 +63,9 @@ public class Konzol {
           }
         } else {
           System.out.println(uzenet);
+        }
+        if (jatekos.getVoltOdaat() && ujHelyszinNev.equals("Rejtett pince")) {
+          jatekos.setVisszaJott(true);
         }
       } else if (parancs.isAktival()) {
         if (vilag.isVilagos()) {
@@ -75,7 +81,7 @@ public class Konzol {
               System.out.println(WordUtils.wrap(vilag.kinyit("portált", "papírral"), WRAP));
             }
           }
-          System.out.println(vilag.aktival(parancs.getTargy(), true));          
+          System.out.println(vilag.aktival(parancs.getTargy(), true));
           if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
             vilag.getCsapda("penge").setAktiv(false);
             System.out.println(WordUtils.wrap(vilag.getCsapda("penge").getFelfedezesUzenet(), WRAP));
@@ -109,24 +115,34 @@ public class Konzol {
             System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
             csapda.setAktiv(false);
             continue;
-            } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
-              vilag.getTargy("piszkavasat").setLathato(true);
-            } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
-              vilag.getTargy("jegyzetet").setLathato(true);
-            } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
-              System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
-              continue;
-            } else if (vilag.checkHelyzet("Rejtett pince", parancs.getTargy(), "papírt")) {
-              System.out.println(WordUtils.wrap(vilag.getUzenet(19), WRAP));
-              continue;
-            }
+          } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
+            vilag.getTargy("piszkavasat").setLathato(true);
+          } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
+            vilag.getTargy("jegyzetet").setLathato(true);
+          } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
+            continue;
+          } else if (vilag.checkHelyzet("Rejtett pince", parancs.getTargy(), "papírt")) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(19), WRAP));
+            continue;
+          }
           System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
         }
       } else {
         System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
       }
+      if (vilag.getAktualisHelyszin().getNev().equals("Odaát")) {
+        jatekos.csokkentOdaat();
+      }
     }
-    System.out.println(vilag.getUzenet(16)); // meghaltál!
+
+    if (jatekos.getOttRagadt()) {
+      System.out.println(vilag.getUzenet(21)); // ottragadtál a túloldalon
+    } else if (jatekos.getVisszaJott()) {
+      System.out.println(vilag.getUzenet(22)); // megnyerted a játékot
+    } else {
+      System.out.println(vilag.getUzenet(16)); // meghaltál
+    }
 
   }
 
