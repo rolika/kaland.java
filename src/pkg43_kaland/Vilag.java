@@ -58,7 +58,7 @@ public class Vilag<E extends Elem> {
     this.csapdak = new HashMap<>();
     csapdak.forEach(csapda -> this.csapdak.put(csapda.getNev(), (Csapda) csapda));
     // kezdő helyszín beállítása
-    aktualisHelyszin = this.helyszinek.get("Padlás eleje");
+    aktualisHelyszin = this.helyszinek.get("Ház előtt");
   }
 
   /**

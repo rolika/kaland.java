@@ -4,7 +4,9 @@ import java.util.Scanner;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
- * Szöveges játék begépelős változata *
+ * Szöveges játék begépelős változata. A Vilag.java-t használja. Ez valósítja meg a játék
+ * logikáját, azaz hangolja össze a világ lehetőségeit (metódusait).
+ * 
  * @author rolika
  */
 public class Konzol {
