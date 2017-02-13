@@ -17,7 +17,15 @@ import java.sql.SQLException;
  */
 public class Main {
     
-  public static void main(String[] args) {    
+  public static void main(String[] args) {
+    
+    /*
+    A világ tartalmazza a helyszíneket, kijáratokat, üzeneteket, tárgyakat, ajtókat, csapdákat és
+    ellenségeket. Ezeket az adatbázisból kell beolvasni. Viszont mivel mindegyik más osztályban
+    "köt ki", kell a beolvasáshoz egy egységes interface, ez az Elem. Hogy a kezdetben általános
+    elemből melyik számomra szükséges osztály lesz, azt az ElemFactory dönti el, a megadott
+    adatbázis-táblanév alapján.
+    */
     
     Vilag vilag = null;
     
