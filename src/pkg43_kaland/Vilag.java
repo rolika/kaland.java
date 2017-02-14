@@ -22,6 +22,7 @@ public class Vilag<E extends Elem> {
   private final Map<String, Targy> targyak;
   private final Map<String, Ajto> ajtok;
   private final Map<String, Csapda> csapdak;
+  private final Map<String, Ellenseg> ellensegek;
   private Helyszin aktualisHelyszin;
 
   /**
@@ -33,14 +34,14 @@ public class Vilag<E extends Elem> {
    * @param targyak
    * @param ajtok
    * @param csapdak
+   * @param ellensegek
    */
   public Vilag(List<E> helyszinek, List<E> kijaratok, List<E> uzenetek, List<E> targyak,
-    List<E> ajtok, List<E> csapdak) {
+    List<E> ajtok, List<E> csapdak, List<E> ellensegek) {
     // helyszínek és kijáratok
     Map<String, Kijarat> tempKijarat = new HashMap<>();
-    this.helyszinek = helyszinek.stream().map(helyszin -> (Helyszin) helyszin)
-      .collect(Collectors.toMap(Helyszin::getNev, Helyszin::getThis));
-    //helyszinek.forEach(helyszin -> this.helyszinek.put(helyszin.getNev(), (Helyszin) helyszin));
+    this.helyszinek = new HashMap<>();
+    helyszinek.forEach(helyszin -> this.helyszinek.put(helyszin.getNev(), (Helyszin) helyszin));
     kijaratok.forEach(kijarat -> tempKijarat.put(kijarat.getNev(), (Kijarat) kijarat));
     this.helyszinek.keySet().forEach(nev
       -> this.helyszinek.get(nev).setKijarat(tempKijarat.get(nev))); // kijárat a helyszín része
@@ -57,6 +58,9 @@ public class Vilag<E extends Elem> {
     // csapdák beállítása
     this.csapdak = new HashMap<>();
     csapdak.forEach(csapda -> this.csapdak.put(csapda.getNev(), (Csapda) csapda));
+    // ellenségek beállítása
+    this.ellensegek = new HashMap<>();
+    ellensegek.forEach(ellenseg -> this.ellensegek.put(ellenseg.getNev(), (Ellenseg) ellenseg));
     // kezdő helyszín beállítása
     aktualisHelyszin = this.helyszinek.get("Ház előtt");
   }

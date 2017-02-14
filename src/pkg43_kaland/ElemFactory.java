@@ -30,6 +30,8 @@ public class ElemFactory {
         return new Ajto(rs);
       case "csapda":
         return new Csapda(rs);
+      case "ellenseg":
+        return new Ellenseg(rs);
       default:
         return null;
     }
