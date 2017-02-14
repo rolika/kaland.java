@@ -53,7 +53,7 @@ public class Ellenseg implements Elem<Ellenseg> {
     return elpusztultUzenet;
   }
   
-  public boolean getAktiv() {
+  public boolean isAktiv() {
     return aktiv;
   }
   

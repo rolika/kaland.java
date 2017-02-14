@@ -40,8 +40,11 @@ public class Konzol {
       if (vilag.isVilagos()) {
         System.out.println(WordUtils.wrap(vilag.getAktualisHelyszin().getLeiras(), WRAP));
         System.out.println(WordUtils.wrap(vilag.getLathatoTargyak(), WRAP));
+        if (ellenseg != null && !ellenseg.isAktiv()) {
+          System.out.println(WordUtils.wrap(vilag.getUzenet(24), WRAP)); // döglött pók
+        }
         vilag.getAktualisHelyszin().setBejart(true);
-        if (ellenseg != null && ellenseg.getAktiv()) {
+        if (ellenseg != null && ellenseg.isAktiv()) {
           System.out.println(WordUtils.wrap(ellenseg.getLeiras(), WRAP));
           jatekos.csokkentPok();
           if (jatekos.tamadPok()) {
@@ -52,8 +55,8 @@ public class Konzol {
         }
       } else {
         System.out.println(WordUtils.wrap(vilag.getUzenet(5), WRAP));
-        if (ellenseg != null && ellenseg.getAktiv()) {
-          System.out.println(WordUtils.wrap(vilag.getUzenet(25), WRAP));
+        if (ellenseg != null && ellenseg.isAktiv()) {
+          System.out.println(WordUtils.wrap(vilag.getUzenet(25), WRAP)); // sötétben támad az ellen
           jatekos.setEletbenVan(false);
           continue;
         }
@@ -142,6 +145,19 @@ public class Konzol {
             continue;
           }
           System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
+        }
+      } else if (parancs.isTamad()) {
+        if (ellenseg == null) {
+          System.out.println(vilag.getUzenet(26)); // nincs ellenség
+        } else if (!parancs.getTargy().equals(ellenseg.getNev())) {
+          System.out.println(vilag.getUzenet(26)); // nincs ellenség
+        } else if (!parancs.getReszes().equals(ellenseg.getFegyver())) {
+          System.out.println(vilag.getUzenet(27)); // hatástalan kísérlet
+        } else if (!vilag.keznelVan(vilag.getReszes(parancs.getReszes()))) {
+          System.out.println(vilag.getUzenet(15)); // nincs nála az adott fegyver
+        } else {
+          System.out.println(WordUtils.wrap(ellenseg.getElpusztultUzenet(), WRAP));
+          ellenseg.setAktiv(false);
         }
       } else {
         System.out.println(vilag.getUzenet(6)); // nem érti az értelmező

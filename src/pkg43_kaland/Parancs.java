@@ -35,6 +35,8 @@ public class Parancs {
   private static final String[] LETESZ = {"leteszem", "lerakom", "eldobom"};  
   
   private static final String[] VIZSGAL = {"megvizsgálom", "megnézem", "ellenőrzöm", "elolvasom"};
+  
+  private static final String[] TAMAD = {"megtámadom", "megölöm", "agyoncsapom"};
 
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -202,6 +204,20 @@ public class Parancs {
    */
   public boolean isVizsgal() {
     for (String szo : VIZSGAL) {
+      if (szo.equals(szavak.get(0))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  /**
+   * A játékos meg akar támadni valamit
+   * 
+   * @return igaz, ha a játékos meg akar támadni valamit
+   */
+  public boolean isTamad() {
+    for (String szo : TAMAD) {
       if (szo.equals(szavak.get(0))) {
         return true;
       }

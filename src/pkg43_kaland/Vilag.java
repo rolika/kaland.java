@@ -178,7 +178,7 @@ public class Vilag<E extends Elem> {
     return null;
   }
 
-  private boolean keznelVan(Targy targy) {
+  public boolean keznelVan(Targy targy) {
     if (targy.getHely().equals("Leltár")) { // leltárban van, vagy
       return true;
     } else if (targy.getHely().equals(aktualisHelyszin.getNev()) && targy.isLathato()
