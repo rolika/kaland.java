@@ -36,12 +36,27 @@ public class Konzol {
   public void jatek() {
 
     while (jatekos.getEletbenVan() && !jatekos.getOttRagadt() && !jatekos.getVisszaJott()) {
+      Ellenseg ellenseg = vilag.getEllenseg();
       if (vilag.isVilagos()) {
         System.out.println(WordUtils.wrap(vilag.getAktualisHelyszin().getLeiras(), WRAP));
         System.out.println(WordUtils.wrap(vilag.getLathatoTargyak(), WRAP));
         vilag.getAktualisHelyszin().setBejart(true);
+        if (ellenseg != null && ellenseg.getAktiv()) {
+          System.out.println(WordUtils.wrap(ellenseg.getLeiras(), WRAP));
+          jatekos.csokkentPok();
+          if (jatekos.tamadPok()) {
+            System.out.println(WordUtils.wrap(ellenseg.getHalalUzenet(), WRAP));
+            jatekos.setEletbenVan(false);
+            continue;
+          }
+        }
       } else {
         System.out.println(WordUtils.wrap(vilag.getUzenet(5), WRAP));
+        if (ellenseg != null && ellenseg.getAktiv()) {
+          System.out.println(WordUtils.wrap(vilag.getUzenet(25), WRAP));
+          jatekos.setEletbenVan(false);
+          continue;
+        }
       }
       System.out.print("> ");
       parancs.szetszed(bevitel.nextLine());

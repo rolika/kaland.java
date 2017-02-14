@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Játékmotor, mely reagál a játékos által kezdeményezett szándékra. Alapvetően megkísérli elvégezni
@@ -396,6 +395,20 @@ public class Vilag<E extends Elem> {
    */
   public boolean checkHelyzet(String helyszin, String mit, String mivel) {
     return aktualisHelyszin.getNev().equals(helyszin) && mit.equals(mivel);
+  }
+  
+  /**
+   * Ha van a helyiségben ellenség, visszaadja
+   * 
+   * @return ellenség, ha van, egyébként null
+   */
+  public Ellenseg getEllenseg() {
+    for (String kulcs : ellensegek.keySet()) {
+      if (ellensegek.get(kulcs).getHely().equals(aktualisHelyszin.getNev())) {
+        return ellensegek.get(kulcs);
+      }
+    }
+    return null;
   }
 
 }

@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public class Ellenseg implements Elem<Ellenseg> {
   
-  private final String nev, leiras, helyszinNev, fegyver, halalUzenet, elpusztultUzenet;
+  private final String nev, leiras, hely, fegyver, halalUzenet, elpusztultUzenet;
   private boolean aktiv;
   
   /**
@@ -21,7 +21,7 @@ public class Ellenseg implements Elem<Ellenseg> {
   public Ellenseg(ResultSet rs) throws SQLException {
     nev = rs.getString("nev");
     leiras = rs.getString("leiras");
-    helyszinNev = rs.getString("helyszinNev");
+    hely = rs.getString("hely");
     fegyver = rs.getString("fegyver");
     halalUzenet = rs.getString("halalUzenet");    
     elpusztultUzenet = rs.getString("elpusztultUzenet");
@@ -37,8 +37,8 @@ public class Ellenseg implements Elem<Ellenseg> {
     return leiras;
   }
   
-  public String getHelyszinNev() {
-    return helyszinNev;
+  public String getHely() {
+    return hely;
   }
   
   public String getFegyver() {
