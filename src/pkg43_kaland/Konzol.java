@@ -162,6 +162,8 @@ public class Konzol {
           System.out.println(WordUtils.wrap(ellenseg.getElpusztultUzenet(), WRAP));
           ellenseg.setAktiv(false);
         }
+      } else if (parancs.isNemKell()) {
+        System.out.println(vilag.getUzenet(28)); // nincs szükség erre
       } else {
         System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
       }

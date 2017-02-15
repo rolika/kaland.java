@@ -40,6 +40,7 @@ public class Parancs {
   
   private static final String[] ALTALANOS =  { "ablakot", "padlót", "szekrényt", "teraszt",
     "lépcsőt", "tetőt", "falat", "mennyezetet", "tapétát" };
+  private static final String[] NEM_KELL = { "becsukom", "bezárom" };
 
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -231,6 +232,17 @@ public class Parancs {
   public boolean isAltalanos() {
     for (String szo : ALTALANOS) {
       if (szo.equals(this.getTargy())) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  
+  
+  public boolean isNemKell() {
+    for (String szo : NEM_KELL) {
+      if (szo.equals(szavak.get(0))) {
         return true;
       }
     }
