@@ -34,10 +34,12 @@ public class Jatekter extends javax.swing.JFrame {
     jButton8 = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
     jMenu1 = new javax.swing.JMenu();
-    jMenuItem1 = new javax.swing.JMenuItem();
-    jMenuItem2 = new javax.swing.JMenuItem();
+    jMenuItem4 = new javax.swing.JMenuItem();
     jMenu2 = new javax.swing.JMenu();
-    jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+    jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
+    jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
+    jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+    jMenuItem5 = new javax.swing.JMenuItem();
     jMenuItem3 = new javax.swing.JMenuItem();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,20 +68,27 @@ public class Jatekter extends javax.swing.JFrame {
 
     jButton8.setText("leltár");
 
-    jMenu1.setText("File");
+    jMenu1.setText("Játék");
 
-    jMenuItem1.setText("Mentés");
-    jMenu1.add(jMenuItem1);
-
-    jMenuItem2.setText("Töltés");
-    jMenu1.add(jMenuItem2);
+    jMenuItem4.setText("Új játék");
+    jMenu1.add(jMenuItem4);
 
     jMenuBar1.add(jMenu1);
 
     jMenu2.setText("Info");
 
-    jRadioButtonMenuItem1.setText("Hosszú leírás");
-    jMenu2.add(jRadioButtonMenuItem1);
+    jCheckBoxMenuItem3.setText("Hosszú leírás");
+    jMenu2.add(jCheckBoxMenuItem3);
+
+    jCheckBoxMenuItem1.setText("Rövid leírás");
+    jMenu2.add(jCheckBoxMenuItem1);
+
+    jCheckBoxMenuItem2.setSelected(true);
+    jCheckBoxMenuItem2.setText("Normál leírás");
+    jMenu2.add(jCheckBoxMenuItem2);
+
+    jMenuItem5.setText("Segítség");
+    jMenu2.add(jMenuItem5);
 
     jMenuItem3.setText("Névjegy");
     jMenu2.add(jMenuItem3);
@@ -188,13 +197,15 @@ public class Jatekter extends javax.swing.JFrame {
   private javax.swing.JButton jButton6;
   private javax.swing.JButton jButton7;
   private javax.swing.JButton jButton8;
+  private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
+  private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+  private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
   private javax.swing.JMenu jMenu1;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
-  private javax.swing.JMenuItem jMenuItem1;
-  private javax.swing.JMenuItem jMenuItem2;
   private javax.swing.JMenuItem jMenuItem3;
-  private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+  private javax.swing.JMenuItem jMenuItem4;
+  private javax.swing.JMenuItem jMenuItem5;
   private javax.swing.JScrollPane jScrollPane1;
   private javax.swing.JTextArea jTextArea1;
   private javax.swing.JTextField jTextField1;
