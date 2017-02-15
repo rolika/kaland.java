@@ -143,6 +143,9 @@ public class Konzol {
           } else if (vilag.checkHelyzet("Rejtett pince", parancs.getTargy(), "papírt")) {
             System.out.println(WordUtils.wrap(vilag.getUzenet(19), WRAP));
             continue;
+          } else if (parancs.isAltalanos()) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(17), WRAP)); // semmi különös
+            continue;
           }
           System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
         }

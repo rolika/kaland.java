@@ -37,6 +37,9 @@ public class Parancs {
   private static final String[] VIZSGAL = {"megvizsgálom", "megnézem", "ellenőrzöm", "elolvasom"};
   
   private static final String[] TAMAD = {"megtámadom", "megölöm", "agyoncsapom"};
+  
+  private static final String[] ALTALANOS =  { "ablakot", "padlót", "szekrényt", "teraszt",
+    "lépcsőt", "tetőt", "falat", "mennyezetet", "tapétát" };
 
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -219,6 +222,15 @@ public class Parancs {
   public boolean isTamad() {
     for (String szo : TAMAD) {
       if (szo.equals(szavak.get(0))) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  public boolean isAltalanos() {
+    for (String szo : ALTALANOS) {
+      if (szo.equals(this.getTargy())) {
         return true;
       }
     }

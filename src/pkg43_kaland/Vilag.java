@@ -210,7 +210,7 @@ public class Vilag<E extends Elem> {
   public String getLathatoTargyak() {
     String leltar = this.getTargyakFromHelyszin(aktualisHelyszin);
     if (leltar.isEmpty()) {
-      return uzenetek.get(11);
+      return uzenetek.get(11); // nincs felvehető tárgy
     } else {
       return uzenetek.get(8) + leltar;
     }
