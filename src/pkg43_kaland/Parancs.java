@@ -32,15 +32,15 @@ public class Parancs {
   private static final String KINYIT = "kinyitom";
 
   private static final String[] FELVESZ = {"felveszem", "elteszem", "elrakom"};
-  private static final String[] LETESZ = {"leteszem", "lerakom", "eldobom"};  
-  
+  private static final String[] LETESZ = {"leteszem", "lerakom", "eldobom"};
+
   private static final String[] VIZSGAL = {"megvizsgálom", "megnézem", "ellenőrzöm", "elolvasom"};
-  
+
   private static final String[] TAMAD = {"megtámadom", "megölöm", "agyoncsapom"};
-  
-  private static final String[] ALTALANOS =  { "ablakot", "padlót", "szekrényt", "teraszt",
-    "lépcsőt", "tetőt", "falat", "mennyezetet", "tapétát" };
-  private static final String[] NEM_KELL = { "becsukom", "bezárom" };
+
+  private static final String[] ALTALANOS = {"ablakot", "padlót", "szekrényt", "teraszt",
+    "lépcsőt", "tetőt", "falat", "mennyezetet", "tapétát"};
+  private static final String[] NEM_KELL = {"becsukom", "bezárom"};
 
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -200,10 +200,10 @@ public class Parancs {
     }
     return false;
   }
-  
+
   /**
    * Tárgyak megvizsgálására irányuló kifejezés
-   * 
+   *
    * @return igaz, ha a játékos meg akar vizsgálni valamit
    */
   public boolean isVizsgal() {
@@ -214,10 +214,10 @@ public class Parancs {
     }
     return false;
   }
-  
+
   /**
    * A játékos meg akar támadni valamit
-   * 
+   *
    * @return igaz, ha a játékos meg akar támadni valamit
    */
   public boolean isTamad() {
@@ -228,7 +228,12 @@ public class Parancs {
     }
     return false;
   }
-  
+
+  /**
+   * Olyan szavak, melyek előfordulhatnak, és általános válasz adható rájuk vizsgálat esetén
+   *
+   * @return
+   */
   public boolean isAltalanos() {
     for (String szo : ALTALANOS) {
       if (szo.equals(this.getTargy())) {
@@ -237,9 +242,12 @@ public class Parancs {
     }
     return false;
   }
-  
-  
-  
+
+  /**
+   * Olyan parancsok, melyek előfordulhatnak, de ebben a játékban nem kellenek
+   *
+   * @return
+   */
   public boolean isNemKell() {
     for (String szo : NEM_KELL) {
       if (szo.equals(szavak.get(0))) {
