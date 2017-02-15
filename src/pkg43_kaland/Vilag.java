@@ -23,6 +23,7 @@ public class Vilag<E extends Elem> {
   private final Map<String, Csapda> csapdak;
   private final Map<String, Ellenseg> ellensegek;
   private Helyszin aktualisHelyszin;
+  private int leiroMod; // 0: normál, 1: hosszú, 2: rövid
 
   /**
    * Felépíti a világot, beállítja a kezdő helyszínt Az egyes osztályokat type cast-olja az Elem-ből
@@ -62,6 +63,8 @@ public class Vilag<E extends Elem> {
     ellensegek.forEach(ellenseg -> this.ellensegek.put(ellenseg.getNev(), (Ellenseg) ellenseg));
     // kezdő helyszín beállítása
     aktualisHelyszin = this.helyszinek.get("Ház előtt");
+    // helyszínleírások beállítása
+    leiroMod = 0; // kezdetben normál
   }
 
   /**
@@ -245,7 +248,7 @@ public class Vilag<E extends Elem> {
 
   /**
    * Visszaadja az adott nevű ajtót
-   * 
+   *
    * @param targyeset
    * @return
    */
@@ -351,10 +354,10 @@ public class Vilag<E extends Elem> {
     }
     return null;
   }
-  
+
   /**
    * Visszaad egy bizonyos csapdát a neve alapján
-   * 
+   *
    * @param nev
    * @return egy csapda, vagy null, ha nincs
    */
@@ -384,10 +387,10 @@ public class Vilag<E extends Elem> {
       return uzenetek.get(6); // nem értelmezett tárgy
     }
   }
-  
+
   /**
    * Adott helyszínen adott helyzet megtörténik-e
-   * 
+   *
    * @param helyszin melyik helyszin
    * @param mit egyeztessen
    * @param mivel egyezzen
@@ -396,10 +399,10 @@ public class Vilag<E extends Elem> {
   public boolean checkHelyzet(String helyszin, String mit, String mivel) {
     return aktualisHelyszin.getNev().equals(helyszin) && mit.equals(mivel);
   }
-  
+
   /**
    * Ha van a helyiségben ellenség, visszaadja
-   * 
+   *
    * @return ellenség, ha van, egyébként null
    */
   public Ellenseg getEllenseg() {
@@ -409,6 +412,26 @@ public class Vilag<E extends Elem> {
       }
     }
     return null;
+  }
+
+  /**
+   * Helyszín leírás módjának lekérdezése
+   *
+   * @return
+   */
+  public int getLeiroMod() {
+    return leiroMod;
+  }
+
+  /**
+   * Helyszín leíró módjának beállítása
+   *
+   * @param leiroMod 0: normál 1: hosszú 2: rövid
+   * @return rendben üzenet
+   */
+  public String setLeiroMod(int leiroMod) {
+    this.leiroMod = leiroMod;
+    return uzenetek.get(2); // rendben
   }
 
 }

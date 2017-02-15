@@ -42,6 +42,10 @@ public class Parancs {
     "lépcsőt", "tetőt", "falat", "mennyezetet", "tapétát"};
   private static final String[] NEM_KELL = {"becsukom", "bezárom"};
 
+  private static final String HOSSZU = "hosszú";
+  private static final String ROVID = "rövid";
+  private static final String NORMAL = "normál";
+
   private final Map<String, Set<String>> iranyok;
   private String irany;
   private List<String> szavak;
@@ -255,6 +259,33 @@ public class Parancs {
       }
     }
     return false;
+  }
+
+  /**
+   * Hosszú leírás bekapcsolása (mindig a hosszú leírást mutatja)
+   *
+   * @return
+   */
+  public boolean isHosszu() {
+    return (szavak.stream().anyMatch(szo -> szo.contains(HOSSZU)));
+  }
+
+  /**
+   * Rövid leírás bekapcsolása (mindig a rövid leírást mutatja)
+   *
+   * @return
+   */
+  public boolean isRovid() {
+    return (szavak.stream().anyMatch(szo -> szo.contains(ROVID)));
+  }
+
+  /**
+   * Normál leírás bekapcsolása (első belépéskor a hosszú leírást, majd a rövidet mutatja)
+   *
+   * @return
+   */
+  public boolean isNormal() {
+    return (szavak.stream().anyMatch(szo -> szo.contains(NORMAL)));
   }
 
 }

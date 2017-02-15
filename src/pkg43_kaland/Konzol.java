@@ -36,6 +36,11 @@ public class Konzol {
   public void jatek() {
 
     while (jatekos.getEletbenVan() && !jatekos.getOttRagadt() && !jatekos.getVisszaJott()) {
+      if (vilag.getLeiroMod() == 1) {
+        vilag.getAktualisHelyszin().setBejart(false);
+      } else if (vilag.getLeiroMod() == 2) {
+        vilag.getAktualisHelyszin().setBejart(true);
+      }
       Ellenseg ellenseg = vilag.getEllenseg();
       if (vilag.isVilagos()) {
         System.out.println(WordUtils.wrap(vilag.getAktualisHelyszin().getLeiras(), WRAP));
@@ -164,6 +169,12 @@ public class Konzol {
         }
       } else if (parancs.isNemKell()) {
         System.out.println(vilag.getUzenet(28)); // nincs szükség erre
+      } else if (parancs.isNormal()) {
+        System.out.println(vilag.setLeiroMod(0)); // rendben üzenet
+      } else if (parancs.isHosszu()) {
+        System.out.println(vilag.setLeiroMod(1));
+      } else if (parancs.isRovid()) {
+        System.out.println(vilag.setLeiroMod(2));
       } else {
         System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
       }
