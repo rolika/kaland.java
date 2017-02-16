@@ -29,7 +29,7 @@ public class Main {
     
     Vilag vilag = null;
     
-    //Jatekter.main();
+    Jatekter.main();
     try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
       SqliteJDBC sql = new SqliteJDBC(kon);
       vilag = new Vilag(sql.minden("helyszin"), sql.minden("kijarat"), sql.minden("uzenet"),

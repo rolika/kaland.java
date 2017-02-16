@@ -11,6 +11,7 @@ public class Jatekter extends javax.swing.JFrame {
    */
   public Jatekter() {
     initComponents();
+    tfParancs.requestFocusInWindow();
   }
 
   /**
@@ -22,70 +23,110 @@ public class Jatekter extends javax.swing.JFrame {
   private void initComponents() {
 
     jScrollPane1 = new javax.swing.JScrollPane();
-    jTextArea1 = new javax.swing.JTextArea();
-    jTextField1 = new javax.swing.JTextField();
-    jButton1 = new javax.swing.JButton();
-    jButton2 = new javax.swing.JButton();
-    jButton3 = new javax.swing.JButton();
-    jButton4 = new javax.swing.JButton();
-    jButton5 = new javax.swing.JButton();
-    jButton6 = new javax.swing.JButton();
-    jButton7 = new javax.swing.JButton();
-    jButton8 = new javax.swing.JButton();
+    taJatek = new javax.swing.JTextArea();
+    tfParancs = new javax.swing.JTextField();
+    btEszak = new javax.swing.JButton();
+    btIndirekt = new javax.swing.JButton();
+    btDel = new javax.swing.JButton();
+    btKelet = new javax.swing.JButton();
+    btNyugat = new javax.swing.JButton();
+    btFel = new javax.swing.JButton();
+    btLe = new javax.swing.JButton();
+    btLeltar = new javax.swing.JButton();
     jMenuBar1 = new javax.swing.JMenuBar();
-    jMenu1 = new javax.swing.JMenu();
-    jMenuItem4 = new javax.swing.JMenuItem();
+    menuJatek = new javax.swing.JMenu();
+    menuItemUjJatek = new javax.swing.JMenuItem();
     jMenu2 = new javax.swing.JMenu();
-    jCheckBoxMenuItem3 = new javax.swing.JCheckBoxMenuItem();
-    jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-    jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+    rbNormal = new javax.swing.JRadioButtonMenuItem();
+    rbHosszu = new javax.swing.JRadioButtonMenuItem();
+    rbRovid = new javax.swing.JRadioButtonMenuItem();
+    jSeparator1 = new javax.swing.JPopupMenu.Separator();
     jMenuItem5 = new javax.swing.JMenuItem();
     jMenuItem3 = new javax.swing.JMenuItem();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    jTextArea1.setEditable(false);
-    jTextArea1.setColumns(20);
-    jTextArea1.setRows(5);
-    jTextArea1.setText("játékablak");
-    jScrollPane1.setViewportView(jTextArea1);
+    taJatek.setEditable(false);
+    taJatek.setColumns(20);
+    taJatek.setRows(5);
+    taJatek.setText("játékablak");
+    jScrollPane1.setViewportView(taJatek);
 
-    jTextField1.setText("parancssor");
+    btEszak.setText("észak");
+    btEszak.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btEszakActionPerformed(evt);
+      }
+    });
 
-    jButton1.setText("észak");
+    btIndirekt.setText("be / ki");
+    btIndirekt.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btIndirektActionPerformed(evt);
+      }
+    });
 
-    jButton2.setText("be / ki");
+    btDel.setText("dél");
+    btDel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btDelActionPerformed(evt);
+      }
+    });
 
-    jButton3.setText("dél");
+    btKelet.setText("kelet");
+    btKelet.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btKeletActionPerformed(evt);
+      }
+    });
 
-    jButton4.setText("kelet");
+    btNyugat.setText("nyugat");
+    btNyugat.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btNyugatActionPerformed(evt);
+      }
+    });
 
-    jButton5.setText("nyugat");
+    btFel.setText("fel");
+    btFel.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btFelActionPerformed(evt);
+      }
+    });
 
-    jButton6.setText("fel");
+    btLe.setText("le");
+    btLe.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btLeActionPerformed(evt);
+      }
+    });
 
-    jButton7.setText("le");
+    btLeltar.setText("leltár");
+    btLeltar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        btLeltarActionPerformed(evt);
+      }
+    });
 
-    jButton8.setText("leltár");
+    menuJatek.setText("Játék");
 
-    jMenu1.setText("Játék");
+    menuItemUjJatek.setText("Új játék");
+    menuJatek.add(menuItemUjJatek);
 
-    jMenuItem4.setText("Új játék");
-    jMenu1.add(jMenuItem4);
-
-    jMenuBar1.add(jMenu1);
+    jMenuBar1.add(menuJatek);
 
     jMenu2.setText("Info");
 
-    jCheckBoxMenuItem3.setText("Hosszú leírás");
-    jMenu2.add(jCheckBoxMenuItem3);
+    rbNormal.setSelected(true);
+    rbNormal.setText("Normál leírás");
+    jMenu2.add(rbNormal);
 
-    jCheckBoxMenuItem1.setText("Rövid leírás");
-    jMenu2.add(jCheckBoxMenuItem1);
+    rbHosszu.setText("Hosszú leírás");
+    jMenu2.add(rbHosszu);
 
-    jCheckBoxMenuItem2.setSelected(true);
-    jCheckBoxMenuItem2.setText("Normál leírás");
-    jMenu2.add(jCheckBoxMenuItem2);
+    rbRovid.setText("Rövid leírás");
+    jMenu2.add(rbRovid);
+    jMenu2.add(jSeparator1);
 
     jMenuItem5.setText("Segítség");
     jMenu2.add(jMenuItem5);
@@ -105,26 +146,26 @@ public class Jatekter extends javax.swing.JFrame {
         .addContainerGap()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addComponent(jScrollPane1)
-          .addComponent(jTextField1)
+          .addComponent(tfParancs)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btNyugat, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btDel, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btLe, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                  .addComponent(btEszak, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                   .addGroup(layout.createSequentialGroup()
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btIndirekt, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btKelet, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                  .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                  .addComponent(btFel, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                  .addComponent(btLeltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         .addContainerGap())
     );
     layout.setVerticalGroup(
@@ -133,26 +174,67 @@ public class Jatekter extends javax.swing.JFrame {
         .addContainerGap()
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addGap(18, 18, 18)
-        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addComponent(tfParancs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton1)
-          .addComponent(jButton6))
+          .addComponent(btEszak)
+          .addComponent(btFel))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton2)
-          .addComponent(jButton4)
-          .addComponent(jButton5)
-          .addComponent(jButton8))
+          .addComponent(btIndirekt)
+          .addComponent(btKelet)
+          .addComponent(btNyugat)
+          .addComponent(btLeltar))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(jButton3)
-          .addComponent(jButton7))
+          .addComponent(btDel)
+          .addComponent(btLe))
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
+
+  private void btNyugatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNyugatActionPerformed
+    tfParancs.setText("nyugat");
+    tfParancs.requestFocusInWindow();
+
+  }//GEN-LAST:event_btNyugatActionPerformed
+
+  private void btEszakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEszakActionPerformed
+    tfParancs.setText("észak");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btEszakActionPerformed
+
+  private void btIndirektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIndirektActionPerformed
+    tfParancs.setText("be");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btIndirektActionPerformed
+
+  private void btDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDelActionPerformed
+    tfParancs.setText("dél");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btDelActionPerformed
+
+  private void btKeletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btKeletActionPerformed
+    tfParancs.setText("kelet");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btKeletActionPerformed
+
+  private void btFelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFelActionPerformed
+    tfParancs.setText("fel");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btFelActionPerformed
+
+  private void btLeltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLeltarActionPerformed
+    tfParancs.setText("leltár");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btLeltarActionPerformed
+
+  private void btLeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLeActionPerformed
+    tfParancs.setText("le");
+    tfParancs.requestFocusInWindow();
+  }//GEN-LAST:event_btLeActionPerformed
 
   /**
    */
@@ -189,25 +271,26 @@ public class Jatekter extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JButton jButton1;
-  private javax.swing.JButton jButton2;
-  private javax.swing.JButton jButton3;
-  private javax.swing.JButton jButton4;
-  private javax.swing.JButton jButton5;
-  private javax.swing.JButton jButton6;
-  private javax.swing.JButton jButton7;
-  private javax.swing.JButton jButton8;
-  private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-  private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-  private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem3;
-  private javax.swing.JMenu jMenu1;
+  private javax.swing.JButton btDel;
+  private javax.swing.JButton btEszak;
+  private javax.swing.JButton btFel;
+  private javax.swing.JButton btIndirekt;
+  private javax.swing.JButton btKelet;
+  private javax.swing.JButton btLe;
+  private javax.swing.JButton btLeltar;
+  private javax.swing.JButton btNyugat;
   private javax.swing.JMenu jMenu2;
   private javax.swing.JMenuBar jMenuBar1;
   private javax.swing.JMenuItem jMenuItem3;
-  private javax.swing.JMenuItem jMenuItem4;
   private javax.swing.JMenuItem jMenuItem5;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JTextArea jTextArea1;
-  private javax.swing.JTextField jTextField1;
+  private javax.swing.JPopupMenu.Separator jSeparator1;
+  private javax.swing.JMenuItem menuItemUjJatek;
+  private javax.swing.JMenu menuJatek;
+  private javax.swing.JRadioButtonMenuItem rbHosszu;
+  private javax.swing.JRadioButtonMenuItem rbNormal;
+  private javax.swing.JRadioButtonMenuItem rbRovid;
+  private javax.swing.JTextArea taJatek;
+  private javax.swing.JTextField tfParancs;
   // End of variables declaration//GEN-END:variables
 }
