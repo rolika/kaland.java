@@ -1,17 +1,242 @@
 package pkg43_kaland;
 
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import org.apache.commons.lang3.text.WordUtils;
+
 /**
  * GUI megvalósítása
+ *
  * @author rolika
  */
 public class Jatekter extends javax.swing.JFrame {
+
+  private final static int WRAP = 50;
+
+  private Parancs parancs;
+  private Jatekos jatekos;
+  private Vilag vilag;
+  private StringBuilder jatekSzoveg;
 
   /**
    * Creates new form Jatekter
    */
   public Jatekter() {
     initComponents();
+    ujJatek();
+  }
+
+  private void ujJatek() {
+    parancs = new Parancs();
+    jatekos = new Jatekos();
+    vilag = getVilag();
+    taJatek.setText("");
+    jatekSzoveg = new StringBuilder();
+    tfParancs.setText("");
     tfParancs.requestFocusInWindow();
+    helyzet();
+  }
+
+  private Vilag getVilag() {
+    try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
+      SqliteJDBC sql = new SqliteJDBC(kon);
+      return new Vilag(sql.minden("helyszin"), sql.minden("kijarat"), sql.minden("uzenet"),
+        sql.minden("targy"), sql.minden("ajto"), sql.minden("csapda"), sql.minden("ellenseg"));
+    } catch (SQLException ex) {
+      System.out.println("SQL hiba\n" + ex.getMessage());
+      return null;
+    }
+  }
+
+  private void helyzet() {
+    if (vilag.getLeiroMod() == 1) {
+      vilag.getAktualisHelyszin().setBejart(false);
+    } else if (vilag.getLeiroMod() == 2) {
+      vilag.getAktualisHelyszin().setBejart(true);
+    }
+    Ellenseg ellenseg = vilag.getEllenseg();
+    if (vilag.isVilagos()) {
+      jatekSzoveg.append(vilag.getAktualisHelyszin().getLeiras());
+      jatekSzoveg.append('\n');
+      jatekSzoveg.append(vilag.getLathatoTargyak());
+      jatekSzoveg.append('\n');
+      if (ellenseg != null && !ellenseg.isAktiv()) {
+        jatekSzoveg.append(vilag.getUzenet(24)); // döglött pók
+        jatekSzoveg.append('\n');
+      }
+      vilag.getAktualisHelyszin().setBejart(true);
+      if (ellenseg != null && ellenseg.isAktiv()) {
+        jatekSzoveg.append(ellenseg.getLeiras());
+        jatekSzoveg.append('\n');
+        jatekos.csokkentPok();
+        if (jatekos.tamadPok()) {
+          jatekSzoveg.append(ellenseg.getHalalUzenet());
+          jatekSzoveg.append('\n');
+          jatekos.setEletbenVan(false);
+        }
+      }
+    } else {
+        jatekSzoveg.append(vilag.getUzenet(5)); // sötét van
+        jatekSzoveg.append('\n');
+      if (ellenseg != null && ellenseg.isAktiv()) {
+        jatekSzoveg.append(vilag.getUzenet(25)); // sötétben támad az ellen
+        jatekSzoveg.append('\n');
+        jatekos.setEletbenVan(false);
+      }
+    }
+    taJatek.setText(WordUtils.wrap(jatekSzoveg.toString(), WRAP));
+  }
+
+  private void ertelmezo() {
+    while (jatekos.getEletbenVan() && !jatekos.getOttRagadt() && !jatekos.getVisszaJott()) {
+      if (vilag.getLeiroMod() == 1) {
+        vilag.getAktualisHelyszin().setBejart(false);
+      } else if (vilag.getLeiroMod() == 2) {
+        vilag.getAktualisHelyszin().setBejart(true);
+      }
+      Ellenseg ellenseg = vilag.getEllenseg();
+      if (vilag.isVilagos()) {
+        System.out.println(WordUtils.wrap(vilag.getAktualisHelyszin().getLeiras(), WRAP));
+        System.out.println(WordUtils.wrap(vilag.getLathatoTargyak(), WRAP));
+        if (ellenseg != null && !ellenseg.isAktiv()) {
+          System.out.println(WordUtils.wrap(vilag.getUzenet(24), WRAP)); // döglött pók
+        }
+        vilag.getAktualisHelyszin().setBejart(true);
+        if (ellenseg != null && ellenseg.isAktiv()) {
+          System.out.println(WordUtils.wrap(ellenseg.getLeiras(), WRAP));
+          jatekos.csokkentPok();
+          if (jatekos.tamadPok()) {
+            System.out.println(WordUtils.wrap(ellenseg.getHalalUzenet(), WRAP));
+            jatekos.setEletbenVan(false);
+            continue;
+          }
+        }
+      } else {
+        System.out.println(WordUtils.wrap(vilag.getUzenet(5), WRAP));
+        if (ellenseg != null && ellenseg.isAktiv()) {
+          System.out.println(WordUtils.wrap(vilag.getUzenet(25), WRAP)); // sötétben támad az ellen
+          jatekos.setEletbenVan(false);
+          continue;
+        }
+      }
+      System.out.print("> ");
+      //parancs.szetszed(bevitel.nextLine());
+      Csapda csapda = vilag.getCsapda();
+      if (parancs.isIrany()) {
+        String uzenet = vilag.ujHelyszin(parancs.getIrany());
+        String ujHelyszinNev = vilag.getAktualisHelyszin().getNev();
+        if (csapda != null) {
+          if (csapda.isAktiv()) {
+            if (ujHelyszinNev.equals(csapda.getCel())) {
+              System.out.println(WordUtils.wrap(csapda.getHalalUzenet(), WRAP));
+              jatekos.setEletbenVan(false);
+            } else {
+              System.out.println(uzenet);
+            }
+          } else {
+            System.out.println(uzenet);
+            System.out.println(WordUtils.wrap(csapda.getHatastalanUzenet(), WRAP));
+          }
+        } else {
+          System.out.println(uzenet);
+        }
+        if (jatekos.getVoltOdaat() && ujHelyszinNev.equals("Rejtett pince")) {
+          jatekos.setVisszaJott(true);
+        }
+      } else if (parancs.isAktival()) {
+        if (vilag.isVilagos()) {
+          if (parancs.getTargy().equals("kötelet")
+            && (!vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
+            || vilag.getAjto("ládát").getAllapot().equals("zárva"))) {
+            System.out.println(vilag.getUzenet(20)); // nincs értelme használni
+            continue;
+          } else if (parancs.getTargy().equals("gépet")) {
+            if (!parancs.getReszes().equals("papírral")) {
+              System.out.println(vilag.getUzenet(20)); // nincs értelme használni
+            } else {
+              System.out.println(WordUtils.wrap(vilag.kinyit("portált", "papírral"), WRAP));
+            }
+          }
+          System.out.println(vilag.aktival(parancs.getTargy(), true));
+          if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
+            vilag.getCsapda("penge").setAktiv(false);
+            System.out.println(WordUtils.wrap(vilag.getCsapda("penge").getFelfedezesUzenet(), WRAP));
+          } else if (vilag.getTargy("kötelet").isAktiv() && vilag.getCsapda("kürtő").isAktiv()) {
+            vilag.getCsapda("kürtő").setAktiv(false);
+            System.out.println(WordUtils.wrap(vilag.getCsapda("kürtő").getFelfedezesUzenet(), WRAP));
+          }
+        }
+      } else if (parancs.isDeaktival()) {
+        if (vilag.isVilagos()) {
+          System.out.println(vilag.aktival(parancs.getTargy(), false));
+        }
+      } else if (parancs.isLeltar()) {
+        if (vilag.isVilagos()) {
+          System.out.println(WordUtils.wrap(vilag.getLeltar(), WRAP));
+        }
+      } else if (parancs.isKinyit()) {
+        System.out.println(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
+      } else if (parancs.isFelvesz()) {
+        if (vilag.isVilagos()) {
+          System.out.println(vilag.felvesz(parancs.getTargy()));
+          if (vilag.getLeltar().contains("lábtörlő")) {
+            vilag.getTargy("kulcsot").setLathato(true);
+          }
+        }
+      } else if (parancs.isLetesz()) {
+        System.out.println(vilag.letesz(parancs.getTargy()));
+      } else if (parancs.isVizsgal()) {
+        if (vilag.isVilagos()) {
+          if (vilag.checkHelyzet("Előtér", parancs.getTargy(), "padlót")) {
+            System.out.println(WordUtils.wrap(csapda.getFelfedezesUzenet(), WRAP));
+            csapda.setAktiv(false);
+            continue;
+          } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
+            vilag.getTargy("piszkavasat").setLathato(true);
+          } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
+            vilag.getTargy("jegyzetet").setLathato(true);
+          } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(18), WRAP));
+            continue;
+          } else if (vilag.checkHelyzet("Rejtett pince", parancs.getTargy(), "papírt")) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(19), WRAP));
+            continue;
+          } else if (parancs.isAltalanos()) {
+            System.out.println(WordUtils.wrap(vilag.getUzenet(17), WRAP)); // semmi különös
+            continue;
+          }
+          System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
+        }
+      } else if (parancs.isTamad()) {
+        if (ellenseg == null) {
+          System.out.println(vilag.getUzenet(26)); // nincs ellenség
+        } else if (!parancs.getTargy().equals(ellenseg.getNev())) {
+          System.out.println(vilag.getUzenet(26)); // nincs ellenség
+        } else if (!parancs.getReszes().equals(ellenseg.getFegyver())) {
+          System.out.println(vilag.getUzenet(27)); // hatástalan kísérlet
+        } else if (!vilag.keznelVan(vilag.getReszes(parancs.getReszes()))) {
+          System.out.println(vilag.getUzenet(15)); // nincs nála az adott fegyver
+        } else {
+          System.out.println(WordUtils.wrap(ellenseg.getElpusztultUzenet(), WRAP));
+          ellenseg.setAktiv(false);
+        }
+      } else if (parancs.isNemKell()) {
+        System.out.println(vilag.getUzenet(28)); // nincs szükség erre
+      } else if (parancs.isNormal()) {
+        System.out.println(vilag.setLeiroMod(0)); // rendben üzenet
+      } else if (parancs.isHosszu()) {
+        System.out.println(vilag.setLeiroMod(1));
+      } else if (parancs.isRovid()) {
+        System.out.println(vilag.setLeiroMod(2));
+      } else {
+        System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
+      }
+      if (vilag.getAktualisHelyszin().getNev().equals("Odaát")) {
+        jatekos.csokkentOdaat();
+      }
+    }
   }
 
   /**
@@ -50,7 +275,15 @@ public class Jatekter extends javax.swing.JFrame {
     taJatek.setColumns(20);
     taJatek.setRows(5);
     taJatek.setText("játékablak");
+    taJatek.setFocusable(false);
+    taJatek.setRequestFocusEnabled(false);
     jScrollPane1.setViewportView(taJatek);
+
+    tfParancs.addKeyListener(new java.awt.event.KeyAdapter() {
+      public void keyPressed(java.awt.event.KeyEvent evt) {
+        tfParancsKeyPressed(evt);
+      }
+    });
 
     btEszak.setText("észak");
     btEszak.addActionListener(new java.awt.event.ActionListener() {
@@ -111,6 +344,11 @@ public class Jatekter extends javax.swing.JFrame {
     menuJatek.setText("Játék");
 
     menuItemUjJatek.setText("Új játék");
+    menuItemUjJatek.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        menuItemUjJatekActionPerformed(evt);
+      }
+    });
     menuJatek.add(menuItemUjJatek);
 
     jMenuBar1.add(menuJatek);
@@ -236,13 +474,27 @@ public class Jatekter extends javax.swing.JFrame {
     tfParancs.requestFocusInWindow();
   }//GEN-LAST:event_btLeActionPerformed
 
+  private void tfParancsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfParancsKeyPressed
+    if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      taJatek.setText(tfParancs.getText());
+    }
+  }//GEN-LAST:event_tfParancsKeyPressed
+
+  private void menuItemUjJatekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUjJatekActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_menuItemUjJatekActionPerformed
+
+  private void vezerlo(String utasitas) {
+
+  }
+
   /**
    */
   public static void main() {
     /* Set the Nimbus look and feel */
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
     /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
      */
     try {
       for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

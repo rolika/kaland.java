@@ -29,7 +29,6 @@ public class Main {
     
     Vilag vilag = null;
     
-    Jatekter.main();
     try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
       SqliteJDBC sql = new SqliteJDBC(kon);
       vilag = new Vilag(sql.minden("helyszin"), sql.minden("kijarat"), sql.minden("uzenet"),
@@ -39,8 +38,10 @@ public class Main {
     }
     
     if (vilag != null) {
-      Konzol konzol = new Konzol(vilag);
-      konzol.jatek();
+      Jatekter.main();
+      
+      //Konzol konzol = new Konzol(vilag);
+      //konzol.jatek();
     }
     
   }
