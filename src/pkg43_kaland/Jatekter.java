@@ -286,6 +286,7 @@ public class Jatekter extends javax.swing.JFrame {
     jMenuItem3 = new javax.swing.JMenuItem();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+    setTitle("Kalandjáték");
 
     taJatek.setEditable(false);
     taJatek.setColumns(20);
@@ -371,7 +372,7 @@ public class Jatekter extends javax.swing.JFrame {
 
     jMenuBar1.add(menuJatek);
 
-    jMenu2.setText("Info");
+    jMenu2.setText("Infó");
 
     bgLeiras.add(rbNormal);
     rbNormal.setSelected(true);
@@ -403,9 +404,19 @@ public class Jatekter extends javax.swing.JFrame {
     jMenu2.add(jSeparator1);
 
     jMenuItem5.setText("Segítség");
+    jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jMenuItem5ActionPerformed(evt);
+      }
+    });
     jMenu2.add(jMenuItem5);
 
     jMenuItem3.setText("Névjegy");
+    jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jMenuItem3ActionPerformed(evt);
+      }
+    });
     jMenu2.add(jMenuItem3);
 
     jMenuBar1.add(jMenu2);
@@ -535,6 +546,24 @@ public class Jatekter extends javax.swing.JFrame {
   private void rbNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNormalActionPerformed
     performUtasitas("normál");
   }//GEN-LAST:event_rbNormalActionPerformed
+
+  private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    String uzenet = "Szöveges kalandjáték\n"
+      + "írta: Weisz Roland (2017)\n"
+      + "Vizsgafeladat Pasztuhov Dániel\n"
+      + "JAVA távoktatásához";
+    JOptionPane.showMessageDialog(this, uzenet, "Kalandjáték", JOptionPane.INFORMATION_MESSAGE);
+  }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+  private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    String uzenet = "A játék két- vagy háromszavas parancsokkal működik,\n"
+      + "melyeket egyes szám első személyben kell kiadni. Pl.\n"
+      + "MEGÖLÖM A TROLLT A KARDDAL\n"
+      + "Ha elakadtál volna, a két aranyszabály:\n"
+      + "- Vizsgálj meg mindent!\n"
+      + "- Vegyél fel minden mozdíthatót!\n";
+    JOptionPane.showMessageDialog(this, uzenet, "Kalandjáték", JOptionPane.INFORMATION_MESSAGE);
+  }//GEN-LAST:event_jMenuItem5ActionPerformed
 
   private void performUtasitas(String utasitas) {
     tfParancs.setText(utasitas);
