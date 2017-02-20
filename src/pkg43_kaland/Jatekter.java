@@ -14,8 +14,6 @@ import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
  */
 public class Jatekter extends javax.swing.JFrame {
 
-  private final static int WRAP = 50;
-
   private Parancs parancs;
   private Jatekos jatekos;
   private Vilag vilag;
