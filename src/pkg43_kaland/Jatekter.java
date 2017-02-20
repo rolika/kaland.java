@@ -62,7 +62,7 @@ public class Jatekter extends javax.swing.JFrame {
     } else {
       jatekSzoveg.append(vilag.getUzenet(16)); // meghaltál
     }
-    taJatek.setText(WordUtils.wrap(jatekSzoveg.toString(), WRAP));
+    taJatek.setText(jatekSzoveg.toString());
     tfParancs.setEnabled(false);
   }
 
@@ -102,7 +102,7 @@ public class Jatekter extends javax.swing.JFrame {
         jatekos.setEletbenVan(false);
       }
     }
-    taJatek.setText(WordUtils.wrap(jatekSzoveg.toString(), WRAP));
+    taJatek.setText(jatekSzoveg.toString());
   }
 
   private void reakcio() {
@@ -211,7 +211,6 @@ public class Jatekter extends javax.swing.JFrame {
           jatekSzoveg.append('\n');
           return;
         }
-        System.out.println(WordUtils.wrap(vilag.vizsgal(parancs.getTargy()), WRAP));
         jatekSzoveg.append(vilag.vizsgal(parancs.getTargy()));
         jatekSzoveg.append('\n');
       }
@@ -290,8 +289,10 @@ public class Jatekter extends javax.swing.JFrame {
 
     taJatek.setEditable(false);
     taJatek.setColumns(20);
+    taJatek.setLineWrap(true);
     taJatek.setRows(5);
     taJatek.setText("játékablak");
+    taJatek.setWrapStyleWord(true);
     taJatek.setFocusable(false);
     taJatek.setRequestFocusEnabled(false);
     jScrollPane1.setViewportView(taJatek);
