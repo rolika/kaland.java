@@ -263,6 +263,7 @@ public class Jatekter extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    bgLeiras = new javax.swing.ButtonGroup();
     jScrollPane1 = new javax.swing.JScrollPane();
     taJatek = new javax.swing.JTextArea();
     tfParancs = new javax.swing.JTextField();
@@ -371,14 +372,32 @@ public class Jatekter extends javax.swing.JFrame {
 
     jMenu2.setText("Info");
 
+    bgLeiras.add(rbNormal);
     rbNormal.setSelected(true);
     rbNormal.setText("Normál leírás");
+    rbNormal.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        rbNormalActionPerformed(evt);
+      }
+    });
     jMenu2.add(rbNormal);
 
+    bgLeiras.add(rbHosszu);
     rbHosszu.setText("Hosszú leírás");
+    rbHosszu.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        rbHosszuActionPerformed(evt);
+      }
+    });
     jMenu2.add(rbHosszu);
 
+    bgLeiras.add(rbRovid);
     rbRovid.setText("Rövid leírás");
+    rbRovid.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        rbRovidActionPerformed(evt);
+      }
+    });
     jMenu2.add(rbRovid);
     jMenu2.add(jSeparator1);
 
@@ -475,7 +494,7 @@ public class Jatekter extends javax.swing.JFrame {
   }//GEN-LAST:event_btFelActionPerformed
 
   private void btLeltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLeltarActionPerformed
-    performUtasitas("leltár\n");
+    performUtasitas("leltár");
   }//GEN-LAST:event_btLeltarActionPerformed
 
   private void btLeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLeActionPerformed
@@ -504,8 +523,21 @@ public class Jatekter extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_menuItemUjJatekActionPerformed
 
+  private void rbHosszuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbHosszuActionPerformed
+    performUtasitas("hosszú");
+  }//GEN-LAST:event_rbHosszuActionPerformed
+
+  private void rbRovidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbRovidActionPerformed
+    performUtasitas("rövid");
+  }//GEN-LAST:event_rbRovidActionPerformed
+
+  private void rbNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbNormalActionPerformed
+    performUtasitas("normál");
+  }//GEN-LAST:event_rbNormalActionPerformed
+
   private void performUtasitas(String utasitas) {
     tfParancs.setText(utasitas);
+    tfParancsKeyPressed(new KeyEvent(tfParancs, KeyEvent.KEY_PRESSED, 1, 0, KeyEvent.VK_ENTER));
     tfParancs.requestFocusInWindow();
   }
 
@@ -544,6 +576,7 @@ public class Jatekter extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.ButtonGroup bgLeiras;
   private javax.swing.JButton btDel;
   private javax.swing.JButton btEszak;
   private javax.swing.JButton btFel;
