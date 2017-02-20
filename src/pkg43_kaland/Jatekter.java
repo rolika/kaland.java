@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import org.apache.commons.lang3.text.WordUtils;
 
 /**
@@ -25,6 +27,7 @@ public class Jatekter extends javax.swing.JFrame {
    */
   public Jatekter() {
     initComponents();
+    setLocationRelativeTo(null);
     ujJatek();
   }
 
@@ -34,6 +37,7 @@ public class Jatekter extends javax.swing.JFrame {
     vilag = getVilag();
     taJatek.setText("");
     jatekSzoveg = new StringBuilder();
+    tfParancs.setEnabled(true);
     tfParancs.setText("");
     tfParancs.requestFocusInWindow();
     helyzet();
@@ -48,6 +52,18 @@ public class Jatekter extends javax.swing.JFrame {
       System.out.println("SQL hiba\n" + ex.getMessage());
       return null;
     }
+  }
+  
+  private void vege() {
+    if (jatekos.getOttRagadt()) {
+      jatekSzoveg.append(vilag.getUzenet(21)); // ottragadtál a túloldalon
+    } else if (jatekos.getVisszaJott()) {
+      jatekSzoveg.append(vilag.getUzenet(22)); // megnyerted a játékot
+    } else {
+      jatekSzoveg.append(vilag.getUzenet(16)); // meghaltál
+    }
+    taJatek.setText(WordUtils.wrap(jatekSzoveg.toString(), WRAP));
+    tfParancs.setEnabled(false);
   }
 
   private void helyzet() {
@@ -410,8 +426,8 @@ public class Jatekter extends javax.swing.JFrame {
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addContainerGap()
-        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
+        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addComponent(tfParancs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -434,60 +450,64 @@ public class Jatekter extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void btNyugatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNyugatActionPerformed
-    tfParancs.setText("nyugat");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("nyugat");
 
   }//GEN-LAST:event_btNyugatActionPerformed
 
   private void btEszakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEszakActionPerformed
-    tfParancs.setText("észak");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("észak");
   }//GEN-LAST:event_btEszakActionPerformed
 
   private void btIndirektActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btIndirektActionPerformed
-    tfParancs.setText("be");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("be");
   }//GEN-LAST:event_btIndirektActionPerformed
 
   private void btDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDelActionPerformed
-    tfParancs.setText("dél");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("dél");
   }//GEN-LAST:event_btDelActionPerformed
 
   private void btKeletActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btKeletActionPerformed
-    tfParancs.setText("kelet");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("kelet");
   }//GEN-LAST:event_btKeletActionPerformed
 
   private void btFelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFelActionPerformed
-    tfParancs.setText("fel");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("fel");
   }//GEN-LAST:event_btFelActionPerformed
 
   private void btLeltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLeltarActionPerformed
-    tfParancs.setText("leltár");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("leltár\n");
   }//GEN-LAST:event_btLeltarActionPerformed
 
   private void btLeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLeActionPerformed
-    tfParancs.setText("le");
-    tfParancs.requestFocusInWindow();
+    performUtasitas("le");
   }//GEN-LAST:event_btLeActionPerformed
 
   private void tfParancsKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tfParancsKeyPressed
     if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+      jatekSzoveg.append(tfParancs.getText().toUpperCase());
+      jatekSzoveg.append('\n');
+      taJatek.setText(jatekSzoveg.toString());
       parancs.szetszed(tfParancs.getText());
       tfParancs.setText("");
       reakcio();
-      // ide kell a vége ellenőrzés
-      helyzet();
+      if (jatekos.getEletbenVan() && !jatekos.getOttRagadt() && !jatekos.getVisszaJott()) {
+        helyzet();
+      } else {
+        vege();
+      }
     }
   }//GEN-LAST:event_tfParancsKeyPressed
 
   private void menuItemUjJatekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemUjJatekActionPerformed
-    ujJatek();
+    if (JOptionPane.showConfirmDialog(this, "Biztosan újraindítod?", "Új játék", OK_CANCEL_OPTION) == 0) {
+      ujJatek();
+    }
   }//GEN-LAST:event_menuItemUjJatekActionPerformed
 
+  private void performUtasitas(String utasitas) {
+    tfParancs.setText(utasitas);
+    tfParancs.requestFocusInWindow();
+  }
 
   /**
    */
