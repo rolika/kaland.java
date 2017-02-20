@@ -245,7 +245,6 @@ public class Jatekter extends javax.swing.JFrame {
     } else {
       jatekSzoveg.append(vilag.getUzenet(6)); // nem érti az értelmező
       jatekSzoveg.append('\n');
-      System.out.println(vilag.getUzenet(6)); // nem érti az értelmező
     }
     if (vilag.getAktualisHelyszin().getNev().equals("Odaát")) {
       jatekos.csokkentOdaat();
