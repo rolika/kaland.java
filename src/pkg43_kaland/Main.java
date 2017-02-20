@@ -27,7 +27,7 @@ public class Main {
     adatbázis-táblanév alapján.
     */
     
-    Vilag vilag = null;
+    /*Vilag vilag = null;
     
     try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
       SqliteJDBC sql = new SqliteJDBC(kon);
@@ -38,11 +38,13 @@ public class Main {
     }
     
     if (vilag != null) {
-      Jatekter.main();
       
       //Konzol konzol = new Konzol(vilag);
       //konzol.jatek();
     }
+    */
+    
+    Jatekter.main();
     
   }
 
