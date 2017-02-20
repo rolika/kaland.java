@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
-import org.apache.commons.lang3.text.WordUtils;
 
 /**
  * GUI megvalósítása
@@ -63,7 +62,7 @@ public class Jatekter extends javax.swing.JFrame {
       jatekSzoveg.append(vilag.getUzenet(16)); // meghaltál
     }
     taJatek.setText(jatekSzoveg.toString());
-    tfParancs.setEnabled(false);
+    tfParancs.setEnabled(false); // ne lehessen semmit csinálni
   }
 
   private void helyzet() {
@@ -100,6 +99,7 @@ public class Jatekter extends javax.swing.JFrame {
         jatekSzoveg.append(vilag.getUzenet(25)); // sötétben támad az ellen
         jatekSzoveg.append('\n');
         jatekos.setEletbenVan(false);
+        vege();
       }
     }
     taJatek.setText(jatekSzoveg.toString());
