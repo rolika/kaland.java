@@ -35,8 +35,17 @@ public class Jatekter extends javax.swing.JFrame {
     taJatek.setText("");
     jatekSzoveg = new StringBuilder();
     tfParancs.setEnabled(true);
+    btEszak.setEnabled(true);
+    btDel.setEnabled(true);
+    btNyugat.setEnabled(true);
+    btKelet.setEnabled(true);
+    btIndirekt.setEnabled(true);
+    btFel.setEnabled(true);
+    btLe.setEnabled(true);
+    btLeltar.setEnabled(true);
     tfParancs.setText("");
     tfParancs.requestFocusInWindow();
+    rbNormal.setSelected(true);
     helyzet();
   }
 
@@ -60,7 +69,16 @@ public class Jatekter extends javax.swing.JFrame {
       jatekSzoveg.append(vilag.getUzenet(16)); // meghaltál
     }
     taJatek.setText(jatekSzoveg.toString());
-    tfParancs.setEnabled(false); // ne lehessen semmit csinálni
+    // ne lehessen semmit csinálni
+    tfParancs.setEnabled(false);
+    btEszak.setEnabled(false);
+    btDel.setEnabled(false);
+    btNyugat.setEnabled(false);
+    btKelet.setEnabled(false);
+    btIndirekt.setEnabled(false);
+    btFel.setEnabled(false);
+    btLe.setEnabled(false);
+    btLeltar.setEnabled(false);
   }
 
   private void helyzet() {
@@ -222,9 +240,15 @@ public class Jatekter extends javax.swing.JFrame {
       } else if (!parancs.getReszes().equals(ellenseg.getFegyver())) {
         jatekSzoveg.append(vilag.getUzenet(27)); // hatástalan kísérlet
         jatekSzoveg.append('\n');
+        jatekSzoveg.append(ellenseg.getHalalUzenet());
+        jatekSzoveg.append('\n');
+        jatekos.setEletbenVan(false);
       } else if (!vilag.keznelVan(vilag.getReszes(parancs.getReszes()))) {
         jatekSzoveg.append(vilag.getUzenet(15)); // nincs nála az adott fegyver
         jatekSzoveg.append('\n');
+        jatekSzoveg.append(ellenseg.getHalalUzenet());
+        jatekSzoveg.append('\n');
+        jatekos.setEletbenVan(false);
       } else {
         jatekSzoveg.append(ellenseg.getElpusztultUzenet());
         jatekSzoveg.append('\n');
@@ -248,6 +272,8 @@ public class Jatekter extends javax.swing.JFrame {
     }
     if (vilag.getAktualisHelyszin().getNev().equals("Odaát")) {
       jatekos.csokkentOdaat();
+      jatekSzoveg.append(vilag.getUzenet(28+jatekos.getOdaatvan()));
+      jatekSzoveg.append('\n');
     }
   }
 

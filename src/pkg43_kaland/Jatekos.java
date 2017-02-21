@@ -39,6 +39,10 @@ public class Jatekos {
     return visszajott;
   }
   
+  public int getOdaatvan() {
+    return odaatVan;
+  }
+  
   public boolean getOttRagadt() {
     return odaatVan == 0;
   }
