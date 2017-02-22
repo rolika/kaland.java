@@ -362,12 +362,7 @@ public class Vilag<E extends Elem> {
    * @return egy csapda, vagy null, ha nincs
    */
   public Csapda getCsapda(String nev) {
-    for (String kulcs : csapdak.keySet()) {
-      if (csapdak.get(kulcs).getNev().equals(nev)) {
-        return csapdak.get(kulcs);
-      }
-    }
-    return null;
+    return csapdak.getOrDefault(nev, null);
   }
 
   /**
