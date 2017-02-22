@@ -62,11 +62,11 @@ public class Jatekter extends javax.swing.JFrame {
   
   private void vege() {
     if (jatekos.getOttRagadt()) {
-      jatekSzoveg.append(vilag.getUzenet(21)); // ottragadtál a túloldalon
+      fuz(vilag.getUzenet(21)); // ottragadtál a túloldalon
     } else if (jatekos.getVisszaJott()) {
-      jatekSzoveg.append(vilag.getUzenet(22)); // megnyerted a játékot
+      fuz(vilag.getUzenet(22)); // megnyerted a játékot
     } else {
-      jatekSzoveg.append(vilag.getUzenet(16)); // meghaltál
+      fuz(vilag.getUzenet(16)); // meghaltál
     }
     taJatek.setText(jatekSzoveg.toString());
     // ne lehessen semmit csinálni
@@ -89,31 +89,24 @@ public class Jatekter extends javax.swing.JFrame {
     }
     Ellenseg ellenseg = vilag.getEllenseg();
     if (vilag.isVilagos()) {
-      jatekSzoveg.append(vilag.getAktualisHelyszin().getLeiras());
-      jatekSzoveg.append('\n');
-      jatekSzoveg.append(vilag.getLathatoTargyak());
-      jatekSzoveg.append('\n');
+      fuz(vilag.getAktualisHelyszin().getLeiras());
+      fuz(vilag.getLathatoTargyak());
       if (ellenseg != null && !ellenseg.isAktiv()) {
-        jatekSzoveg.append(vilag.getUzenet(24)); // döglött pók
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(24)); // döglött pók
       }
       vilag.getAktualisHelyszin().setBejart(true);
       if (ellenseg != null && ellenseg.isAktiv()) {
-        jatekSzoveg.append(ellenseg.getLeiras());
-        jatekSzoveg.append('\n');
+        fuz(ellenseg.getLeiras());
         jatekos.csokkentPok();
         if (jatekos.tamadPok()) {
-          jatekSzoveg.append(ellenseg.getHalalUzenet());
-          jatekSzoveg.append('\n');
+          fuz(ellenseg.getHalalUzenet());
           jatekos.setEletbenVan(false);
         }
       }
     } else {
-        jatekSzoveg.append(vilag.getUzenet(5)); // sötét van
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(5)); // sötét van
       if (ellenseg != null && ellenseg.isAktiv()) {
-        jatekSzoveg.append(vilag.getUzenet(25)); // sötétben támad az ellen
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(25)); // sötétben támad az ellen
         jatekos.setEletbenVan(false);
         vege();
       }
@@ -130,22 +123,17 @@ public class Jatekter extends javax.swing.JFrame {
       if (csapda != null) {
         if (csapda.isAktiv()) {
           if (ujHelyszinNev.equals(csapda.getCel())) {
-            jatekSzoveg.append(csapda.getHalalUzenet());
-            jatekSzoveg.append('\n');
+            fuz(csapda.getHalalUzenet());
             jatekos.setEletbenVan(false);
           } else {
-            jatekSzoveg.append(uzenet);
-            jatekSzoveg.append('\n');
+            fuz(uzenet);
           }
         } else {
-          jatekSzoveg.append(uzenet);
-          jatekSzoveg.append('\n');
-          jatekSzoveg.append(csapda.getHatastalanUzenet());
-          jatekSzoveg.append('\n');
+          fuz(uzenet);
+          fuz(csapda.getHatastalanUzenet());
         }
       } else {
-        jatekSzoveg.append(uzenet);
-        jatekSzoveg.append('\n');
+        fuz(uzenet);
       }
       if (jatekos.getVoltOdaat() && ujHelyszinNev.equals("Rejtett pince")) {
         jatekos.setVisszaJott(true);
@@ -155,59 +143,47 @@ public class Jatekter extends javax.swing.JFrame {
         if (parancs.getTargy().equals("kötelet")
           && (!vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
           || vilag.getAjto("ládát").getAllapot().equals("zárva"))) {
-          jatekSzoveg.append(vilag.getUzenet(20)); // nincs értelme használni
-          jatekSzoveg.append('\n');
+          fuz(vilag.getUzenet(20)); // nincs értelme használni
           return;
         } else if (parancs.getTargy().equals("gépet")) {
           if (!parancs.getReszes().equals("papírral")) {
-            jatekSzoveg.append(vilag.getUzenet(20)); // nincs értelme használni
-            jatekSzoveg.append('\n');
+            fuz(vilag.getUzenet(20)); // nincs értelme használni
           } else {
-            jatekSzoveg.append(vilag.kinyit("portált", "papírral"));
-            jatekSzoveg.append('\n');
+            fuz(vilag.kinyit("portált", "papírral"));
           }
         }
-        jatekSzoveg.append(vilag.aktival(parancs.getTargy(), true));
-        jatekSzoveg.append('\n');
+        fuz(vilag.aktival(parancs.getTargy(), true));
         if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
           vilag.getCsapda("penge").setAktiv(false);
-          jatekSzoveg.append(vilag.getCsapda("penge").getFelfedezesUzenet());
-          jatekSzoveg.append('\n');
+          fuz(vilag.getCsapda("penge").getFelfedezesUzenet());
         } else if (vilag.getTargy("kötelet").isAktiv() && vilag.getCsapda("kürtő").isAktiv()) {
           vilag.getCsapda("kürtő").setAktiv(false);
-          jatekSzoveg.append(vilag.getCsapda("kürtő").getFelfedezesUzenet());
-          jatekSzoveg.append('\n');
+          fuz(vilag.getCsapda("kürtő").getFelfedezesUzenet());
         }
       }
     } else if (parancs.isDeaktival()) {
       if (vilag.isVilagos()) {
-        jatekSzoveg.append(vilag.aktival(parancs.getTargy(), false));
-        jatekSzoveg.append('\n');
+        fuz(vilag.aktival(parancs.getTargy(), false));
       }
     } else if (parancs.isLeltar()) {
       if (vilag.isVilagos()) {
-        jatekSzoveg.append(vilag.getLeltar());
-        jatekSzoveg.append('\n');
+        fuz(vilag.getLeltar());
       }
     } else if (parancs.isKinyit()) {
-      jatekSzoveg.append(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
-      jatekSzoveg.append('\n');
+      fuz(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
     } else if (parancs.isFelvesz()) {
       if (vilag.isVilagos()) {
-        jatekSzoveg.append(vilag.felvesz(parancs.getTargy()));
-        jatekSzoveg.append('\n');
+        fuz(vilag.felvesz(parancs.getTargy()));
         if (vilag.getLeltar().contains("lábtörlő")) {
           vilag.getTargy("kulcsot").setLathato(true);
         }
       }
     } else if (parancs.isLetesz()) {
-      jatekSzoveg.append(vilag.letesz(parancs.getTargy()));
-      jatekSzoveg.append('\n');
+      fuz(vilag.letesz(parancs.getTargy()));
     } else if (parancs.isVizsgal()) {
       if (vilag.isVilagos()) {
         if (vilag.checkHelyzet("Előtér", parancs.getTargy(), "padlót")) {
-          jatekSzoveg.append(csapda.getFelfedezesUzenet());
-          jatekSzoveg.append('\n');
+          fuz(csapda.getFelfedezesUzenet());
           csapda.setAktiv(false);
           return;
         } else if (vilag.checkHelyzet("Szoba", parancs.getTargy(), "kandallót")) {
@@ -215,66 +191,58 @@ public class Jatekter extends javax.swing.JFrame {
         } else if (vilag.checkHelyzet("Konyha", parancs.getTargy(), "szekrényt")) {
           vilag.getTargy("jegyzetet").setLathato(true);
         } else if (vilag.checkHelyzet("Padlás vége", parancs.getTargy(), "papírt")) {
-          jatekSzoveg.append(vilag.getUzenet(18)); // láda és papír összefügg
-          jatekSzoveg.append('\n');
+          fuz(vilag.getUzenet(18)); // láda és papír összefügg
           return;
         } else if (vilag.checkHelyzet("Rejtett pince", parancs.getTargy(), "papírt")) {
-          jatekSzoveg.append(vilag.getUzenet(19)); // gép és papír összefügg
-          jatekSzoveg.append('\n');
+          fuz(vilag.getUzenet(19)); // gép és papír összefügg
           return;
         } else if (parancs.isAltalanos()) {
-          jatekSzoveg.append(vilag.getUzenet(17)); // semmi különös
-          jatekSzoveg.append('\n');
+          fuz(vilag.getUzenet(17)); // semmi különös
           return;
         }
-        jatekSzoveg.append(vilag.vizsgal(parancs.getTargy()));
-        jatekSzoveg.append('\n');
+        fuz(vilag.vizsgal(parancs.getTargy()));
       }
     } else if (parancs.isTamad()) {
       if (ellenseg == null) {
-        jatekSzoveg.append(vilag.getUzenet(26)); // nincs ellenség
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(26)); // nincs ellenség
       } else if (!parancs.getTargy().equals(ellenseg.getNev())) {
-        jatekSzoveg.append(vilag.getUzenet(26)); // nincs ellenség
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(26)); // nincs ellenség
       } else if (!parancs.getReszes().equals(ellenseg.getFegyver())) {
-        jatekSzoveg.append(vilag.getUzenet(27)); // hatástalan kísérlet
-        jatekSzoveg.append('\n');
-        jatekSzoveg.append(ellenseg.getHalalUzenet());
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(27)); // hatástalan kísérlet
+        fuz(ellenseg.getHalalUzenet());
         jatekos.setEletbenVan(false);
       } else if (!vilag.keznelVan(vilag.getReszes(parancs.getReszes()))) {
-        jatekSzoveg.append(vilag.getUzenet(15)); // nincs nála az adott fegyver
-        jatekSzoveg.append('\n');
-        jatekSzoveg.append(ellenseg.getHalalUzenet());
-        jatekSzoveg.append('\n');
+        fuz(vilag.getUzenet(15)); // nincs nála az adott fegyver
+        fuz(ellenseg.getHalalUzenet());
         jatekos.setEletbenVan(false);
       } else {
-        jatekSzoveg.append(ellenseg.getElpusztultUzenet());
-        jatekSzoveg.append('\n');
+        fuz(ellenseg.getElpusztultUzenet());
         ellenseg.setAktiv(false);
       }
     } else if (parancs.isNemKell()) {
-      jatekSzoveg.append(vilag.getUzenet(28)); // nincs szükség erre
-      jatekSzoveg.append('\n');
+      fuz(vilag.getUzenet(28)); // nincs szükség erre
     } else if (parancs.isNormal()) {
-      jatekSzoveg.append(vilag.setLeiroMod(0)); // rendben üzenet
-      jatekSzoveg.append('\n');
+      fuz(vilag.setLeiroMod(0)); // rendben üzenet
     } else if (parancs.isHosszu()) {
-      jatekSzoveg.append(vilag.setLeiroMod(1)); // rendben üzenet
-      jatekSzoveg.append('\n');
+      fuz(vilag.setLeiroMod(1)); // rendben üzenet
     } else if (parancs.isRovid()) {
-      jatekSzoveg.append(vilag.setLeiroMod(2)); // rendben üzenet
-      jatekSzoveg.append('\n');
+      fuz(vilag.setLeiroMod(2)); // rendben üzenet
     } else {
-      jatekSzoveg.append(vilag.getUzenet(6)); // nem érti az értelmező
-      jatekSzoveg.append('\n');
+      fuz(vilag.getUzenet(6)); // nem érti az értelmező
     }
     if (vilag.getAktualisHelyszin().getNev().equals("Odaát")) {
       jatekos.csokkentOdaat();
-      jatekSzoveg.append(vilag.getUzenet(28+jatekos.getOdaatvan()));
-      jatekSzoveg.append('\n');
+      fuz(vilag.getUzenet(28+jatekos.getOdaatvan()));
     }
+  }
+  
+  /**
+   * Kiszervezett szöveg-összefűzés, hozzáadott újsorral
+   * @param szovegresz 
+   */
+  private void fuz(String szovegresz) {
+    jatekSzoveg.append(szovegresz);
+    jatekSzoveg.append('\n');
   }
 
   /**
