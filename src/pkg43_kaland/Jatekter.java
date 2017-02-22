@@ -82,12 +82,14 @@ public class Jatekter extends javax.swing.JFrame {
   }
 
   private void helyzet() {
+    
     if (vilag.getLeiroMod() == 1) {
       vilag.getAktualisHelyszin().setBejart(false);
     } else if (vilag.getLeiroMod() == 2) {
       vilag.getAktualisHelyszin().setBejart(true);
     }
     Ellenseg ellenseg = vilag.getEllenseg();
+    
     if (vilag.isVilagos()) {
       fuz(vilag.getAktualisHelyszin().getLeiras());
       fuz(vilag.getLathatoTargyak());
@@ -103,6 +105,7 @@ public class Jatekter extends javax.swing.JFrame {
           jatekos.setEletbenVan(false);
         }
       }
+      
     } else {
         fuz(vilag.getUzenet(5)); // sötét van
       if (ellenseg != null && ellenseg.isAktiv()) {
@@ -111,12 +114,15 @@ public class Jatekter extends javax.swing.JFrame {
         vege();
       }
     }
+    
     taJatek.setText(jatekSzoveg.toString());
   }
 
   private void reakcio() {
     Ellenseg ellenseg = vilag.getEllenseg();
     Csapda csapda = vilag.getCsapda();
+    
+    // a játékos menne valamerre
     if (parancs.isIrany()) {
       String uzenet = vilag.ujHelyszin(parancs.getIrany());
       String ujHelyszinNev = vilag.getAktualisHelyszin().getNev();
@@ -138,6 +144,8 @@ public class Jatekter extends javax.swing.JFrame {
       if (jatekos.getVoltOdaat() && ujHelyszinNev.equals("Rejtett pince")) {
         jatekos.setVisszaJott(true);
       }
+      
+    // a játékos aktiválna (használna, mozgatna, bekapcsolna) valamit
     } else if (parancs.isAktival()) {
       if (vilag.isVilagos()) {
         if (parancs.getTargy().equals("kötelet")
@@ -161,16 +169,24 @@ public class Jatekter extends javax.swing.JFrame {
           fuz(vilag.getCsapda("kürtő").getFelfedezesUzenet());
         }
       }
+      
+    // a játékos deaktiválna (lekapcsolna) valamit
     } else if (parancs.isDeaktival()) {
       if (vilag.isVilagos()) {
         fuz(vilag.aktival(parancs.getTargy(), false));
       }
+      
+    // a játékos megnézi a leltárt
     } else if (parancs.isLeltar()) {
       if (vilag.isVilagos()) {
         fuz(vilag.getLeltar());
       }
+      
+    // a játékos kinyitna valamit
     } else if (parancs.isKinyit()) {
       fuz(vilag.kinyit(parancs.getTargy(), parancs.getReszes()));
+      
+    // a játékos felvenne valamit
     } else if (parancs.isFelvesz()) {
       if (vilag.isVilagos()) {
         fuz(vilag.felvesz(parancs.getTargy()));
@@ -178,8 +194,12 @@ public class Jatekter extends javax.swing.JFrame {
           vilag.getTargy("kulcsot").setLathato(true);
         }
       }
+    
+    // a játékos letenne valamit
     } else if (parancs.isLetesz()) {
       fuz(vilag.letesz(parancs.getTargy()));
+      
+    // a játékos megvizsgálna (elolvasna) valamit
     } else if (parancs.isVizsgal()) {
       if (vilag.isVilagos()) {
         if (vilag.checkHelyzet("Előtér", parancs.getTargy(), "padlót")) {
@@ -202,6 +222,8 @@ public class Jatekter extends javax.swing.JFrame {
         }
         fuz(vilag.vizsgal(parancs.getTargy()));
       }
+      
+    // a játékos megtámadna valamit
     } else if (parancs.isTamad()) {
       if (ellenseg == null) {
         fuz(vilag.getUzenet(26)); // nincs ellenség
@@ -219,21 +241,30 @@ public class Jatekter extends javax.swing.JFrame {
         fuz(ellenseg.getElpusztultUzenet());
         ellenseg.setAktiv(false);
       }
+      
+    // értelmes, de ebben a játékban nem kell
     } else if (parancs.isNemKell()) {
       fuz(vilag.getUzenet(28)); // nincs szükség erre
+      
+    // a játékos a leíró-módot változtatja
     } else if (parancs.isNormal()) {
-      fuz(vilag.setLeiroMod(0)); // rendben üzenet
+      fuz(vilag.setLeiroMod(0)); // rendben üzenet      
     } else if (parancs.isHosszu()) {
-      fuz(vilag.setLeiroMod(1)); // rendben üzenet
+      fuz(vilag.setLeiroMod(1)); // rendben üzenet      
     } else if (parancs.isRovid()) {
       fuz(vilag.setLeiroMod(2)); // rendben üzenet
+      
+    // nem értelmezett parancs
     } else {
       fuz(vilag.getUzenet(6)); // nem érti az értelmező
     }
+    
+    // ha a játékos odaát van, elkezd becsukódni a portál
     if (vilag.getAktualisHelyszin().getNev().equals("Odaát")) {
       jatekos.csokkentOdaat();
       fuz(vilag.getUzenet(28+jatekos.getOdaatvan()));
     }
+    
   }
   
   /**
