@@ -119,55 +119,17 @@ public class Jatekter extends javax.swing.JFrame {
   }
 
   private void reakcio() {
-    Ellenseg ellenseg = vilag.getEllenseg();
+    //Ellenseg ellenseg = vilag.getEllenseg();
     Csapda csapda = vilag.getCsapda();
     
     // a játékos menne valamerre
     if (parancs.isIrany()) {
-      String uzenet = vilag.ujHelyszin(parancs.getIrany());
-      String ujHelyszinNev = vilag.getAktualisHelyszin().getNev();
-      if (csapda != null) {
-        if (csapda.isAktiv()) {
-          if (ujHelyszinNev.equals(csapda.getCel())) {
-            fuz(csapda.getHalalUzenet());
-            jatekos.setEletbenVan(false);
-          } else {
-            fuz(uzenet);
-          }
-        } else {
-          fuz(uzenet);
-          fuz(csapda.getHatastalanUzenet());
-        }
-      } else {
-        fuz(uzenet);
-      }
-      if (jatekos.getVoltOdaat() && ujHelyszinNev.equals("Rejtett pince")) {
-        jatekos.setVisszaJott(true);
-      }
+      irany(csapda);
       
     // a játékos aktiválna (használna, mozgatna, bekapcsolna) valamit
     } else if (parancs.isAktival()) {
       if (vilag.isVilagos()) {
-        if (parancs.getTargy().equals("kötelet")
-          && (!vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
-          || vilag.getAjto("ládát").getAllapot().equals("zárva"))) {
-          fuz(vilag.getUzenet(20)); // nincs értelme használni
-          return;
-        } else if (parancs.getTargy().equals("gépet")) {
-          if (!parancs.getReszes().equals("papírral")) {
-            fuz(vilag.getUzenet(20)); // nincs értelme használni
-          } else {
-            fuz(vilag.kinyit("portált", "papírral"));
-          }
-        }
-        fuz(vilag.aktival(parancs.getTargy(), true));
-        if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
-          vilag.getCsapda("penge").setAktiv(false);
-          fuz(vilag.getCsapda("penge").getFelfedezesUzenet());
-        } else if (vilag.getTargy("kötelet").isAktiv() && vilag.getCsapda("kürtő").isAktiv()) {
-          vilag.getCsapda("kürtő").setAktiv(false);
-          fuz(vilag.getCsapda("kürtő").getFelfedezesUzenet());
-        }
+        aktival();
       }
       
     // a játékos deaktiválna (lekapcsolna) valamit
@@ -225,22 +187,7 @@ public class Jatekter extends javax.swing.JFrame {
       
     // a játékos megtámadna valamit
     } else if (parancs.isTamad()) {
-      if (ellenseg == null) {
-        fuz(vilag.getUzenet(26)); // nincs ellenség
-      } else if (!parancs.getTargy().equals(ellenseg.getNev())) {
-        fuz(vilag.getUzenet(26)); // nincs ellenség
-      } else if (!parancs.getReszes().equals(ellenseg.getFegyver())) {
-        fuz(vilag.getUzenet(27)); // hatástalan kísérlet
-        fuz(ellenseg.getHalalUzenet());
-        jatekos.setEletbenVan(false);
-      } else if (!vilag.keznelVan(vilag.getReszes(parancs.getReszes()))) {
-        fuz(vilag.getUzenet(15)); // nincs nála az adott fegyver
-        fuz(ellenseg.getHalalUzenet());
-        jatekos.setEletbenVan(false);
-      } else {
-        fuz(ellenseg.getElpusztultUzenet());
-        ellenseg.setAktiv(false);
-      }
+        tamad();
       
     // értelmes, de ebben a játékban nem kell
     } else if (parancs.isNemKell()) {
@@ -274,6 +221,76 @@ public class Jatekter extends javax.swing.JFrame {
   private void fuz(String szovegresz) {
     jatekSzoveg.append(szovegresz);
     jatekSzoveg.append('\n');
+  }
+  
+  /**
+   * Kiszervezett mozgás
+   * @param csapda 
+   */
+  private void irany(Csapda csapda) {
+    String uzenet = vilag.ujHelyszin(parancs.getIrany());
+      String ujHelyszinNev = vilag.getAktualisHelyszin().getNev();
+      if (csapda != null) {
+        if (csapda.isAktiv()) {
+          if (ujHelyszinNev.equals(csapda.getCel())) {
+            fuz(csapda.getHalalUzenet());
+            jatekos.setEletbenVan(false);
+          } else {
+            fuz(uzenet);
+          }
+        } else {
+          fuz(uzenet);
+          fuz(csapda.getHatastalanUzenet());
+        }
+      } else {
+        fuz(uzenet);
+      }
+      if (jatekos.getVoltOdaat() && ujHelyszinNev.equals("Rejtett pince")) {
+        jatekos.setVisszaJott(true);
+      }
+  }
+  
+  private void aktival() {
+    if (parancs.getTargy().equals("kötelet")
+      && (!vilag.getAktualisHelyszin().getNev().equals("Padlás vége")
+      || vilag.getAjto("ládát").getAllapot().equals("zárva"))) {
+      fuz(vilag.getUzenet(20)); // nincs értelme használni
+      return;
+    } else if (parancs.getTargy().equals("gépet")) {
+      if (!parancs.getReszes().equals("papírral")) {
+        fuz(vilag.getUzenet(20)); // nincs értelme használni
+      } else {
+        fuz(vilag.kinyit("portált", "papírral"));
+      }
+    }
+    fuz(vilag.aktival(parancs.getTargy(), true));
+    if (vilag.getTargy("kart").isAktiv() && vilag.getCsapda("penge").isAktiv()) {
+      vilag.getCsapda("penge").setAktiv(false);
+      fuz(vilag.getCsapda("penge").getFelfedezesUzenet());
+    } else if (vilag.getTargy("kötelet").isAktiv() && vilag.getCsapda("kürtő").isAktiv()) {
+      vilag.getCsapda("kürtő").setAktiv(false);
+      fuz(vilag.getCsapda("kürtő").getFelfedezesUzenet());
+    }
+  }
+  
+  private void tamad() {
+    Ellenseg ellenseg = vilag.getEllenseg();
+    if (ellenseg == null) {
+      fuz(vilag.getUzenet(26)); // nincs ellenség
+    } else if (!parancs.getTargy().equals(ellenseg.getNev())) {
+      fuz(vilag.getUzenet(26)); // nincs ellenség
+    } else if (!parancs.getReszes().equals(ellenseg.getFegyver())) {
+      fuz(vilag.getUzenet(27)); // hatástalan kísérlet
+      fuz(ellenseg.getHalalUzenet());
+      jatekos.setEletbenVan(false);
+    } else if (!vilag.keznelVan(vilag.getReszes(parancs.getReszes()))) {
+      fuz(vilag.getUzenet(15)); // nincs nála az adott fegyver
+      fuz(ellenseg.getHalalUzenet());
+      jatekos.setEletbenVan(false);
+    } else {
+      fuz(ellenseg.getElpusztultUzenet());
+      ellenseg.setAktiv(false);
+    }
   }
 
   /**
