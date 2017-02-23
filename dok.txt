@@ -1,0 +1,32 @@
+Szöveges kalandjáték megvalósítása Java SE és Swing segítségével
+
+A szöveges kalandjáték olyan számítógépes játék, mely nem grafikával, hanem írott szöveggel jeleníti meg a környezetet, amelyben a játékos tevékenykedhet. A játék irányítása szintén szöveges parancsokkal történik.
+
+Az általam fejlesztett játék a magyar nyelv szabályai szerint működik, egyes szám első személyben lehet utasításokat adni a gépnek. A parancsok a következő formátumúak lehetnek:
+- ELMEGYEK ÉSZAKRA, vagy ÉSZAK, vagy csak É;
+- MEGNÉZEM A LELTÁRT, vagy csak LELTÁR;
+- KINYITOM AZ AJTÓT vagy KINYITOM AZ AJTÓT A KULCCSAL, ha be van zárva;
+- KI vagy BE: indirekt irányok, a program feltételez egy irányt (pl. a ház előtt állva valószínűleg be akarunk jutni)
+A parancsok általános formája: IGE - TÁRGYESET - RÉSZESESET. Az esetleges névelőket az értelmező figyelmen kívül hagyja.
+
+A szöveges játékoknak is van céljuk. Az én játékomnak fő célja az erdei házikó titkának felderítése, illetve eközben a ránk leselkedő veszélyek túlélése.
+Ezek a veszélyek:
+- csapdák: adott helyiségben bizonyos irányba elmozdulva aktiválódnak. Kikapcsolásuk jó megfigyeléssel, bizonyos mechanizmusok működtetésével ill. tárgyak megfelelő használatával történhet;
+- ellenségek: adott helyiségben tanyáznak. A helysiégbe lépve ráijesztenek a játékosra, de első körben nem bántják. A játékosnak egyetlen parancs kiadására van ilyenkor lehetősége. Ha nem a megfelelő módon próbálja ártalmatlanítani az ellenséget, az a következő lépésben mindenképpen megöli őt. Az ellenség viselkedésére hatással van a sötétség, ld. lejjebb.
+A játék befejeződik, ha a játékos életét veszti, elveszti a játékot (spoiler: nem jön vissza), ill. ha megnyeri a játékot.
+
+A játék folyamán három féle megjelenítési módot lehet beállítani, egyrészt az Infó menüpont alól, másrészt a parancssorba begépelve:
+- NORMÁL: ha a játékos először jár egy helyszínen, hosszú leírást kap, ha visszatér, már cska a rövdet, azaz a helyszín nevét;
+- HOSSZÚ: mindig a hosszú leírást kapja;
+- RÖVID: mindig a rövid leírást kapja
+
+Előfordulhat, hogy egy helyiségben sötét van. Ekkor az alábbi szabályok érvényesek:
+- a játékos nem kap semmilyen leírást, csak egy üzenetet, hogy túl sötét van;
+- az esetleges ellenségek a sötétben azonnal támadnak és megölik a játékost;
+- sötétben a játékos csak mozogni tud, vizsgálni, tárgyakat felvenni, használni nem.
+
+A játék során a továbbjutáshoz szükség van bizonyos helyszíneken bizonyos dolgok alapos szemügyre vételére. Ezzel csapdák hatástalaníthatók, a átjárók nyithatók meg, ill. további tárgyak válnak láthatóvá. Ez utóbbi egyes tárgyak felvételével is előfordulhat.
+
+A grafikus kezelőfelület a fő mozgásirányokat valósítja meg, továbbá a leltár gombot.
+
+Jó szórakozást a játékhoz!
