@@ -1,0 +1,27 @@
+Technikai leírás a kalandjátékhoz
+
+Az alapvető információkat egy SQLite3-adatbázisban tárolom. Azért SQLite3, mert:
+- nagyon egyszerű, nem szerver-alapú SQL-megvalósítás;
+- egyetlen file-ban tárolja az adatokat;
+- apróság, de nem köti meg az adattípusokat (nem kell előre deklarálni).
+
+Az adatbázis a következő táblákat tartalmazza:
+- helyszín
+- kijárat
+- üzenet
+- tárgy
+- ajtó
+- csapda
+- ellenség
+
+Az adatbázis-táblákból az azonos nevű (csak éppen nagybetűvel kezdődő) osztályokba olvasom be az adatokat. A különböző osztályokat egy Elem() osztállyal egységesítettem. A konkrét osztálypéldányokat egy ElemFactory() segítségével készítem el, mely a kapott táblanév alapján dolgozik. Ezek az osztályok egymással párhuzamosan létező adattároló osztályok.
+
+A játék megvalósítása három osztályra támaszkodik:
+- Játékos (nyilvántartja, életben van-e, adott esetben hány lépés telt el, megtámadja-e valami);
+- Parancs (a játékos által beírt parancsok értelmezésére);
+- Világ (a játék tulajdonképpeni motorja).
+
+A játék motorja (a "világ") az adatbázisból kinyert adatokból, azaz a belőlük létrehozott osztályokból építi fel magát, amiket paraméterül kap meg.
+Mivel az általános célú Elem() osztályokat kapja meg, végső formájukat type cast-olással nyerik el.
+
+A játékot megvalósító logika e három osztály metódusain keresztül ellenőrzi a játékos lépéseit és reagál azokra.

@@ -1,8 +1,8 @@
 package pkg43_kaland;
 
-import java.sql.Connection;
+/*import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.SQLException;*/
 
 /**
  * A játék egy szöveges kalandjátékot valósít meg. A szöveges kalandjátékban nincsenek
