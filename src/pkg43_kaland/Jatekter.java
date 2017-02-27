@@ -49,6 +49,7 @@ public class Jatekter extends javax.swing.JFrame {
     helyzet();
   }
 
+  // beolvasom a táblákat az adatbázisból
   private Vilag getVilag() {
     try (Connection kon = DriverManager.getConnection("jdbc:sqlite:kaland.sql")) {
       SqliteJDBC sql = new SqliteJDBC(kon);
@@ -200,6 +201,12 @@ public class Jatekter extends javax.swing.JFrame {
       fuz(vilag.setLeiroMod(1)); // rendben üzenet      
     } else if (parancs.isRovid()) {
       fuz(vilag.setLeiroMod(2)); // rendben üzenet
+    
+    // a játékos információt (hosszú leírást) kér
+    } else if (parancs.isInfo()) {
+      if (vilag.isVilagos() && vilag.getLeiroMod() != 1) {
+        fuz(vilag.getAktualisHelyszin().getHosszu());
+      }
       
     // nem értelmezett parancs
     } else {
@@ -600,7 +607,13 @@ public class Jatekter extends javax.swing.JFrame {
       + "MEGÖLÖM A TROLLT A KARDDAL\n"
       + "Ha elakadtál volna, a két aranyszabály:\n"
       + "- Vizsgálj meg mindent!\n"
-      + "- Vegyél fel minden mozdíthatót!\n";
+      + "- Vegyél fel minden mozdíthatót!\n"
+      + "Használható utasítások:\n"
+      + "É, D, K, NY, FEL, LE, BE, KI, LELTÁR\n"
+      + "BEKAPCSOLOM, KIKAPCSOLOM, HASZNÁLOM, MOZGATOM, KINYITOM\n"
+      + "FELVESZEM, LETESZEM, MEGNÉZEM, ELOLVASOM, MEGTÁMADOM\n"
+      + "HOSSZÚ, RÖVID, NORMÁL, INFÓ\n"
+      + "A szövegben lévő főnevek tárgy- és részes-eseteit érti meg.";
     JOptionPane.showMessageDialog(this, uzenet, "Kalandjáték", JOptionPane.INFORMATION_MESSAGE);
   }//GEN-LAST:event_jMenuItem5ActionPerformed
 

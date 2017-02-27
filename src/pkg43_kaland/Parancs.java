@@ -45,6 +45,7 @@ public class Parancs {
   private static final String HOSSZU = "hosszú";
   private static final String ROVID = "rövid";
   private static final String NORMAL = "normál";
+  private static final String INFO = "infó";
 
   private final Map<String, Set<String>> iranyok;
   private String irany;
@@ -72,7 +73,7 @@ public class Parancs {
    * @param parancs játékostól kapott szöveges parancs, pl. MEGÖLÖM A PÓKOT A KÉSSEL
    */
   public void szetszed(String parancs) {
-    szavak = Arrays.asList(parancs.split(" a?z?\\b ?"));
+    szavak = Arrays.asList(parancs.toLowerCase().split(" a?z?\\b ?"));
   }
 
   /**
@@ -286,6 +287,15 @@ public class Parancs {
    */
   public boolean isNormal() {
     return (szavak.stream().anyMatch(szo -> szo.contains(NORMAL)));
+  }
+
+  /**
+   * Információ kérése, azaz helyiség hosszú leírása
+   *
+   * @return
+   */
+  public boolean isInfo() {
+    return (szavak.stream().anyMatch(szo -> szo.contains(INFO)));
   }
 
 }

@@ -412,7 +412,7 @@ public class Vilag<E extends Elem> {
   /**
    * Helyszín leírás módjának lekérdezése
    *
-   * @return
+   * @return 0: normál 1: hosszú 2: rövid
    */
   public int getLeiroMod() {
     return leiroMod;

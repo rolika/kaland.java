@@ -26,8 +26,6 @@ public class Helyszin implements Elem<Helyszin> {
     sotet = rs.getBoolean("sotet");
     bejart = false;
   }
-  
-  public Helyszin getThis() { return this; }
 
   /**
    * Helyiség rövid leírása, ill. kulcs a tároló hashmap-ben
@@ -44,6 +42,14 @@ public class Helyszin implements Elem<Helyszin> {
    */
   public boolean isSotet() {
     return sotet;
+  }
+  
+  /**
+   * Hosszú helyszínleírás
+   * @return szöveg
+   */
+  public String getHosszu() {
+    return leiras;
   }
   
   /**
