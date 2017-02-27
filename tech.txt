@@ -14,7 +14,7 @@ Az adatbázis a következő táblákat tartalmazza:
 - csapda
 - ellenség
 
-Az adatbázis-táblákból az azonos nevű (csak éppen nagybetűvel kezdődő) osztályokba olvasom be az adatokat. A különböző osztályokat egy Elem() osztállyal egységesítettem. A konkrét osztálypéldányokat egy ElemFactory() segítségével készítem el, mely a kapott táblanév alapján dolgozik. Ezek az osztályok egymással párhuzamosan létező adattároló osztályok.
+Az adatbázis-táblákból az azonos nevű (csak éppen nagybetűvel kezdődő) osztályokba olvasom be az adatokat, egy SqliteJDBC() DAO segítségével. A különböző osztályokat egy Elem() osztállyal egységesítettem. A konkrét osztálypéldányokat egy ElemFactory() segítségével készítem el, mely a kapott táblanév alapján dolgozik. Ezek az osztályok egymással párhuzamosan létező adattároló osztályok.
 
 A játék megvalósítása három osztályra támaszkodik:
 - Játékos (nyilvántartja, életben van-e, adott esetben hány lépés telt el, megtámadja-e valami);
