@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class ElemFactory {
   
   /**
-   * Az általános Elemből specifikus osztályt kéazít a táblanév alapján
+   * Az általános Elemből specifikus osztályt készít a táblanév alapján
    * @param tabla adatbázis táblaneve alapján azonosítja a visszaadandó új osztályt
    * @param rs Resultset az adatbázisból
    * @return specifikus osztály (ami megvalósítja az elem interface-t)
